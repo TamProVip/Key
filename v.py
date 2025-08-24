@@ -1635,7 +1635,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
     Id_Skin = IDMODSKIN.encode()
     Name_Hero = NAME_HERO.encode()
     HD = b'y'
-    Skins = b'y'
+    Skins = b'n'
 
     FILES_XML = []
     for root, dirs, files in os.walk(Files_Directory_Path):
@@ -2218,7 +2218,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN =='15012' and 'U1.xml' in file_path:
-                with open(file_path, 'rb') as f: rpl = f.read().replace(b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/150_Hanxin_spellC_01"',b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/150_hanxin/15012/150_Hanxin_spellC_01"').replace(b'CheckSkinIdVirtualTick',b'CheckSkinIdTick')
+                with open(file_path, 'rb') as f: rpl = f.read().replace(b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/150_Hanxin_spellC_01"',b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/150_hanxin/15012/150_Hanxin_spellC_01"')
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
@@ -2332,13 +2332,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
-#-----------------------------------------------
-            if IDMODSKIN == '59901' and 'S1B1.xml' in file_path:
-                with open(file_path, 'rb') as f:
-                    rpl = f.read()
-                    rpl = rpl.replace(b'489244d8-5e63-43fc-a238-4941e1b4d289" enabled="true', b'489244d8-5e63-43fc-a238-4941e1b4d289" enabled="false')
-                with open(file_path, 'wb') as f:
-                    f.write(rpl)
+                    
 #-----------------------------------------------
     IDNODMODCHECK = ['13210', '13011', '52414', '15015', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804']
     
@@ -2379,7 +2373,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     
             # --- Xử lý FixSkinAvatar ---
             FixSkinAvatar = ('<SkinOrAvatarList id="' + IDMODSKIN + '" />').encode()
-            FixSkinAvatar1 = ('<SkinOrAvatarList id="' + IDMODSKIN[:3] +'00' + '" />').encode()
+            FixSkinAvatar1 = ('<SkinOrAvatarList id="' + IDMODSKIN[:3] + '00" />').encode()
             if FixSkinAvatar in All:
                 All = All.replace(FixSkinAvatar, FixSkinAvatar1)
     
@@ -2784,14 +2778,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
                                   b'prefab_skill_effects/hero_skill_effects/150_hanxin/15013/')
         with open(Youtuber_Name, 'wb') as f:
             f.write(noidung)
-    os.makedirs(f'{FolderMod}/Resources/{Ver}/assetbundle',exist_ok=True)
-    try:
-        with open(f'Resources/1.59.1/assetbundle/resourceverificationinfosetall.assetbundle','rb') as f:
-            strin=f.read()
-        with open(f'{FolderMod}/Resources/1.59.1/assetbundle/resourceverificationinfosetall.assetbundle','wb') as f:
-            f.write(b'Mua Sources Ib Zalo')
-    except Exception as e:
-        pass
+
 #-----------------------------------------------
     fixlag1 = '1'
     if fixlag1 == '1':
@@ -3935,7 +3922,59 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
                 with open(p, 'wb') as f:
                     f.write(b)
         
-             
+            def find_skin(txt, sid):
+                tg = '<Element var="Com" type="Assets.Scripts.GameLogic.SkinElement">'
+                pos = 0
+                while True:
+                    si = txt.find(tg, pos)
+                    if si == -1:
+                        break
+                    ei, oc = si, 0
+                    for m in re.finditer(r'<(/?Element\b[^>]*)>', txt[si:]):
+                        t = m.group(1)
+                        ei = si + m.end()
+                        if t.endswith('/'): continue
+                        elif t.startswith('/'): oc -= 1
+                        else: oc += 1
+                        if oc == 0: break
+                    seg = txt[si:ei]
+                    if f'/{sid}_' in seg or f'/{sid}' in seg:
+                        try:
+                            ET.fromstring(f"<Root>{seg}</Root>")
+                            return seg
+                        except: return None
+                    pos = ei
+                return None
+            
+            def find_prefab(txt, sid):
+                pos = 0
+                while True:
+                    si = txt.find('<ArtPrefabLOD', pos)
+                    if si == -1: break
+                    ei = txt.find('<SkinPrefab var="Array" type="Assets.Scripts.GameLogic.SkinElement[]">', si)
+                    if ei == -1: break
+                    seg = txt[si:ei]
+                    print(f"[DEBUG] {seg}")
+                    if f"/{sid}_" in seg or f"/{sid}" in seg:
+                        return seg
+                    pos = ei + 1
+                return None
+            
+            with open(axml, "r", encoding="utf-8") as f:
+                txt = f.read()
+            
+            new_txt = txt
+            src_id = idg
+            
+            for i in range(1, 31):
+                dst_id = f"{pf}{i}"
+                if dst_id == src_id:
+                    continue
+                try:
+                    seg_src = find_prefab(new_txt, src_id) or find_skin(new_txt, src_id)
+                    seg_dst = find_prefab(new_txt, dst_id) or find_skin(new_txt, dst_id)
+                    if seg_src and seg_dst:
+                        new_txt = new_txt.replace(seg_dst, seg_src)
                 except: pass
             
             with open(axml, "w", encoding="utf-8") as f:
