@@ -1,9 +1,76 @@
-import os; import re; import getopt; import random; import pyzstd; from xml.dom import minidom; from colorama import Fore, Style; import sys; import shutil; import zipfile; import uuid; from collections import Counter; import xml.etree.ElementTree as ET; from collections import defaultdict; import os as O, binascii as X; from pathlib import Path; from random import randint; import datetime; import time; import struct; import hashlib; import json
+import os; import re; import getopt; import random; import pyzstd; from xml.dom import minidom; from colorama import Fore, Style; import sys; import shutil; import zipfile; import uuid; from collections import Counter; import xml.etree.ElementTree as ET; from collections import defaultdict; import os as O, binascii as X; from pathlib import Path; from random import randint; import datetime; import time; import struct; import hashlib; import json; import requests; import io
 
+URL = "https://raw.githubusercontent.com/DoanNguyenHaNam/SourceGame/main/Resources.zip"
+FOLDER_NAME = "Resources"
+ZIP_NAME = "Resources.zip"
+
+def progress_bar(percent, width=40):
+    filled = int(width * percent // 100)
+    bar = '[' + '#' * filled + '-' * (width - filled) + ']'
+    sys.stdout.write(f'\r{bar} {percent:6.2f}%')
+    sys.stdout.flush()
+
+def download_file(url, filename):
+    resp = requests.get(url, stream=True)
+    total = int(resp.headers.get("content-length", 0))
+    downloaded = 0
+    with open(filename, "wb") as f:
+        for chunk in resp.iter_content(chunk_size=8192):
+            if chunk:
+                f.write(chunk)
+                downloaded += len(chunk)
+                percent = downloaded * 100 / total if total else 100
+                progress_bar(percent)
+def unzip_file(zip_path, extract_to):
+    with zipfile.ZipFile(zip_path, "r") as z:
+        infos = z.infolist()
+        total = sum(info.file_size for info in infos)
+        extracted = 0
+        for info in infos:
+            z.extract(info, extract_to)
+            extracted += info.file_size
+            percent = extracted * 100 / total if total else 100
+            progress_bar(percent)
+
+def check_resources():
+    if os.path.exists(FOLDER_NAME):
+        return
+    print(f"[-] {FOLDER_NAME} Not Found Download Now...")
+    download_file(URL, ZIP_NAME)
+    print("[-] Doi Tool Unzip...")
+    unzip_file(ZIP_NAME, ".")
+    os.remove(ZIP_NAME)
+check_resources()
+os.system('clear')
 AutoMod = __file__
-
 TimeUpdate = os.path.getmtime(AutoMod)
 TimeLine = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(TimeUpdate))
+while True:
+    print(time.strftime("%H:%M:%S"),end='\r')
+    time.sleep(1)
+def menu_key():
+    terminal_width = shutil.get_terminal_size().columns
+    
+    lines = [
+        "Key Vip: Liên Hệ Zalo Admin",
+        "Giá Key: 20 VND / Month",
+        "Mua Source: 400 VND / Year"
+    ]
+
+    box_width = max(len(line) for line in lines)
+
+    def center_line(text):
+        print(text.center(terminal_width))
+
+    def row(text):
+        return f"│ {text.ljust(box_width)} │"
+
+    center_line("╭" + "─" * (box_width + 2) + "╮")
+    for line in lines:
+        center_line(row(line))
+    center_line("╰" + "─" * (box_width + 2) + "╯")
+
+menu_key()
 
 # Đọc version từ file
 try:
@@ -218,6 +285,11 @@ file_sound5 = f"Resources/{Ver}/Databin/Client/Sound/LobbySound.bytes"
 file_sound_mod5 = f"{FolderMod}/Resources/{Ver}/Databin/Client/Sound/LobbySound.bytes"
 shutil.copy(file_sound5, file_sound_mod5)
 giai(file_sound_mod5)
+
+file_sound6 = f"Resources/{Ver}/Databin/Client/Sound/CoupleSound.bytes"
+file_sound_mod6 = f"{FolderMod}/Resources/{Ver}/Databin/Client/Sound/CoupleSound.bytes"
+shutil.copy(file_sound6, file_sound_mod6)
+giai(file_sound_mod6)
 
 Sound_Files = f"{FolderMod}/Resources/{Ver}/Databin/Client/Sound"
 
@@ -1152,7 +1224,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                 first_pattern = relevant_patterns[0]
                 pos = Code.find(first_pattern)
                 if pos == -1:
-                    print(f"[!] Không tìm thấy pattern đầu.")
+                    pass
                 else:
                     start = pos - 155
                     full_code = b''
@@ -1514,7 +1586,8 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
         
             if ID_SKIN == b'11215':
                 strin = strin.replace(b'<Track ConfigID="11200"',b'<Track ConfigID="11215235" BulletName="112s1b1" resource="prefab_skill_effects/hero_skill_effects/112_gongshuban/11215/gongshuban_attack01_spell01" none="983a0000000000000100003200000001000100010000000000000000000000000000007e04e803e803" />\n<Track ConfigID="11200"')
-            
+            if ID_SKIN == b'11119':
+                strin = strin.replace(b'<Track ConfigID="500001" BulletName="500001texiao" resource="Prefab_Skill_Effects/New_Common_Effects/EF_BlueTower_GoldenCoin" none="581b000000000000010000a00f18fc0100010001000000000000000000000000000000e803e803e803" />',b'<Track ConfigID="500001" BulletName="500001texiao" resource="Prefab_Skill_Effects/New_Common_Effects/EF_BlueTower_GoldenCoin" none="581b000000000000010000a00f18fc0100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111126" BulletName="111a1b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" none="b888000000000000010000ee0200000100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111237" BulletName="111a2b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" none="b888000000000000012c01bc02bc020100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111004" BulletName="111a4b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_attack01_C" none="b888000000000000010000ee0200000100010001000000000000000000000000000000e803e803e803" />')
             if ID_SKIN == b'13311':
                 strin = strin.replace(b"prefab_skill_effects/hero_skill_effects/133_direnjie/13311/",b"prefab_skill_effects/component_effects/13311/13311_5/")
             with open(file_mod_skill11, "wb") as f:
@@ -1576,9 +1649,9 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
             CodeMD.append(code)
             CodeMD2.append(code)
     aw=0
-    if len(CodeDB)>1:
-        print(f"Choose One Or {len(CodeDB)}: ",end="")
-        aw=int(input())-1
+    #if len(CodeDB)>1:
+        #print(f"Choose One Or {len(CodeDB)}: ",end="")
+        #aw=int(input())-1
     if len(CodeDB)>0:
         CodeR=CodeDB[aw]
         idmod=CodeR[21:25]
@@ -2264,9 +2337,17 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
 
 #---------------—------------———----------------
             if IDMODSKIN =='15012' and 'U1.xml' in file_path:
-                with open(file_path, 'rb') as f: rpl = f.read().replace(b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/150_Hanxin_spellC_01"',b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/150_hanxin/15012/150_Hanxin_spellC_01"')
+                with open(file_path, 'rb') as f: rpl = f.read().replace(b'CheckSkinIdVirtualTick',b'CheckSkinIdTick')
                 with open(file_path, 'wb') as f: f.write(rpl)
-            
+#---------------—------------———----------------
+            if IDMODSKIN =='10620' and 'S2.xml' not in file_path:
+                with open(file_path, 'rb') as f: rpl = f.read().replace(b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n        <bool name="bEqual" value="false" refParamName="" useRefParam="false" />\r\n        <bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />',b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />>\r\n        <<bool name="bEqual" value="false" refParamName="" useRefParam="false" />>\r\n        <bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />').replace(b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n        <bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />',b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n        <bool name="bEqual" value="false" refParamName="" useRefParam="false" />\r\n        <bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />').replace(b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />>\r\n        <<bool name="bEqual" value="false" refParamName="" useRefParam="false" />>\r\n        <bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />',b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n        <bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />')
+                with open(file_path, 'wb') as f: f.write(rpl)
+#---------------—------------———----------------
+            if IDMODSKIN == '10620' and 'S2.xml' in file_path:
+                with open(file_path, 'rb') as f:
+                    rpl = f.read().replace(b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n        <bool name="bEqual" value="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>',b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n        <<bool name="bEqual" value="false" refParamName="" useRefParam="false" />>\r\n      </Event>\r\n    </Track>').replace(b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>',b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n        <bool name="bEqual" value="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>').replace(b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n        <<bool name="bEqual" value="false" refParamName="" useRefParam="false" />>\r\n      </Event>\r\n    </Track>',b'        <int name="skinId" value="10620" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>')
+                with open(file_path, 'wb') as f: f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN == '17106' and 'P1E5.xml' in file_path:
                 with open(file_path, 'rb') as f:
@@ -2778,7 +2859,15 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
                                   b'prefab_skill_effects/hero_skill_effects/150_hanxin/15013/')
         with open(Youtuber_Name, 'wb') as f:
             f.write(noidung)
-
+    try:
+        with open(f'Resources/{Ver}/assetbundle/resourceverificationinfosetall.assetbundle','rb') as f:
+            strin=f.read()
+    except:
+        strin = b'An Cap Bu Buoi Tao'
+    strin = b'MOD BY YTB: '
+    os.makedirs(f'{FolderMod}/Resources/{Ver}/assetbundle',exist_ok=True)
+    i=0
+    with open(f'{FolderMod}/Resources/{Ver}/assetbundle/resourceverificationinfosetall.assetbundle','wb') as f:f.write(strin)
 #-----------------------------------------------
     fixlag1 = '1'
     if fixlag1 == '1':
