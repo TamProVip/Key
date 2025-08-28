@@ -37,7 +37,7 @@ def check_resources():
         return
     print(f"[-] {FOLDER_NAME} Not Found Download Now...")
     download_file(URL, ZIP_NAME)
-    print("[-] Doi Tool Unzip...")
+    print("\n[-] Doi Tool Unzip...")
     unzip_file(ZIP_NAME, ".")
     os.remove(ZIP_NAME)
 check_resources()
@@ -45,9 +45,6 @@ os.system('clear')
 AutoMod = __file__
 TimeUpdate = os.path.getmtime(AutoMod)
 TimeLine = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(TimeUpdate))
-while True:
-    print(time.strftime("%H:%M:%S"),end='\r')
-    time.sleep(1)
 def menu_key():
     terminal_width = shutil.get_terminal_size().columns
     
