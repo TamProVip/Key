@@ -50,7 +50,7 @@ def menu_key():
     
     lines = [
         "Key Vip: Liên Hệ Zalo Admin",
-        "Giá Key: 20 VND / Month",
+        "Giá Key: 30 VND / Month",
         "Mua Source: 400 VND / Year"
     ]
 
