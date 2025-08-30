@@ -1132,7 +1132,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
         sound_files = os.listdir(sound_directory)
 
         all_skin_ids = []
-        for i in range(21):
+        for i in range(30):
             i_str = f"{i:02d}"  # 00 -> 20
             all_skin_ids.append(b"\x00" + int(skin_id_input[:3] + i_str).to_bytes(4, "little"))
 
@@ -1617,69 +1617,62 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
             print('    [-] ' + os.path.basename(file_mod_skill2) + '    Done')
         process_file_skillmark(file_mod_skill2,2)
 #-----------------------------------------------
-    AllID=[]
-    for i in range(21):
-        if i<10: AllID.append(ID[0:3]+"0"+str(i))
-        else: AllID.append(ID[0:3]+str(i))
-    All_S=[]
-    for i in AllID:
-        i=hex(int(i))[2:]
-        All_S.append(bytes.fromhex(f"{i[2:4]}{i[0:2]}0000"))
-    with open(file_mod_Modtion,"rb") as f:
-        begin=f.read(140)
-        All_Code=[]
-        while True:
-            SL=f.read(2)
-            if SL==b"": 
-                f.close()
-                break
-            SL0=SL[0]+SL[1]*256+2
-            Code=SL+f.read(SL0)
-            if All_S[AllID.index(ID)] in Code: All_Code.append(Code)
-            elif All_S[0] in Code: All_Code.append(Code)
-    CodeDB=[]
-    CodeMD=[]
-    CodeMD2=[]
-    for code in All_Code:
-        if code[0:2] in b"6\x00S\x00": CodeDB.append(code)
-        else:
-            CodeMD.append(code)
-            CodeMD2.append(code)
-    aw=0
-    #if len(CodeDB)>1:
-        #print(f"Choose One Or {len(CodeDB)}: ",end="")
-        #aw=int(input())-1
-    if len(CodeDB)>0:
-        CodeR=CodeDB[aw]
-        idmod=CodeR[21:25]
-        for code in CodeMD:
-            vtf=CodeMD.index(code)
-            for id in All_S:
-                vt=code.find(id)
-                if vt!=-1:
-                    codet=code[vt+4:vt+8]
-                    code=code.replace(codet,idmod,1)
-                else: break
-            CodeMD[vtf]=code
-    else:
-        for code in CodeMD:
-            vtr=CodeMD.index(code)
-            vt=code.find(All_S[AllID.index(ID)])
-            idmod=code[vt+4:vt+8]
-            for id in All_S:
-                vt=code.find(id)
-                if vt!=-1:
-                    codet=code[vt+4:vt+8]
-                    code=code.replace(codet,idmod,1)
-                else: break
-            CodeMD[vtr]=code
-    with open(file_mod_Modtion,"rb") as f:
-        y=f.read()
-        f.close()
-    for i in range(len(CodeMD)): y=y.replace(CodeMD2[i],CodeMD[i],1)
-    if len(CodeMD)+len(CodeDB)==0:
-        for id in All_S: y=y.replace(id,b"00\x00\x00",1)
-    with open(file_mod_Modtion,"wb") as f: f.write(y)
+    with open(f'{FolderMod}/Resources/1.59.1/Databin/Client/Motion/ResSkinMotionBaseCfg.bytes','rb') as f:
+        strin=f.read()
+        ID=skinid.decode()
+        List=[]
+        for i in range(30):
+            List.append(dec_to_hex(int(ID[:3]+'0'*(2-len(str(i)))+str(i))))
+        if True:
+            main=strin[140:]
+            List_code=[]
+            while True:
+                id=main[:2]
+                if dec_to_hex(int(ID))+b'\x00\x00' in main[:hex_to_dec(id)+4]:
+                    List_code.append(main[:hex_to_dec(id)+4])
+                for i in List:
+                    if i +b'\x00\x00' in main[:hex_to_dec(id)+4] and i+b'\x00\x00'!=dec_to_hex(int(skinid))+b'\x00\x00':
+                        List_code.append(main[:hex_to_dec(id)+4])
+                    else:break
+                main=main[hex_to_dec(id)+4:]
+                if main==b'':
+                    break
+            code_special=[]
+            code_normal_1=[]
+            code_normal_2=[]
+            for code in List_code:
+                if code[:2] in [b'6\x00',b'S\x00']:
+                    code_special.append(code)
+                else:
+                    code_normal_1.append(code)
+            if code_special!=[]:
+                code=code_special[0]
+                idcode=b'\x00\x00'+code[21:25]
+                for code in code_normal_1:
+                    for id in List:
+                        p=code.find(id+b'\x00\x00')
+                        if p!=-1:
+                            code=code.replace(code[p:p+8],id+idcode,1)
+                    code_normal_2.append(code)
+            else:
+                for code in code_normal_1:
+                    p=code.find(dec_to_hex(int(ID))+b'\x00\x00')
+                    if p!=-1:
+                        idcode=code[p+2:p+8]
+                        for id in List:
+                            p=code.find(id+b'\x00\x00')
+                            if p!=-1:
+                                code=code.replace(code[p:p+8],id+idcode,1)
+                    else:
+                        pass
+                    code_normal_2.append(code)
+            for i in range(len(code_normal_1)):
+                if len(code_normal_1)==len(code_normal_2):
+                    strin=strin.replace(code_normal_1[i],code_normal_2[i],1)
+            if len(code_special)+len(code_normal_1)==0:
+                for id in List:
+                    strin=strin.replace(id+b'\x00\x00',b'00\x00\x00',1)
+    with open(f'{FolderMod}/Resources/1.59.1/Databin/Client/Motion/ResSkinMotionBaseCfg.bytes','wb') as f:f.write(strin)
     #print("—" * 53)
     print(f"    Mod Motion ID: {IDMODSKIN}")
 #-----------------------------------------------
@@ -2065,13 +2058,17 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
-            if IDMODSKIN == '11120' and 'A1B1.xml' in file_path:
-                with open(file_path, 'rb') as f: sec = f.read().replace(b'</Action>', b'  <Track trackName="SpawnLiteObjDuration0" eventType="SpawnLiteObjDuration" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Event eventName="SpawnLiteObjDuration" time="0.000" length="5.000" isDuration="true" guid="6d868a6f-8ee5-477f-b215-8168ab03ce28">\n        <String name="OutputLiteBulletName" value="111a4b1" refParamName="" useRefParam="false"/>\n        <uint name="ConfigID" value="11102" refParamName="" useRefParam="false"/>\n        <TemplateObject name="ReferenceID" id="0" objectName="\xe6\x94\xbb\xe5\x87\xbb\xe8\x80\x85" isTemp="false" refParamName="" useRefParam="false"/>\n        <TemplateObject name="TargetID" id="1" objectName="target" isTemp="false" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n    <Track trackName="StopTrack1" eventType="StopTrack" guid="4ce273d3-51d6-4fe0-8fbe-1ff46fefa576" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Condition id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" status="true"/>\n      <Event eventName="StopTrack" time="0.000" isDuration="false" guid="c0253b7e-2e8c-461d-919a-e5617c64555b">\n        <TrackObject name="trackId" id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n  </Action>')
+            if IDMODSKIN in ['11120'] and 'U1.xml' in file_path:
+                with open(file_path, 'rb') as f: sec = f.read().replace(b'SkinAvatarFilterType="9">',b'SkinAvatarFilterType="11">')
+                with open(file_path, 'wb') as f:
+                    f.write(rpl)
+            if IDMODSKIN in ['11120','11119'] and 'A1B1.xml' in file_path:
+                with open(file_path, 'rb') as f: sec = f.read().replace(b'</Action>', b'    <Track trackName="SpawnLiteObjDuration0" eventType="SpawnLiteObjDuration" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Event eventName="SpawnLiteObjDuration" time="0.000" length="5.000" isDuration="true" guid="6d868a6f-8ee5-477f-b215-8168ab03ce28">\n        <String name="OutputLiteBulletName" value="111a1b1" refParamName="" useRefParam="false"/>\n        <uint name="ConfigID" value="11100" refParamName="" useRefParam="false"/>\n        <TemplateObject name="ReferenceID" id="0" objectName="\xe6\x94\xbb\xe5\x87\xbb\xe8\x80\x85" isTemp="false" refParamName="" useRefParam="false"/>\n        <TemplateObject name="TargetID" id="1" objectName="target" isTemp="false" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n    <Track trackName="StopTrack1" eventType="StopTrack" guid="4ce273d3-51d6-4fe0-8fbe-1ff46fefa576" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Condition id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" status="true"/>\n      <Event eventName="StopTrack" time="0.000" isDuration="false" guid="c0253b7e-2e8c-461d-919a-e5617c64555b">\n        <TrackObject name="trackId" id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n  </Action>')
                 with open(file_path,'wb') as f: f.write(sec)
-            if IDMODSKIN == '11120' and 'A2B1.xml' in file_path:
+            if IDMODSKIN in ['11120','11119'] and 'A2B1.xml' in file_path:
                 with open(file_path, 'rb') as f: sec = f.read().replace(b'</Action>', b'  <Track trackName="SpawnLiteObjDuration0" eventType="SpawnLiteObjDuration" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Event eventName="SpawnLiteObjDuration" time="0.000" length="5.000" isDuration="true" guid="6d868a6f-8ee5-477f-b215-8168ab03ce28">\n        <String name="OutputLiteBulletName" value="111a2b1" refParamName="" useRefParam="false"/>\n        <uint name="ConfigID" value="11101" refParamName="" useRefParam="false"/>\n        <TemplateObject name="ReferenceID" id="0" objectName="\xe6\x94\xbb\xe5\x87\xbb\xe8\x80\x85" isTemp="false" refParamName="" useRefParam="false"/>\n        <TemplateObject name="TargetID" id="1" objectName="target" isTemp="false" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n    <Track trackName="StopTrack1" eventType="StopTrack" guid="4ce273d3-51d6-4fe0-8fbe-1ff46fefa576" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Condition id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" status="true"/>\n      <Event eventName="StopTrack" time="0.000" isDuration="false" guid="c0253b7e-2e8c-461d-919a-e5617c64555b">\n        <TrackObject name="trackId" id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n  </Action>')
                 with open(file_path,'wb') as f: f.write(sec)
-            if IDMODSKIN == '11120' and 'A4B1.xml' in file_path:
+            if IDMODSKIN in ['11120','11119'] and 'A4B1.xml' in file_path:
                 with open(file_path, 'rb') as f: sec = f.read().replace(b'</Action>', b'  <Track trackName="SpawnLiteObjDuration0" eventType="SpawnLiteObjDuration" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Event eventName="SpawnLiteObjDuration" time="0.000" length="5.000" isDuration="true" guid="6d868a6f-8ee5-477f-b215-8168ab03ce28">\n        <String name="OutputLiteBulletName" value="111a4b1" refParamName="" useRefParam="false"/>\n        <uint name="ConfigID" value="11102" refParamName="" useRefParam="false"/>\n        <TemplateObject name="ReferenceID" id="0" objectName="\xe6\x94\xbb\xe5\x87\xbb\xe8\x80\x85" isTemp="false" refParamName="" useRefParam="false"/>\n        <TemplateObject name="TargetID" id="1" objectName="target" isTemp="false" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n    <Track trackName="StopTrack1" eventType="StopTrack" guid="4ce273d3-51d6-4fe0-8fbe-1ff46fefa576" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Condition id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" status="true"/>\n      <Event eventName="StopTrack" time="0.000" isDuration="false" guid="c0253b7e-2e8c-461d-919a-e5617c64555b">\n        <TrackObject name="trackId" id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n  </Action>')
                 with open(file_path,'wb') as f: f.write(sec)
 #---------------—------------———----------------
@@ -2563,8 +2560,6 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     continue
                 elif filename != 'u1b1.xml' and IDCHECK == '59901':
                     continue
-                elif filename != ["A1B1.xml", "A1b2.xml", "A2B1.xml", "A2b2.xml"] and IDCHECK == '11120':
-                    continue
                 elif filename != 'U1E1.xml' and IDCHECK == '10611':
                     continue
                 if filename in ['S1E2.xml', 'S2.xml', 'U1.xml'] and IDCHECK == "11113":
@@ -2572,36 +2567,6 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 elif filename == 'U1.xml' and IDCHECK == '15015':
                     continue
                 file_path = os.path.join(directory_path, filename)
-                if VMODCHECK == "1":
-                    with open(file_path, 'rb') as file:
-                        xml_bytes = file.read()#.decode('utf-8')
-                        start_phrase = b'<Track trackName="'
-                        end_phrase = b'</Track>' 
-                        start_index = xml_bytes.find(start_phrase)
-                        end_index = xml_bytes.find(end_phrase, start_index)
-                        while start_index != -1 and end_index != -1:
-                            track_text = xml_bytes[start_index:end_index + len(end_phrase)]
-                            start_index = xml_bytes.find(start_phrase, end_index)
-                            end_index = xml_bytes.find(end_phrase, start_index)
-                            if b'"skinId" value="' + IDCHECK.encode() + b'"' in track_text:
-                                ABCD.append(track_text)
-                                    #print(track_text)
-                                    #track_text = track_text.encode()
-                    for track_text in ABCD:
-                        with open(file_path, 'rb') as file:
-                            xml_bytes = file.read()
-                        modified_data = (
-                                track_text
-                                .replace(b"CheckSkinIdTick", b"CheckHeroIdTick")
-                                .replace(b"CheckSkinIdVirtualTick", b"CheckHeroIdTick")
-                                .replace(
-                                    b'"skinId" value="' + IDCHECK.encode() + b'"',
-                                    b'"heroId" value="' + IDCHECK[:3].encode() + b'"'
-                                )
-                            )                                        
-                        modified_data1 = xml_bytes.replace(track_text, modified_data)
-                        with open(file_path, 'wb') as file:
-                            file.write(modified_data1)
                 if VMODCHECK == "2":
                     with open(file_path, 'rb') as file:
                         xml_bytes = file.read()#.decode('utf-8')
@@ -3841,7 +3806,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
 #-----------------------------------------------
     SkinSpecial = IDMODSKIN
     IDM = IDMODSKIN
-    if SkinSpecial in ['19015', '11620', '13118', '54805','13213','11215'] or IDM[:3] == '196':
+    if SkinSpecial in ['19015', '11620', '13118', '54805','13213','11215','11120'] or IDM[:3] == '196':
 
         if IDM[:3] == '196':
             if b"Skin_Icon_Skill" in dieukienmod:
@@ -3937,7 +3902,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
         
                 LC = '2'
                 process_directory(Directory, LC)
-        if IDM in ['54805','13118','13213','11215']:
+        if IDM in ['54805','13118','13213','11215','11120']:
             shutil.rmtree(f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/')
             idg = IDINFO
             pf = idg[:3]
@@ -4040,7 +4005,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
                     ei = txt.find('<SkinPrefab var="Array" type="Assets.Scripts.GameLogic.SkinElement[]">', si)
                     if ei == -1: break
                     seg = txt[si:ei]
-                    print(f"[DEBUG] {seg}")
+                    #print(f"[DEBUG] {seg}")
                     if f"/{sid}_" in seg or f"/{sid}" in seg:
                         return seg
                     pos = ei + 1
