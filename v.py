@@ -2399,28 +2399,11 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             if IDMODSKIN == '52113':
                 with open(file_path, 'rb') as f:
                     rpl = f.read()
-                    rpl = re.sub(rb'SkinAvatarFilterType="9"', b'SkinAvatarFilterType="__TMP__"', rpl, flags=re.IGNORECASE)
-                    rpl = re.sub(rb'SkinAvatarFilterType="11"', b'SkinAvatarFilterType="9"', rpl, flags=re.IGNORECASE)
-                    rpl = re.sub(rb'SkinAvatarFilterType="__TMP__"', b'SkinAvatarFilterType="11"', rpl, flags=re.IGNORECASE)
                     rpl = re.sub(b'<String name="prefabName" value="Prefab_Skill_Effects/Hero_Skill_Effects/521_Florentino/52113_Florentino_BianShen" refParamName="" useRefParam="false" />', b'<String name="prefabName" value="Prefab_Skill_Effects/Hero_Skill_Effects/521_Florentino/52113/52113_Florentino_BianShen" refParamName="" useRefParam="false" />', rpl, flags=re.IGNORECASE)
-                    rpl=rpl.replace(b'<SkinOrAvatarList id="52113" />',b'')
-                text = rpl.decode('utf-8')
-                lines = text.splitlines()
-                new_lines = []
-                for line in lines:
-                    if '<String name="clipName"' in line:
-                        new_lines.append(
-                        '        <int name="frameRate" value="10800" refParamName="" useRefParam="false" />')
-                    new_lines.append(line)
-            
-                new_text = '\n'.join(new_lines)
-                rpl = new_text.encode('utf-8')
-            
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
-                    
 #-----------------------------------------------
-    IDNODMODCHECK = ['13210', '13011', '52414', '15015', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408']
+    IDNODMODCHECK = ['13210', '13011', '52414', '15015', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408','52113']
     
     if IDCHECK not in IDNODMODCHECK:
         directorypath = Files_Directory_Path + f'{NAME_HERO}' + '/skill/'
@@ -2614,7 +2597,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
     Kiem_Tra_Code = os.path.join(Files_Directory_Path, f'{NAME_HERO}', 'skill')
     for file in os.listdir(Kiem_Tra_Code):
         File_Check_Code = os.path.join(Kiem_Tra_Code, file)
-        if IDMODSKIN in ['54805','11620','17408']:
+        if IDMODSKIN in ['54805','11620','17408','52113']:
             with open(File_Check_Code, "rb") as f:
                 All = f.read()
                 All = All.replace(b'<SkinOrAvatarList id="' + IDMODSKIN.encode() + b'" />', b'')
