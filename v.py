@@ -45,7 +45,6 @@ os.system('clear')
 AutoMod = __file__
 TimeUpdate = os.path.getmtime(AutoMod)
 TimeLine = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(TimeUpdate))
-print('Billow,BoltBaron Đang Error Code Vui Lòng Không Mod')
 def menu_key():
     terminal_width = shutil.get_terminal_size().columns
     
@@ -1812,12 +1811,11 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                 with open(file_path, 'rb') as f:
                     rpl = f.read().replace(b'<String name="prefabName" value="Prefab_Skill_Effects/Hero_Skill_Effects/599_LvMeng/5991_LvMeng_Shak_Mid" refParamName="" useRefParam="false" />',b'<String name="prefabName" value="Prefab_Skill_Effects/Hero_Skill_Effects/599_LvMeng/59901/5991_LvMeng_Shak_Mid" refParamName="" useRefParam="false" />').replace(b'<String name="prefabName" value="Prefab_Skill_Effects/Hero_Skill_Effects/599_LvMeng/5991_LvMeng_Shak" refParamName="" useRefParam="false" />',b'<String name="prefabName" value="Prefab_Skill_Effects/Hero_Skill_Effects/599_LvMeng/59901/5991_LvMeng_Shak" refParamName="" useRefParam="false" />')
                 with open(file_path, 'wb') as f:f.write(rpl)
-#---------------—------------———----------------
-            if IDMODSKIN == '59901' and 'S1.xml' in file_path:
+            if IDMODSKIN == '59901' and 'S1B00.xml' in file_path:
                 with open(file_path, 'rb') as f:
-                    rpl = f.read().replace(b'</Action>',b'    <Track trackName="SetAnimationParamsTick0" eventType="SetAnimationParamsTick" guid="c2e40485-fa44-4c14-a09b-1d2e010bce50" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\r\n      <Event eventName="SetAnimationParamsTick" time="0.000" isDuration="false" guid="d376c3bc-4c1d-4c28-8198-cfe33a7f29d2">\r\n        <TemplateObject name="targetId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />\r\n        <Array name="boolNames" refParamName="" useRefParam="false" type="String">\r\n          <String value="Spell1_1_Start" />\r\n        </Array>\r\n        <Array name="boolValues" refParamName="" useRefParam="false" type="bool">\r\n          <bool value="true" />\r\n        </Array>\r\n      </Event>\r\n      <SkinOrAvatarList id="59998" />\r\n    </Track>\r\n    <Track trackName="SetAnimationParamsTick0" eventType="SetAnimationParamsTick" guid="1f2d81a7-47bc-4ba1-8ea4-3f8d6631872c" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\r\n      <Event eventName="SetAnimationParamsTick" time="0.066" isDuration="false" guid="67735e55-debf-43ab-9854-0f65154bf4f8">\r\n        <TemplateObject name="targetId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />\r\n        <Array name="boolNames" refParamName="" useRefParam="false" type="String">\r\n          <String value="Spell1_1_Start" />\r\n        </Array>\r\n        <Array name="boolValues" refParamName="" useRefParam="false" type="bool">\r\n          <bool value="false" />\r\n        </Array>\r\n      </Event>\r\n      <SkinOrAvatarList id="59998" />\r\n    </Track>\r\n    <Track trackName="PlayAnimDuration0" eventType="PlayAnimDuration" guid="f367f53c-2614-4451-8662-1d6c9abf8d19" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" OrConditions="true" SkinAvatarFilterType="11">\r\n      <Event eventName="PlayAnimDuration" time="0.000" length="1.000" isDuration="true" guid="96b1fc43-7446-4e66-ac22-d6617f0c1dde">\r\n        <TemplateObject name="targetId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="clipName" value="Spell1_11" refParamName="" useRefParam="false" />\r\n        <int name="layer" value="3" refParamName="" useRefParam="false" />\r\n        <float name="endTime" value="999999.000" refParamName="" useRefParam="false" />\r\n      </Event>\r\n      <SkinOrAvatarList id="59998" />\r\n    </Track>\r\n  </Action>')
-                with open(file_path, 'wb') as f:
-                    f.write(rpl)
+                    rpl = f.read().replace(b'59901/59904',b'59901')
+                with open(file_path, 'wb') as f:f.write(rpl)
+#---------------—------------———----------------
 #---------------—------------———----------------
             if IDMODSKIN[:3] == '111':
                 with open(file_path, 'rb') as f:
@@ -2547,7 +2545,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     VMODCHECK = '2'
     MODCHECK = '1'
     if MODCHECK == '1':
-        IDNODMODCHECK = ['14111', '13210', '16707', '13011','13213','10620']
+        IDNODMODCHECK = ['14111', '13210', '16707', '13011','13213','10620','59901']
         #IDCHECK = IDCHECK[:3]+'00'
         if IDCHECK not in IDNODMODCHECK:
             ABCD=[]
@@ -2684,33 +2682,37 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
         
             for t in tracks:
                 t_low = t.lower()
-                if b"random" in t_low or b"spawnobjectduration" in t_low or b"spawnbullettick" in t_low or b"filtertargettype" in t_low or b"checkenergyconditionduration0" in t_low or b"setmaterialparamsduration" in t_low or b"setactorhudscaleduration0" in t_low or b"hittriggertick0" in t_low or b"removebufftick0" in t_low or b"stoptrack" in t_low:
+                if b"random" in t_low or b"spawnobjectduration" in t_low or b"spawnbullettick" in t_low or b"filtertargettype" in t_low or b"checkenergyconditionduration0" in t_low or b"setmaterialparamsduration" in t_low or b"setactorhudscaleduration0" in t_low or b"hittriggertick" in t_low or b"removebufftick0" in t_low or b"stoptrack" in t_low:
 
                     continue
                 All = All.replace(t, t.replace(b'<SkinOrAvatarList id="59802" />',
-                                               b'<SkinOrAvatarList id="59898" />'))
+                                               b''))
         
             with open(File_Check_Code, "wb") as f:
                 f.write(All)
-
-        if IDCHECK == '59901' and file not in ['Back.xml', 'P10E2.xml', 'S1B1.xml']:
+        if IDCHECK == '59901' and 'S1B1.xml' in file:
             with open(File_Check_Code, "rb") as f:
                 All = f.read()
-        
-            for track in re.findall(rb'(<Track trackName=".*?</Track>)', All, flags=re.DOTALL):
-                l = track.lower()
-                if (b"random" in l or b'scalemeshduration0' in l or b'hittrigger' in l or b'spawnobjectduration' in l or b'spawnbullettick' in l or b'removebufftick' in l or b'setcollisiontick' in l):
-                    continue
-                new_track = re.sub(
-                    rb'<SkinOrAvatarList id="59901"\s*/>',
-                    b'<SkinOrAvatarList id="59998" />',
-                    track
-                )
-        
-                All = All.replace(track, new_track)
-        
+            All=All.replace(
+            b'489244d8-5e63-43fc-a238-4941e1b4d289" enabled="true', 
+            b'489244d8-5e63-43fc-a238-4941e1b4d289" enabled="false')
             with open(File_Check_Code, "wb") as f:
                 f.write(All)
+        if IDCHECK == '59901' and file not in ['S1B1.xml','Back.xml','P10E2.xml']:
+          with open(File_Check_Code,"rb") as f:
+            data=f.read()
+            tn=[b"random",b"scalemeshduration0",b"spawnobjectduration",b"spawnbullettick",
+                b'guid="12d7aef8-3082-4aba-b52d-9af5c9a9053e"',b'<int name="skillid" value="59900"',
+                b"setcollisiontick",b"removebufftick",b"hittrigger",b"checkskillidtick"]
+            out=b"";p=0
+            for m in re.finditer(rb'<Track trackName=".*?</Track>',data,flags=re.DOTALL):
+              s,e=m.span();b=data[s:e]
+              if not any(t in b.lower() for t in tn):
+                b=b.replace(b'<SkinOrAvatarList id="59901" />',b'')
+                print(b,"\n"+"-"*40)
+              out+=data[p:s]+b;p=e
+            out+=data[p:]
+            with open(File_Check_Code,"wb") as f:f.write(out)
         
         if IDCHECK == '13706' and 'U1B0.xml' in file:
             with open(File_Check_Code, 'rb') as f:
