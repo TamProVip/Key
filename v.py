@@ -1861,7 +1861,13 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                     rpl = f.read().replace(b'59901/59904',b'59901')
                 with open(file_path, 'wb') as f:f.write(rpl)
 #---------------—------------———----------------
-            
+            if IDMODSKIN == '17408':
+                with open(file_path, 'rb') as f:
+                    rpl = f.read()
+                    rpl = rpl.replace(b'Project/Assets/Prefabs/', b'').replace(
+                        b'Project\\Assets\\Prefabs\\', b'').replace(b'Prefab_Skill_Effects\\Hero_Skill_Effects\\174_YuJi\\17408\\',b'prefab_skill_effects/hero_skill_effects/174_YuJi/17408/')
+                with open(file_path, 'wb') as f:
+                    f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN[:3] == '111':
                 with open(file_path, 'rb') as f:
@@ -2414,7 +2420,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     f.write(rpl)
                     
 #-----------------------------------------------
-    IDNODMODCHECK = ['13210', '13011', '52414', '15015', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804']
+    IDNODMODCHECK = ['13210', '13011', '52414', '15015', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408']
     
     if IDCHECK not in IDNODMODCHECK:
         directorypath = Files_Directory_Path + f'{NAME_HERO}' + '/skill/'
@@ -2456,20 +2462,8 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             FixSkinAvatar1 = ('<SkinOrAvatarList id="' + IDMODSKIN[:3] + '00" />').encode()
             if FixSkinAvatar in All:
                 All = All.replace(FixSkinAvatar, FixSkinAvatar1)
-    
-            # --- Xử lý đặc biệt cho IDMODSKIN == '54805' ---
-            if IDMODSKIN == '54805':
-                xoa = b'<SkinOrAvatarList id="54800" />'
-                if xoa in All:
-                    All = All.replace(xoa, b'')  # Xóa dòng
-            if IDMODSKIN == '11620':
-                xoa = b'<SkinOrAvatarList id="11600" />'
-                if xoa in All:
-                    All = All.replace(xoa, b'')
-            # --- Ghi lại file ---
             with open(filecheck, 'wb') as f:
                 f.write(All)
-            
 #-----------------------------------------------
     if IDCHECK in ['53002'] or b"Skin_Icon_SoundEffect" in dieukienmod or b"Skin_Icon_Dialogue" in dieukienmod:
         if IDCHECK not in ["13311", "16707"]:
@@ -2620,6 +2614,12 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
     Kiem_Tra_Code = os.path.join(Files_Directory_Path, f'{NAME_HERO}', 'skill')
     for file in os.listdir(Kiem_Tra_Code):
         File_Check_Code = os.path.join(Kiem_Tra_Code, file)
+        if IDMODSKIN in ['54805','11620','17408']:
+            with open(File_Check_Code, "rb") as f:
+                All = f.read()
+                All = All.replace(b'<SkinOrAvatarList id="' + IDMODSKIN.encode() + b'" />', b'')
+            with open(File_Check_Code, "wb") as f:
+                f.write(All)
         if IDCHECK == '11120' and file not in ["A1B1.xml", "A1b2.xml", "A2B1.xml", "A2b2.xml", "A4B1.xml", "A4b2.xml", "S2.xml"]:
             with open(File_Check_Code, "rb") as f:
                 All = f.read()
@@ -3808,7 +3808,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
 #-----------------------------------------------
     SkinSpecial = IDMODSKIN
     IDM = IDMODSKIN
-    if SkinSpecial in ['19015', '11620', '13118', '54805','13213','11215','11120'] or IDM[:3] == '196':
+    if SkinSpecial in ['19015', '11620', '13118', '54805','13213','11215','11120','17408'] or IDM[:3] == '196':
 
         if IDM[:3] == '196':
             if b"Skin_Icon_Skill" in dieukienmod:
@@ -3839,7 +3839,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
     
             with open(Directory, 'wb') as f:
                 f.write(tulen)
-            print('\tRemove ' + b'<useMecanim var="String" type="System.Boolean" value="True"/>'.decode())
+            print('Remove ' + b'<useMecanim var="String" type="System.Boolean" value="True"/>'.decode())
 
             LC = '2'
             process_directory(Directory, LC)
@@ -3851,11 +3851,11 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
             process_directory(Directory, LC)
             with open(Directory, 'rb') as code_tulen:
                 tulen = code_tulen.read()
-                tulen = tulen.replace(b'<useMecanim var="String" type="System.Boolean" value="True"/>',b'',1)
+                tulen = tulen.replace(b'<useNewMecanim var="String" type="System.Boolean" value="True"/>',b'',1)
     
             with open(Directory, 'wb') as f:
                 f.write(tulen)
-            print('\tRemove ' + b'<useMecanim var="String" type="System.Boolean" value="True"/>'.decode())
+            print('Remove ' + b'<useMecanim var="String" type="System.Boolean" value="True"/>'.decode())
             LC = '2'
             process_directory(Directory, LC)
 #-----------------------------------------------
