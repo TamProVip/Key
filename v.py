@@ -236,7 +236,10 @@ for FolderMod in TENSKIN:
     aaabbbcccnnn = FolderMod
     ten_final = FolderMod
 
-FolderMod = f"Pack {len(DANHSACH)} Skin"
+if len(DANHSACH) >= 1:
+    FolderMod = input("Nhập Tên Pack Skin: ")
+else:
+    pass
 if not os.path.exists(FolderMod):
     os.makedirs(FolderMod)
 with open(os.path.join(FolderMod, 'SkinListMod.txt'), 'w', encoding='utf-8') as f:
@@ -1245,6 +1248,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                         print(f'    Fix Mất Ngoại Hình - {IDMODSKIN}')
 #----------------------------------------------
     if IDCHECK == "53002" or b"Skin_Icon_Skill" in dieukienmod or b"Skin_Icon_BackToTown" in dieukienmod:
+        
         def B2Js(blocks_data):
             offset = 140
             blocks = []
@@ -1699,7 +1703,50 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
     Name_Hero = NAME_HERO.encode()
     HD = b'y'
     Skins = b'n'
-
+    def Component(file_path):
+        with open(file_path, 'rb') as f:
+            rpl = f.read()
+    
+        if IDMODSKIN == '11620':
+            if phukienb == 'tim':
+                rpl = rpl.replace(
+                b'prefab_skill_effects/hero_skill_effects/116_JingKe/11620/',
+                b'prefab_skill_effects/component_effects/11620/1162001/'
+                        ).replace(
+                b'11620/11620_3/',
+                b'11620/1162001/'
+                        ).replace(
+                            b'11620/1162001/11607/11607_huijidi_01',
+                            b'11607/11607_huijidi_01'
+                        ).replace(
+                            b'<SkinOrAvatarList id="11620" />', b''
+                        )
+            elif phukienb == 'do':
+                rpl = rpl.replace(
+                            b'prefab_skill_effects/hero_skill_effects/116_JingKe/11620/',
+                            b'prefab_skill_effects/component_effects/11620/1162002/'
+                        ).replace(
+                            b'11620/11620_3/', b'11620/1162002/'
+                        ).replace(
+                            b'11620/1162002/11607/11607_huijidi_01',
+                            b'11607/11607_huijidi_01'
+                        ).replace(
+                            b'<SkinOrAvatarList id="11620" />', b''
+                        )
+            else:
+                rpl = rpl.replace(
+                            b'prefab_skill_effects/hero_skill_effects/116_JingKe/11620/',
+                            b'prefab_skill_effects/component_effects/11620/11620_5/'
+                        ).replace(
+                            b'11620/11620_3/', b'11620/11620_5/'
+                        ).replace(
+                            b'11620/11607/11607_huijidi_01',
+                            b'11607/11607_huijidi_01'
+                        ).replace(
+                            b'<SkinOrAvatarList id="11620" />', b''
+                        )
+        with open(file_path, 'wb') as f:
+            f.write(rpl)
     FILES_XML = []
     for root, dirs, files in os.walk(Files_Directory_Path):
         for file in files:
@@ -1755,6 +1802,8 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
             with open(file_path, 'wb') as f:
                 f.write(All)
             AABBCC = 'YtbTâmModAOV'
+            if IDMODSKIN == '11620':
+                Component(file_path)
 #---------------—------------———----------------
             if IDMODSKIN == '10611' and 'U1B1.xml' in file_path:
                 with open(file_path, 'rb') as f:
@@ -1816,6 +1865,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                     rpl = f.read().replace(b'59901/59904',b'59901')
                 with open(file_path, 'wb') as f:f.write(rpl)
 #---------------—------------———----------------
+            
 #---------------—------------———----------------
             if IDMODSKIN[:3] == '111':
                 with open(file_path, 'rb') as f:
@@ -1900,45 +1950,11 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
 #---------------—------------———----------------
             if IDMODSKIN == '11620' and 'S3.xml' in file_path:
                 with open(file_path, 'rb') as f:
-                    rpl = f.read().replace(b'<SkinOrAvatarList id="11620" />',b'')
+                    rpl = f.read().replace(b'</Action>',b'  <Track trackName="B" eventType="TriggerParticleTick" guid="154320f4-b071-45d9-a219-60d2d40b643e" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" SkinAvatarFilterType="9">\n      <Event eventName="TriggerParticleTick" time="0.200" isDuration="false" guid="1c18eeae-9938-4123-8768-3dea052a4a06">\n        <TemplateObject name="targetId" objectName="None" id="-1" isTemp="false" refParamName="" useRefParam="false"/>\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false"/>\n        <String name="resourceName" value="prefab_skill_effects/component_effects/11620/11620_5/jingke_hurt_spell03_dragona" refParamName="" useRefParam="false"/>\n        <float name="lifeTime" value="3.000" refParamName="" useRefParam="false"/>\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" refParamName="" useRefParam="false"/>\n        <bool name="applyActionSpeedToParticle" value="false" refParamName="" useRefParam="false"/>\n      </Event>\n    </Track>\n    <Track trackName="BattleUIAnimationDuration1" eventType="BattleUIAnimationDuration" guid="3d2d80dc-a263-4780-ba18-509858656672" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" SkinAvatarFilterType="9">\n      <Event eventName="BattleUIAnimationDuration" time="0.000" length="2.000" isDuration="true" guid="a080b418-a8cc-40cf-b4d9-c29b57b3730f">\n        <TemplateObject name="targetId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false"/>\n        <String name="prefab" value="prefab_skill_effects/component_effects/11620/11620_5/jingke_hurt_spell03_cam" refParamName="" useRefParam="false"/>\n        <String name="animName" value="" refParamName="" useRefParam="false"/>\n      </Event>\n    </Track>\n  </Action>')
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
-            if IDMODSKIN == '11620' or IDMODSKIN == b'11620':
-                with open(file_path, 'rb') as f:
-                    rpl = f.read()
             
-                if phukienb == 'tim':
-                    rpl = re.sub(
-                        br'prefab_skill_effects/hero_skill_effects/116_Jingke/11620/',
-                        b'prefab_skill_effects/Component_Effects/11620/1162001/',
-                        rpl, flags=re.IGNORECASE
-                    )
-                    rpl = re.sub(br'11620/11620_3/', b'11620/1162001/', rpl, flags=re.IGNORECASE)
-                    rpl = re.sub(br'11620/1162001/11607/11607_huijidi_01', b'11607/11607_huijidi_01', rpl, flags=re.IGNORECASE)
-            
-                elif phukienb == 'do':
-                    rpl = re.sub(
-                        br'prefab_skill_effects/hero_skill_effects/116_Jingke/11620/',
-                        b'Prefab_Skill_Effects/Component_Effects/11620/1162002/',
-                        rpl, flags=re.IGNORECASE
-                    )
-                    rpl = re.sub(br'11620/11620_3/', b'11620/1162002/', rpl, flags=re.IGNORECASE)
-                    rpl = re.sub(br'11620/1162002/11607/11607_huijidi_01', b'11607/11607_huijidi_01', rpl, flags=re.IGNORECASE)
-            
-                else:
-                    rpl = re.sub(br'prefab_skill_effects/hero_skill_effects/116_Jingke/11620/', 
-                                 b'prefab_skill_effects/component_effects/11620/11620_5/', rpl, flags=re.IGNORECASE)
-            
-                    rpl = re.sub(br'prefab_skill_effects/hero_skill_effects/116_JingKe/11620/11620_5/11607', 
-                                 b'prefab_skill_effects/component_effects/11620/11620_5/', rpl, flags=re.IGNORECASE)
-            
-                    rpl = re.sub(br'11620/11620_3/', b'11620/11620_5/', rpl, flags=re.IGNORECASE)
-            
-                    rpl = re.sub(br'11620/11620_5/11607/11607_huijidi_01', b'11607/11607_huijidi_01', rpl, flags=re.IGNORECASE)
-            
-                with open(file_path, 'wb') as f:
-                    f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN =='13613' and 'S1E1.xml' in file_path:
                 with open(file_path, 'rb') as f: rpl = f.read().replace(b'</Event>\r\n    </Track>\r\n  </Action>\r\n</Project>',b'</Event>\r\n    </Track>\r\n    <Track trackName="Youtuber_You_Mod_Skin" eventType="TriggerParticleTick" guid="daa65ca6-798c-4280-84b3-171fc3a73a82" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="TriggerParticleTick" time="0.000" isDuration="false" guid="5f30bc82-d28a-4b25-b3a6-92fc32eac064">\r\n        <TemplateObject name="targetId" objectName="None" id="-1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/136_wuzetian/13613/WuZeTian_hurt02" refParamName="" useRefParam="false" />\r\n        <float name="lifeTime" value="0.600" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="1.000" z="0.000" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>\r\n</Project>')
@@ -2297,7 +2313,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 with open(file_path,'wb') as f: 
                     f.write(rpl)
 #---------------—------------———----------------
-            if IDMODSKIN == '13311' and 'U1' in file_path:
+            if IDMODSKIN == '13311' and 'U1.xml' in file_path:
                 if phukienv == "dov":
                     with open(file_path, 'rb') as f:
                         rpl = f.read().replace(b'prefab_skill_effects/component_effects/13311/13311_5/',b'prefab_skill_effects/component_effects/13311/1331102/')
@@ -2456,7 +2472,10 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 xoa = b'<SkinOrAvatarList id="54800" />'
                 if xoa in All:
                     All = All.replace(xoa, b'')  # Xóa dòng
-    
+            if IDMODSKIN == '11620':
+                xoa = b'<SkinOrAvatarList id="11600" />'
+                if xoa in All:
+                    All = All.replace(xoa, b'')
             # --- Ghi lại file ---
             with open(filecheck, 'wb') as f:
                 f.write(All)
@@ -2726,17 +2745,6 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
                 rpl = rpl.replace(b'SkinAvatarFilterType="9">',b'SkinAvatarFilterType="11">').replace(b'<String name="prefab" value="prefab_characters/prefab_hero/133_DiRenJie/DiRenJie_spell03_cutin01" refParamName="" useRefParam="false" />',b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/133_DiRenJie/13314/DiRenJie_spell03_cutin01" refParamName="" useRefParam="false" />')
             with open(File_Check_Code, 'wb') as f:
                 f.write(rpl)
-        if IDCHECK == '11620' and file not in ['S3.xml']:
-            with open(File_Check_Code, 'rb') as f:
-                rpl = f.read()
-                rpl = rpl.replace(b'SkinAvatarFilterType="9">',b'SkinAvatarFilterType="Love">').replace(b'SkinAvatarFilterType="11">',b'SkinAvatarFilterType="9">').replace(b'SkinAvatarFilterType="Love">',b'SkinAvatarFilterType="11">').replace(b'11620_3/',b'11620_5/')
-            with open(File_Check_Code, 'wb') as f:
-                f.write(rpl)
-            if 'Skin20E1.xml' in file:
-                with open(File_Check_Code, 'rb') as f:
-                    rpl = f.read().replace(b'SkinAvatarFilterType="9">',b'SkinAvatarFilterType="11">').replace(b'<SkinOrAvatarList id="11600" />',b'<SkinOrAvatarList id="23720" />')
-                with open(File_Check_Code, 'wb') as f:
-                    f.write(rpl)
         if IDCHECK == '13213':
             if file in ['A1.xml', 'A2.xml', 'A3.xml','Death.xml', 'P1E42.xml','P1E51.xml','PassiveE3.xml','S1E1.xml','S2.xml','S11B0.xml','S12B0.xml','U1.xml','U2.xml','U3.xml']:
                 with open(File_Check_Code, 'rb') as f:
@@ -2829,7 +2837,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
             strin=f.read()
     except:
         strin = b'An Cap Bu Buoi Tao'
-    strin = b'MOD BY YTB: '
+    strin = b'An Cap Bu Buoi Tao'
     os.makedirs(f'{FolderMod}/Resources/{Ver}/assetbundle',exist_ok=True)
     i=0
     with open(f'{FolderMod}/Resources/{Ver}/assetbundle/resourceverificationinfosetall.assetbundle','wb') as f:f.write(strin)
