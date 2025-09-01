@@ -45,6 +45,7 @@ os.system('clear')
 AutoMod = __file__
 TimeUpdate = os.path.getmtime(AutoMod)
 TimeLine = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(TimeUpdate))
+print('Đã Fix Billow And Baron')
 def menu_key():
     terminal_width = shutil.get_terminal_size().columns
     
