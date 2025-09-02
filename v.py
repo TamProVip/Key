@@ -236,7 +236,7 @@ for FolderMod in TENSKIN:
     aaabbbcccnnn = FolderMod
     ten_final = FolderMod
 
-if len(DANHSACH) >= 1:
+if len(DANHSACH) > 1:
     FolderMod = input("Nhập Tên Pack Skin: ")
 else:
     pass
@@ -1586,7 +1586,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
             )
         
             if ID_SKIN == b'11215':
-                strin = strin.replace(b'<Track ConfigID="11200"',b'<Track ConfigID="11215235" BulletName="112s1b1" resource="prefab_skill_effects/hero_skill_effects/112_gongshuban/11215/gongshuban_attack01_spell01" none="983a0000000000000100003200000001000100010000000000000000000000000000007e04e803e803" />\n<Track ConfigID="11200"')
+                strin = strin.replace(b'<Track ConfigID="11200"',b'<Track ConfigID="11200" BulletName="112s1b1" resource="prefab_skill_effects/hero_skill_effects/112_gongshuban/11215/gongshuban_attack01_spell01" none="983a0000000000000100003200000001000100010000000000000000000000000000007e04e803e803" />\n<Track ConfigID="11200"')
             if ID_SKIN == b'11119':
                 strin = strin.replace(b'<Track ConfigID="500001" BulletName="500001texiao" resource="Prefab_Skill_Effects/New_Common_Effects/EF_BlueTower_GoldenCoin" none="581b000000000000010000a00f18fc0100010001000000000000000000000000000000e803e803e803" />',b'<Track ConfigID="500001" BulletName="500001texiao" resource="Prefab_Skill_Effects/New_Common_Effects/EF_BlueTower_GoldenCoin" none="581b000000000000010000a00f18fc0100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111126" BulletName="111a1b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" none="b888000000000000010000ee0200000100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111237" BulletName="111a2b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" none="b888000000000000012c01bc02bc020100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111004" BulletName="111a4b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_attack01_C" none="b888000000000000010000ee0200000100010001000000000000000000000000000000e803e803e803" />')
             if ID_SKIN == b'13311':
@@ -1815,7 +1815,12 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
-
+            if IDMODSKIN == '53702' and 'Change.xml' in file_path and 'ChangeB.xml' in file_path:
+                with open(file_path, "rb") as f:
+                    All = f.read()
+                    All = All.replace(b'/537_Trip/5373_Trip_S_LOD1',b'/537_Trip/53702/5373_Trip_S_LOD1')
+                with open(file_path, 'wb') as f:
+                    f.write(All)
 #---------------—------------———----------------
             if IDMODSKIN == '11215':
                 with open(file_path, "rb") as f:
@@ -1998,10 +2003,10 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
 #---------------—------------———----------------
             if IDMODSKIN[:3] =='537' and 'S12.xml' in file_path:
                 with open(file_path, 'rb') as f:
-                    rpl = f.read().replace(b'prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1_S',b'prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1_S')
+                    rpl = f.read().replace(b'prefab_skill_effects/hero_skill_effects/537_Trip/'+IDMODSKIN.encode()+b'/Trip_attack_spell01_1prefab_skill_effects/hero_skill_effects/537_Trip/'+IDMODSKIN.encode()+b'/Trip_attack_spell01_1prefab_skill_effects/hero_skill_effects/537_Trip/'+IDMODSKIN.encode()+b'/Trip_attack_spell01_1_S',b'prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1_S')
                 with open(file_path,'wb') as f: f.write(rpl)
 #---------------—------------———----------------
-            if IDCHECK =='53702' and "S13B1.xml" in file_path and "S14B1.xml" in file_path:
+            if IDMODSKIN =='53702' and "S13B1.xml" in file_path and "S14B1.xml" in file_path:
                 with open(file_path, 'rb') as f:
                     rpl = f.read().replace(b'prefab_skill_effects/hero_skill_effects/537_Trip/53702/Trip_attack_spell01_Indicator',b'prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_Indicator')
                 with open(file_path, 'wb') as f:
@@ -2597,6 +2602,11 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
     Kiem_Tra_Code = os.path.join(Files_Directory_Path, f'{NAME_HERO}', 'skill')
     for file in os.listdir(Kiem_Tra_Code):
         File_Check_Code = os.path.join(Kiem_Tra_Code, file)
+        if IDMODSKIN[:3] == '537' and 'Change.xml' in file or IDMODSKIN[:3] == '537' and 'ChangeB.xml' in file:
+            with open(File_Check_Code, "rb") as f:
+                rpl = f.read().replace(b'537_Trip/', b'537_Trip/' + IDMODSKIN.encode() + b'/')
+            with open(File_Check_Code, "wb") as f:
+                f.write(rpl)
         if IDMODSKIN in ['54805','11620','17408','52113']:
             with open(File_Check_Code, "rb") as f:
                 All = f.read()
@@ -3843,8 +3853,8 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
             process_directory(Directory, LC)
 #-----------------------------------------------
         if IDM == '11620':
-            player = input('   Phụ Kiện\n   1. Ngân Nguyệt Lưu\n   2. Hồng Quang Chiến Ngọc\n   3. No Component\n >>> ')
-            if player == '1':
+            #player = input('   Phụ Kiện\n   1. Ngân Nguyệt Lưu\n   2. Hồng Quang Chiến Ngọc\n   3. No Component\n >>> ')
+            if phukienb == 'tim':
                 Directory = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/Prefab_Hero/116_JingKe/116_JingKe_actorinfo.bytes'
                 LC = '1'
                 process_directory(Directory, LC)
@@ -3858,7 +3868,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
         
                 LC = '2'
                 process_directory(Directory, LC)
-            if player == '2':
+            elif phukienb == 'do':
                 Directory = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/Prefab_Hero/116_JingKe/116_JingKe_actorinfo.bytes'
                 LC = '1'
                 process_directory(Directory, LC)
@@ -3873,7 +3883,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
                 LC = '2'
                 process_directory(Directory, LC)
                 
-            if player == '3':
+            else:
                 Directory = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/Prefab_Hero/116_JingKe/116_JingKe_actorinfo.bytes'
                 LC = '1'
                 process_directory(Directory, LC)
