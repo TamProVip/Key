@@ -1585,8 +1585,8 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                 b"hero_skill_effects/" + hero_name + b"/" + ID_SKIN + b"/"
             )
         
-            if ID_SKIN == b'11215':
-                strin = strin.replace(b'<Track ConfigID="11200"',b'<Track ConfigID="11200" BulletName="112s1b1" resource="prefab_skill_effects/hero_skill_effects/112_gongshuban/11215/gongshuban_attack01_spell01" none="983a0000000000000100003200000001000100010000000000000000000000000000007e04e803e803" />\n<Track ConfigID="11200"')
+            #if ID_SKIN == b'11215':
+                #strin = strin.replace(b'<Track ConfigID="11200"',b'<Track ConfigID="11200" BulletName="112s1b1" resource="prefab_skill_effects/hero_skill_effects/112_gongshuban/11215/gongshuban_attack01_spell01" none="983a0000000000000100003200000001000100010000000000000000000000000000007e04e803e803" />\n<Track ConfigID="11200"')
             if ID_SKIN == b'11119':
                 strin = strin.replace(b'<Track ConfigID="500001" BulletName="500001texiao" resource="Prefab_Skill_Effects/New_Common_Effects/EF_BlueTower_GoldenCoin" none="581b000000000000010000a00f18fc0100010001000000000000000000000000000000e803e803e803" />',b'<Track ConfigID="500001" BulletName="500001texiao" resource="Prefab_Skill_Effects/New_Common_Effects/EF_BlueTower_GoldenCoin" none="581b000000000000010000a00f18fc0100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111126" BulletName="111a1b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" none="b888000000000000010000ee0200000100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111237" BulletName="111a2b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" none="b888000000000000012c01bc02bc020100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111004" BulletName="111a4b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_attack01_C" none="b888000000000000010000ee0200000100010001000000000000000000000000000000e803e803e803" />')
             if ID_SKIN == b'13311':
@@ -1720,7 +1720,9 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                             b'11607/11607_huijidi_01'
                         ).replace(
                             b'<SkinOrAvatarList id="11620" />', b''
-                        )
+                        ).replace(
+                        b'11620/11620_3/',
+                        b'11620/1162001/')
             elif phukienb == 'do':
                 rpl = rpl.replace(
                             b'prefab_skill_effects/hero_skill_effects/116_JingKe/11620/',
@@ -1732,7 +1734,9 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                             b'11607/11607_huijidi_01'
                         ).replace(
                             b'<SkinOrAvatarList id="11620" />', b''
-                        )
+                        ).replace(
+                        b'11620/11620_3/',
+                        b'11620/1162002/')
             else:
                 rpl = rpl.replace(
                             b'prefab_skill_effects/hero_skill_effects/116_JingKe/11620/',
@@ -1961,7 +1965,14 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
-            
+            if IDMODSKIN =='59702':
+                with open(file_path, 'rb') as f:
+                    rpl = f.read().replace(b'SkinAvatarFilterType="9">',
+                    b'SkinAvatarFilterType="X">').replace(b'SkinAvatarFilterType="11">',
+                    b'SkinAvatarFilterType="9">').replace(b'SkinAvatarFilterType="X">',
+                    b'SkinAvatarFilterType="11">')
+                with open(file_path, 'wb') as f:
+                    f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN =='13613' and 'S1E1.xml' in file_path:
                 with open(file_path, 'rb') as f: rpl = f.read().replace(b'</Event>\r\n    </Track>\r\n  </Action>\r\n</Project>',b'</Event>\r\n    </Track>\r\n    <Track trackName="Youtuber_You_Mod_Skin" eventType="TriggerParticleTick" guid="daa65ca6-798c-4280-84b3-171fc3a73a82" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="TriggerParticleTick" time="0.000" isDuration="false" guid="5f30bc82-d28a-4b25-b3a6-92fc32eac064">\r\n        <TemplateObject name="targetId" objectName="None" id="-1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/136_wuzetian/13613/WuZeTian_hurt02" refParamName="" useRefParam="false" />\r\n        <float name="lifeTime" value="0.600" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="1.000" z="0.000" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>\r\n</Project>')
@@ -3854,7 +3865,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
 #-----------------------------------------------
         if IDM == '11620':
             #player = input('   Phụ Kiện\n   1. Ngân Nguyệt Lưu\n   2. Hồng Quang Chiến Ngọc\n   3. No Component\n >>> ')
-            if phukienb == 'tim':
+            if phukienb == 'do':
                 Directory = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/Prefab_Hero/116_JingKe/116_JingKe_actorinfo.bytes'
                 LC = '1'
                 process_directory(Directory, LC)
@@ -3868,7 +3879,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
         
                 LC = '2'
                 process_directory(Directory, LC)
-            elif phukienb == 'do':
+            elif phukienb == 'tim':
                 Directory = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/Prefab_Hero/116_JingKe/116_JingKe_actorinfo.bytes'
                 LC = '1'
                 process_directory(Directory, LC)
@@ -4094,3 +4105,5 @@ with zipfile.ZipFile(f"{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab
 shutil.rmtree(f"{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1")
 shutil.rmtree("mod5", ignore_errors=True)
 #-----------------------------------------------
+shutil.make_archive(f'{FolderMod}/Resources', 'zip', f'{FolderMod}/', 'Resources')
+os.rename(f'./{FolderMod}/Resources.zip', f'{FolderMod}/IOS.zip')
