@@ -215,7 +215,14 @@ for IDCC in IDMODSKIN:
     TenSkin = (C1 + " " + C2).strip()
     TenSkinList.append((TenSkin, IDCC))
 if len(TenSkinList) == 1:
-    FolderMod = TenSkinList[0][0]
+    print(f"1. Tạo Folder Theo Tên Skin: {TenSkinList[0][0]}")
+    print("2. Tự Nhập Tên Folder")
+    choice = input("Chọn 1 hoặc 2: ").strip()
+
+    if choice == "2":
+        FolderMod = input("Nhập tên thư mục: ").strip() or TenSkinList[0][0]
+    else:
+        FolderMod = TenSkinList[0][0]
 else:
     FolderMod = f"Pack {len(TenSkinList)} Skin"
     FolderMod = input(f"Nhập Tên Pack Skin [{FolderMod}]: ") or FolderMod
