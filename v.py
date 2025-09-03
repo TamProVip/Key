@@ -1,4 +1,5 @@
-import os; import re; import getopt; import random; import pyzstd; from xml.dom import minidom; from colorama import Fore, Style; import sys; import shutil; import zipfile; import uuid; from collections import Counter; import xml.etree.ElementTree as ET; from collections import defaultdict; import os as O, binascii as X; from pathlib import Path; from random import randint; import datetime; import time; import struct; import hashlib; import json; import requests; import io
+# https://youtube.com/@YtbTamModAOV
+import os; import re; import getopt; import random; import pyzstd; from xml.dom import minidom; from colorama import Fore, Style; import sys; import shutil; import zipfile; import uuid; from collections import Counter; import xml.etree.ElementTree as ET; from collections import defaultdict; import os as O, binascii as X; from pathlib import Path; from random import randint; import datetime; import time; import struct; import hashlib; import json; import requests; import io; import glob
 
 URL = "https://raw.githubusercontent.com/DoanNguyenHaNam/SourceGame/main/Resources.zip"
 FOLDER_NAME = "Resources"
@@ -161,10 +162,9 @@ def enc(path1=None):
                 pass
 #print("\033[36m[III]. Chọn Chức Năng Fix Lag\n   [1].Fix Lag AssetRefs\n   [2].Fix Lag Born\n   [3].Không Fix Lag")
 fixlag = '1'#input("\n>>> ")
-
 def process_input_numbers(numbers):
     return numbers 
-
+CAMXA = input("\n\t\033[1;97m[\033[1;92m?\033[1;97m] MOD CAM XA Y/n: ")
 input_numbers = input('\n\t' + "ID: ")
 numbers = [int(num) for num in input_numbers.split()]
 results = process_input_numbers(numbers)
@@ -174,76 +174,58 @@ result_str = ' '.join(map(str, results))
 IDD = result_str
 IDMODSKIN = IDD.split()
 IDMODSKIN1 = IDD.split()
-
 if len(IDMODSKIN1) == 1:
     pass
     #sys.exit()
 
 DANHSACH = IDD.split()
-
 with open(f'Resources/{Ver}/Databin/Client/Actor/heroSkin.bytes', 'rb') as f:
-    a = f.read()
-if b'"J\x00' in a:
     giai(f'Resources/{Ver}/Databin/Client/Actor/heroSkin.bytes')
+    giai(f"Resources/{Ver}/Languages/VN_Garena_VN")
+    VTR = f.read()
 
-FILES_MAP = [
-    f'Resources/{Ver}/Languages/VN_Garena_VN/languageMap.txt',
-    f'Resources/{Ver}/Languages/VN_Garena_VN/languageMap_Newbie.txt',
-    f'Resources/{Ver}/Languages/VN_Garena_VN/languageMap_WorldConcept.txt',
-    f'Resources/{Ver}/Languages/VN_Garena_VN/languageMap_Xls.txt',
-    f'Resources/{Ver}/Languages/VN_Garena_VN/lanMapIncremental.txt'
-]
+TenSkinList = []
+for IDCC in IDMODSKIN:
+    IDD1 = struct.pack("<I", int(IDCC))
+    VTCT = VTR.find(IDD1)
+    if VTCT == -1:
+        print(f"Không tìm thấy {IDCC}")
+        continue
 
-for mapp in FILES_MAP:
-    with open(mapp, 'rb') as f:
-        a = f.read()
-    if b'"J\x00' in a:
-        giai(mapp)
+    ST1 = VTR[VTCT+12:VTCT+60].split(b"\x00",1)[0].decode("utf8","ignore")
+    ST2 = VTR[VTCT+40:VTCT+80].split(b"\x00",1)[0].decode("utf8","ignore")
 
-TENSKIN = []
-for mapp in FILES_MAP:
-    for i in DANHSACH:
-        with open(mapp, 'rb') as f:
-            rpl = f.read()
-        with open(f'Resources/{Ver}/Databin/Client/Actor/heroSkin.bytes', 'rb') as f:
-            RPL = f.read()
+    C1 = C2 = ""
+    for file in glob.glob(f"Resources/{Ver}/Languages/VN_Garena_VN/*.txt"):
+        with open(file,"r",encoding="utf8",errors="ignore") as f:
+            for line in f:
+                if not C1 and ST1 in line and "=" in line:
+                    n = line.split("=",1)[1].strip()
+                    if n and not n.startswith("[ex]"):
+                        C1 = n
+                if not C2 and ST2 in line and "=" in line:
+                    n = line.split("=",1)[1].strip()
+                    if n and not n.startswith("[ex]"):
+                        C2 = n
+                if C1 and C2:
+                    break
+        if C1 and C2:
+            break
 
-        i = int(i)
-        IDFIND = RPL.find(i.to_bytes(4, 'little') + int(str(i)[:3]).to_bytes(4, 'little'))
-        if IDFIND != -1:
-            try:
-                VT = RPL[IDFIND + 12:IDFIND + 31]
-                VT1 = rpl.find(VT)
-                VT2 = rpl.find(b'\r', VT1)
-                VTR = rpl[VT1:VT2]
-
-                VT = RPL[IDFIND + 40:IDFIND + 59]
-                VT1 = rpl.find(VT)
-                VT2 = rpl.find(b'\r', VT1)
-                VTR_SKIN = rpl[VT1:VT2]
-
-                A = VTR[22:]
-                B = VTR_SKIN[22:]
-                FolderMod = ((A + b' ' + B).decode(errors='ignore'))
-                FolderMod = ''.join(char for char in FolderMod if char not in ['/', '\\', ':', '*', '?', '"', '<', '>', '|'])
-
-                if FolderMod.strip() != '' and '[ex]' not in FolderMod:
-                    TENSKIN.append(FolderMod)
-            except:
-                continue 
-aaabbbcccnnn = ''
-for FolderMod in TENSKIN:
-    aaabbbcccnnn = FolderMod
-    ten_final = FolderMod
-
-if len(DANHSACH) > 1:
-    FolderMod = input("Nhập Tên Pack Skin: ")
+    TenSkin = (C1 + " " + C2).strip()
+    TenSkinList.append((TenSkin, IDCC))
+if len(TenSkinList) == 1:
+    FolderMod = TenSkinList[0][0]
 else:
-    pass
+    FolderMod = f"Pack {len(TenSkinList)} Skin"
+    FolderMod = input(f"Nhập Tên Pack Skin [{FolderMod}]: ") or FolderMod
+
 if not os.path.exists(FolderMod):
     os.makedirs(FolderMod)
+
 with open(os.path.join(FolderMod, 'SkinListMod.txt'), 'w', encoding='utf-8') as f:
-    f.writelines(f'{i+1}. {name}\n' for i, name in enumerate(TENSKIN))
+    for i, (NameHero, SkinName) in enumerate(TenSkinList, 1):
+        f.write(f"{i}. {NameHero} ({SkinName})\n")
 directorie = f'{FolderMod}/Resources/{Ver}/AssetRefs/Hero'
 os.makedirs(directorie, exist_ok=True)
 base_path = f"{FolderMod}/Resources/{Ver}/Databin/Client/"
@@ -630,14 +612,19 @@ def dec_to_hex(a):
     return (bytes.fromhex(a))[::-1]
 #-----------------------------------------------
 for IDMODSKIN in IDMODSKIN1:
-    index = DANHSACH.index(IDMODSKIN)
-    TENSKIN_NOW = TENSKIN[index]
+    NameHero = None
+    for TenSkin, SkinID in TenSkinList:
+        if SkinID == IDMODSKIN:
+            NameHero = TenSkin
+            break
+    if NameHero:
+        print('-' * 53)
+        print(f"{NameHero:^53}")
+        print('-' * 53)
     fileasset = f'Resources/{Ver}/AssetRefs/Hero/{IDMODSKIN[:3]}_AssetRef.bytes'
     fileasset_mod2 = f'{FolderMod}/Resources/{Ver}/AssetRefs/Hero/{IDMODSKIN[:3]}_AssetRef.bytes'
+    os.makedirs(os.path.dirname(fileasset_mod2), exist_ok=True)
     shutil.copy(fileasset, fileasset_mod2)
-    print('-' * 53)
-    print(f"{TENSKIN_NOW:^53}")
-    print('-' * 53)
     SKINEOV = ''
     if IDMODSKIN == '13311':
         SKINEOV = "r"
@@ -1859,7 +1846,6 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                 
                 with open(file_path, "wb") as f:
                     f.write(All)
-                
 #---------------—------------———----------------
             if IDMODSKIN == '59901' and 'S1E60.xml' in file_path:
                 with open(file_path, 'rb') as f:
@@ -2260,11 +2246,11 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 with open(file_path, 'rb') as f: rpl = f.read().replace(b'Bone_Blade',b'Bip001 Prop1').replace(b'Bone_Weapon01',b'Bip001 Prop1')
                 with open(file_path,'wb') as f: f.write(rpl)
 #---------------—------------———----------------
-            if IDMODSKIN[:3] =='537' and 'S12.xml' in file_path:
-                with open(file_path, 'rb') as f:
-                    rpl = f.read().replace(b'prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1_S',b'prefab_skill_effects/hero_skill_effects/537_Trip/Trip_attack_spell01_1_S')
-                with open(file_path, 'wb') as f:
-                    f.write(rpl)
+            if file_path == 'Death.xml':
+                with open(file_path, 'r',encoding='utf8') as f:
+                    sec = f.read().replace('</Action>', '    <Track trackName="CommonSkillProcessBarDuration0" eventType="CommonSkillProcessBarDuration" guid="8f26cacc-ee15-4857-94aa-ffccd0b1a87a" enabled="true" refParamName="" useRefParam="false" r="0.933" g="0.000" b="1.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n      <Event eventName="CommonSkillProcessBarDuration" time="0.000" length="4.500" isDuration="true">\n        <TemplateObject name="targetId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false"/>\n        <int name="width" value="0" refParamName="" useRefParam="false"/>\n        <bool name="useCurrentSkillName" value="false" refParamName="" useRefParam="false"/>\n        <String name="skillNameTextKey" value="YtbTâmModAOV" refParamName="" useRefParam="false"/>\n      </Event>\n    </Track>\n  </Action>')
+                with open(file_path, 'w',encoding='utf8') as f:
+                    f.write(sec)  
 #---------------—------------———----------------
             if IDMODSKIN =='11119' and 'A1B1.xml' in file_path:
                 with open(file_path, 'rb') as f: rpl = f.read().replace(b'<String name="prefabName" value="prefab_characters/commonempty" refParamName="" useRefParam="false" />', b'<String name="prefabName" value="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" refParamName="" useRefParam="false" />\r\n        <Vector3i name="translation" x="0" y="750" z="0" refParamName="" useRefParam="false" />')
@@ -2543,73 +2529,81 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             if os.path.isdir(directory_path):
                 remove_extra_skin_array_in_folder(directory_path)
 
-    # fix ef pro
-    VMODCHECK = '2'
-    MODCHECK = '1'
-    if MODCHECK == '1':
-        IDNODMODCHECK = ['14111', '13210', '16707', '13011','13213','10620','59901']
-        #IDCHECK = IDCHECK[:3]+'00'
-        if IDCHECK not in IDNODMODCHECK:
-            ABCD=[]
-            files_list = os.listdir(directory_path)
-            for filename in files_list:
-                if filename in ['A1B1.xml', 'A2B1.xml', 'A1b2.xml', 'A2b2.xml'] and IDCHECK == "11119":
-                    continue
-                elif filename == 'P1E5.xml' and IDCHECK[:3] == '131':
-                    continue
-                elif filename != 'S1B1.xml' and IDCHECK == '13609':
-                    continue
-                elif filename != 'u1b1.xml' and IDCHECK == '59901':
-                    continue
-                elif filename != 'U1E1.xml' and IDCHECK == '10611':
-                    continue
-                if filename in ['S1E2.xml', 'S2.xml', 'U1.xml'] and IDCHECK == "11113":
-                    continue
-                elif filename == 'U1.xml' and IDCHECK == '15015':
-                    continue
-                file_path = os.path.join(directory_path, filename)
-                if VMODCHECK == "2":
-                    with open(file_path, 'rb') as file:
-                        xml_bytes = file.read()#.decode('utf-8')
-                        start_phrase = b'<Track trackName="'
-                        end_phrase = b'</Track>' 
-                        start_index = xml_bytes.find(start_phrase)
-                        end_index = xml_bytes.find(end_phrase,start_index)
-                        while start_index != -1 and end_index != -1:
-                            track_text = xml_bytes[start_index:end_index + len(end_phrase)]
-                            start_index = xml_bytes.find(start_phrase, end_index)
-                            end_index = xml_bytes.find(end_phrase, start_index)
-                            if b'"skinId" value="' + IDCHECK.encode() + b'"' in track_text:
-                                ABCD.append(track_text)
-                                print(track_text)
-                                    #track_text = track_text.encode()
-                    for track_text in ABCD:
-                        if b'<bool name="bEqual" value="false" refParamName="" useRefParam="false" />' in track_text:
-                            with open(file_path, 'rb') as file:
-                                xml_bytes = file.read()
-                            modified_data = (
-                                    track_text
-                                    .replace(
-b'<int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" useRefParam="false" />\r\n        <bool name="bEqual" value="false" refParamName="" useRefParam="false" />',
-b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" useRefParam="false" />')
-                                    .replace(b"CheckSkinIdVirtualTick", b"CheckSkinIdTick")
-                                )                                        
-                            modified_data1 = xml_bytes.replace(track_text, modified_data)
-                            with open(file_path, 'wb') as file:
-                                file.write(modified_data1)
-                        if b'<bool name="bEqual" value="false" refParamName="" useRefParam="false" />' not in track_text:
-                            with open(file_path, 'rb') as file:
-                                xml_bytes = file.read()
-                            modified_data = (
-                                    track_text
-                                    .replace(
-b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" useRefParam="false" />', 
-b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" useRefParam="false" />\r\n        <bool name="bEqual" value="false" refParamName="" useRefParam="false" />')
-                                    .replace(b"CheckSkinIdVirtualTick", b"CheckSkinIdTick")
-                                )                                        
-                            modified_data1 = xml_bytes.replace(track_text, modified_data)
-                            with open(file_path, 'wb') as file:
-                                file.write(modified_data1)
+        if b"Skin_Icon_Skill" in dieukienmod or b"Skin_Icon_BackToTown" in dieukienmod or IDCHECK == "53702":
+            IDNODMODCHECK = ['14111', '16707', '13011', '15009', '54307', '10620', '14104', '14107', '12106', '59901', '10915', '52414', '19610']
+            
+            if IDCHECK not in IDNODMODCHECK:
+                files_list = os.listdir(directory_path)
+        
+                for filename in files_list:
+                    if (filename in ['S1.xml', 'S1B1.xml', 'S1B2.xml'] and IDCHECK == "14111") or \
+                       (filename in ['S2.xml', 'S21.xml', 'S22.xml'] and IDCHECK == "13011") or \
+                       (filename not in ['13210_Back.xml', 'S2B2.xml', 't2p1.xml', 't2p2.xml'] and IDCHECK == "13210") or \
+                       (filename == 'P1E5.xml' and IDCHECK[:3] == '131') or \
+                       (filename != 'S1B1.xml' and IDCHECK == '13609') or \
+                       (filename != 'U1E1.xml' and IDCHECK == '10611') or \
+                       (filename == 'U1.xml' and IDCHECK == '10611') or \
+                       (filename == 'u1b1.xml' and IDCHECK == '59901') or \
+                       (filename == 'S2.xml' and IDCHECK == '15013') or \
+                       (filename == 'U1.xml' and IDCHECK == '15015'):
+                        continue
+                    
+                    file_path = os.path.join(directory_path, filename)
+                    with open(file_path, 'rb') as f:
+                        All = f.read()
+        
+                    if b'"Jg\x00' in All:
+                        continue
+        
+                    ListAll = All.split(b'\r\n')
+                    List_DOANAll = All.split(b'    <Track trackName="')
+        
+                    SKM = b'\r\n        <int name="skinId" value="237' + IDCHECK[-2:].encode() + b'" refParamName="" useRefParam="false" />'
+                    IDS = b'\r\n        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" useRefParam="false" />'
+                    EQF = b'\r\n        <bool name="bEqual" value="false" refParamName="" useRefParam="false" />'
+                    EQT = b'\r\n        <bool name="bEqual" value="true" refParamName="" useRefParam="false" />'
+                    UNV = b'\r\n        <bool name="useNegateValue" value="true" refParamName="" useRefParam="false" />'
+                    UNF = b'\r\n        <bool name="useNegateValue" value="false" refParamName="" useRefParam="false" />'
+                    bol = b'\r\n        <bool name="'
+                    check_vt = b'CheckSkinIdVirtualTick'
+                    check_sk = b'CheckSkinIdTick'
+        
+                    CODE_CHECK = [x for x in List_DOANAll if IDS.lower() in x.lower()]
+                    if len(CODE_CHECK) != 0:
+                        for text in CODE_CHECK:
+                            if check_sk.lower() in text.lower():
+                                if bol not in text:
+                                    text1 = text.replace(IDS, IDS + EQF).replace(IDS, SKM)
+                                    All = All.replace(text, text1)
+                                    continue
+                                if EQF not in text and EQT in text:
+                                    text1 = text.replace(EQT, EQF).replace(IDS, SKM)
+                                    All = All.replace(text, text1)
+                                    continue
+                                if EQF in text:
+                                    text1 = text.replace(EQF, b'').replace(IDS, SKM)
+                                    All = All.replace(text, text1)
+                                    continue
+                                if EQF not in text:
+                                    text1 = text.replace(IDS, IDS + EQF).replace(IDS, SKM)
+                                    All = All.replace(text, text1)
+                                    continue
+                            if check_vt.lower() in text.lower():
+                                if UNV in text:
+                                    text1 = text.replace(UNV, b'').replace(IDS, SKM)
+                                    All = All.replace(text, text1)
+                                    continue
+                                if UNF in text:
+                                    text1 = text.replace(UNF, UNV).replace(IDS, SKM)
+                                    All = All.replace(text, text1)
+                                    continue
+                                if UNV not in text:
+                                    text1 = text.replace(IDS, IDS + UNV).replace(IDS, SKM)
+                                    All = All.replace(text, text1)
+                                    continue
+        
+                    with open(file_path, 'wb') as f:
+                        f.write(All)
     Kiem_Tra_Code = os.path.join(Files_Directory_Path, f'{NAME_HERO}', 'skill')
     for file in os.listdir(Kiem_Tra_Code):
         File_Check_Code = os.path.join(Kiem_Tra_Code, file)
@@ -3448,6 +3442,14 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
                         print(e)
                     shutil.rmtree(f'{FolderMod}/Resources/{Ver}/Ages/mod2/', ignore_errors=True)
 #-----------------------------------------------
+        if CAMXA.lower() == 'y':
+            duongdancamxa=f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/PassiveResource/junglemark.xml'
+            giai(duongdancamxa)
+            with open (duongdancamxa, 'rb') as f:
+                noidungsexx = f.read()            
+                noidungsexx = noidungsexx.replace(b'</Action>', b"""  <Track trackName="SetCameraHeightDuration0" eventType="SetCameraHeightDuration" guid="9489c796-894b-4c2e-9a95-acf27873964a" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n    <Event eventName="SetCameraHeightDuration" time="0.000" length="1.000" isDuration="true" guid="422a1ed9-a12c-44b3-a9c5-3fe899d689dd">\n      <int name="slerpTick" value="0" refParamName="" useRefParam="false"/>\n        <float name="heightRate" value="1.25" refParamName="" useRefParam="false"/>\n        <bool name="bOverride" value="true" refParamName="" useRefParam="false"/>\n        <bool name="leftTimeSlerpBack" value="true" refParamName="" useRefParam="false"/>\n        <String name="refParamName" value="" refParamName="" useRefParam="false"/>\n      </Event>\n	</Track>\n <Track trackName="InBattleMsgSendTick0" eventType="InBattleMsgSendTick" guid="5169fb6a-26eb-4bf0-ae25-0da74fe7d84a" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n	<Event eventName="InBattleMsgSendTick" time="0.000" isDuration="false" guid="9473c11a-e73b-4a84-b950-3b39d37dee13">\n	  <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\n  	<String name="msgKey" value="Create:MMN AOV" refParamName="" useRefParam="false" />\n	</Event>\n  </Track>\n    </Action>""")    
+            with open (duongdancamxa,'wb') as f : f.write(noidungsexx)
+            giai(duongdancamxa)
     antidec = 'n'#input("ANTI_DECOMP__?: ").strip().lower()
     if antidec == 'y':
         enc(directory_path)
@@ -3783,8 +3785,10 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
     tinhRootDsau=len(RootDsau).to_bytes(4,byteorder='little')+RootDsau[4:]
     tinhRootDtrc=RootDtrc+tinhRootDsau
     CodeDayDu=len(tinhRootDtrc).to_bytes(4,byteorder='little')+tinhRootDtrc[4:]
-    CodeDayDu=CodeDayDu.replace(b"Light<",b"00000<")
-    CodeDayDu = CodeDayDu.replace(b"imeline<", b"1234567<")
+    #CodeDayDu=CodeDayDu.replace(
+    b"Light<",
+    b"00000<")
+    #CodeDayDu = CodeDayDu.replace(b"imeline<", b"1234567<")
     CodeDayDu=CodeDayDu.replace(b'_LOD2',b'_LOD1').replace(b'_LOD3',b'_LOD1').replace(b'_Show2\x04',b'_Show1\x04').replace(b'_Show3\x04',b'_Show1\x04')
     tinhcam=CodeDayDu[:89]
     with open(op,'wb')as f: f.write(CodeDayDu)
@@ -4040,6 +4044,7 @@ b'        <int name="skinId" value="' + IDCHECK.encode() + b'" refParamName="" u
             with open(axml, "rb") as f:
                 d = f.read().decode('utf8')
             d = d.replace('<ArtSkinPrefabLOD var="Array" type="System.String[]">', '<ArtPrefabLOD var="Array" type="System.String[]">', 1)
+            #d = d.replae('<bUnityLight var="String" type="System.Boolean" value="True"/>','<bUnity00000 var="String" type="System.Boolean" value="True"/>')
             d = d.replace('</ArtSkinPrefabLOD>', '</ArtPrefabLOD>', 1)
             d = d.replace('<ArtSkinPrefabLODEx', '<ArtPrefabLODEx', 1)
             d = d.replace('</ArtSkinPrefabLODEx>', '</ArtPrefabLODEx>', 1)
