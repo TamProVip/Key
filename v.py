@@ -229,7 +229,6 @@ else:
 
 if not os.path.exists(FolderMod):
     os.makedirs(FolderMod)
-
 with open(os.path.join(FolderMod, 'SkinListMod.txt'), 'w', encoding='utf-8') as f:
     for i, (NameHero, SkinName) in enumerate(TenSkinList, 1):
         f.write(f"{i}. {NameHero} ({SkinName})\n")
@@ -2614,6 +2613,10 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     Kiem_Tra_Code = os.path.join(Files_Directory_Path, f'{NAME_HERO}', 'skill')
     for file in os.listdir(Kiem_Tra_Code):
         File_Check_Code = os.path.join(Kiem_Tra_Code, file)
+        if IDMODSKIN =='54402' and 'U1B1.xml' in file:
+            with open(File_Check_Code, "rb") as f:
+                rpl = f.read().replace(b'<bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />',b'<bool name="bEqual" value="false" refParamName="" useRefParam="false" />\n        <bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />')
+            with open(File_Check_Code, "wb") as f:f.write(rpl)
         if IDMODSKIN[:3] == '537' and 'Change.xml' in file or IDMODSKIN[:3] == '537' and 'ChangeB.xml' in file:
             with open(File_Check_Code, "rb") as f:
                 rpl = f.read().replace(b'537_Trip/', b'537_Trip/' + IDMODSKIN.encode() + b'/')
@@ -3197,7 +3200,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     else:
                         block_effect = block_effect.replace('jiasu_tongyong_01', 'MaKeBoLuo_Buff_Start')
                 elif IDMODSKIN == '14111':
-                    block_effect = block_effect.replace('JiaSu_tongyong_01', '14111_luoer_Sprint').replace(
+                    block_effect = block_effect.replace('jiaSu_tongyong_01', '14111_luoer_Sprint').replace(
                         '        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600" refParamName="" useRefParam="false" />', '        <Vector3 name="bindPosOffset" x="0.000" y="0.000" z="0.000" refParamName="" useRefParam="false" />')
                 block_effect = remove_lines_after_bUseTargetSkinEffect(block_effect)
     
@@ -3792,9 +3795,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     tinhRootDsau=len(RootDsau).to_bytes(4,byteorder='little')+RootDsau[4:]
     tinhRootDtrc=RootDtrc+tinhRootDsau
     CodeDayDu=len(tinhRootDtrc).to_bytes(4,byteorder='little')+tinhRootDtrc[4:]
-    CodeDayDu=CodeDayDu.replace(
-    b"Light<",
-    b"00000<")
+    CodeDayDu=CodeDayDu.replace(b"Light<",b"00000<")
     CodeDayDu = CodeDayDu.replace(b"imeline<", b"1234567<")
     CodeDayDu=CodeDayDu.replace(b'_LOD2',b'_LOD1').replace(b'_LOD3',b'_LOD1').replace(b'_Show2\x04',b'_Show1\x04').replace(b'_Show3\x04',b'_Show1\x04')
     tinhcam=CodeDayDu[:89]
@@ -3823,7 +3824,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
 #-----------------------------------------------
     SkinSpecial = IDMODSKIN
     IDM = IDMODSKIN
-    if SkinSpecial in ['19015', '11620', '13118', '54805','13213','11215','11120','17408'] or IDM[:3] == '196':
+    if SkinSpecial in ['19015', '11620', '13118', '54805','13213','11215','11120','17408','13314'] or IDM[:3] == '196':
 
         if IDM[:3] == '196':
             if b"Skin_Icon_Skill" in dieukienmod:
@@ -3839,7 +3840,23 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 LC = '2'
                 Directory = f'./{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/Prefab_Hero/196_Elsu/196_Elsu_trap_actorinfo.bytes'
                 process_directory(Directory, LC)
-                #-----------------------------------------------
+#-----------------------------------------------
+        if IDM == "54402":
+            Directory = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/Prefab_Hero/544_Painter/544_Painter_actorinfo.bytes'
+    
+            LC = '1'
+            process_directory(Directory, LC)
+            with open(Directory, 'rb') as code_yan:
+                yan = code_yan.read()
+                yan = yan.replace(b'<useMecanim var="String" type="System.Boolean" value="True"/>',b'<useT1234567 var="String" type="System.Boolean" value="True"/>').replace(b'  <PreloadAnimatorEffects var="Array" type="System.String[]"/>\r\n  <TransConfigs var="Array" type="Assets.Scripts.GameLogic.TransformConfig[]">\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.TransformConfig"/>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.TransformConfig"/>\r\n  </TransConfigs>\r\n  <LookAt var="Com" type="Assets.Scripts.GameLogic.CameraLookAt">\r\n    <Offset var="Com" type="UnityEngine.Vector3">\r\n      <x var="String" type="System.Single" value="-0.07700014"/>\r\n      <y var="String" type="System.Single" value="1.689991"/>\r\n      <z var="String" type="System.Single" value="-1.183998"/>\r\n    </Offset>\r\n    <Direction var="Com" type="UnityEngine.Vector3">\r\n      <x var="String" type="System.Single" value="0.144031"/>\r\n      <y var="String" type="System.Single" value="0"/>\r\n      <z var="String" type="System.Single" value="0.9895732"/>\r\n    </Direction>\r\n    <Duration var="String" type="System.Single" value="1"/>\r\n  </LookAt>\r\n  <LightConfig var="Com" type="Assets.Scripts.GameLogic.PrepareBattleLightConfig"/>\r\n  <IdleShowConfigs var="Array" type="Assets.Scripts.GameLogic.IdleShowConfig[]">\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig">\r\n      <DisableDir00000 var="String" type="System.Boolean" value="True"/>\r\n    </Element>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig">\r\n      <DisableDir00000 var="String" type="System.Boolean" value="True"/>\r\n    </Element>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig"/>\r\n  </IdleShowConfigs>','',1)
+    
+            with open(Directory, 'wb') as f:
+                f.write(yan)
+            print('Fix Đen Màn Xuất Hiện')
+
+            LC = '2'
+            process_directory(Directory, LC)
+#-----------------------------------------------
         if IDM == "19015":
             Directory = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/Prefab_Hero/190_ZhuGeLiang/190_ZhuGeLiang_actorinfo.bytes'
     
@@ -3919,7 +3936,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
         
                 LC = '2'
                 process_directory(Directory, LC)
-        if IDM in ['54805','13118','13213','11215','11120']:
+        if IDM in ['54805','13118','13213','11215','11120','13314']:
             shutil.rmtree(f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/')
             idg = IDINFO
             pf = idg[:3]
@@ -3989,7 +4006,6 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     b = b.replace(b'<oriSkinUseNewMecanim var="String" type="System.Boolean" value="True"/>', b'', 1)
                 with open(p, 'wb') as f:
                     f.write(b)
-        
             def find_skin(txt, sid):
                 tg = '<Element var="Com" type="Assets.Scripts.GameLogic.SkinElement">'
                 pos = 0
@@ -4061,7 +4077,9 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             d = d.replace('</ArtSkinLobbyShowLOD>', '</ArtLobbyShowLOD>', 1)
             d = d.replace('<Element var="Com" type="Assets.Scripts.GameLogic.SkinElement">', '', 1)
             d = re.sub(r'<ActorName var="String" type="System.String" value=".*?"/>','<ActorName var="String" type="System.String" value="Mod_By_Tran_Thi_Nhung"/>',d)
-            d = d.replace('LOD3','LOD1').replace('LOD2','LOD1').replace('Show3','Show1').replace('Show2','Show1')
+            if idg != "13315":
+                d = d.replace('LOD3','LOD1').replace('LOD2','LOD1').replace('_Show3','_Show1').replace('_Show2','_Show1')
+                
             d = re.sub(
                 r'[ \t]*<ArtSkinLobbyNode var="String" type="System.String" value="Prefab_Characters/Prefab_Hero/531_keera/5312_Keera_Show1_Node"/>\s*\n?',
                 '', d, count=1
