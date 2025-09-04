@@ -3792,10 +3792,10 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     tinhRootDsau=len(RootDsau).to_bytes(4,byteorder='little')+RootDsau[4:]
     tinhRootDtrc=RootDtrc+tinhRootDsau
     CodeDayDu=len(tinhRootDtrc).to_bytes(4,byteorder='little')+tinhRootDtrc[4:]
-    #CodeDayDu=CodeDayDu.replace(
+    CodeDayDu=CodeDayDu.replace(
     b"Light<",
     b"00000<")
-    #CodeDayDu = CodeDayDu.replace(b"imeline<", b"1234567<")
+    CodeDayDu = CodeDayDu.replace(b"imeline<", b"1234567<")
     CodeDayDu=CodeDayDu.replace(b'_LOD2',b'_LOD1').replace(b'_LOD3',b'_LOD1').replace(b'_Show2\x04',b'_Show1\x04').replace(b'_Show3\x04',b'_Show1\x04')
     tinhcam=CodeDayDu[:89]
     with open(op,'wb')as f: f.write(CodeDayDu)
