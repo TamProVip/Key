@@ -1,5 +1,5 @@
 # https://youtube.com/@YtbTamModAOV
-import os; import re; import getopt; import random; import pyzstd; from xml.dom import minidom; from colorama import Fore, Style; import sys; import shutil; import zipfile; import uuid; from collections import Counter; import xml.etree.ElementTree as ET; from collections import defaultdict; import os as O, binascii as X; from pathlib import Path; from random import randint; import datetime; import time; import struct; import hashlib; import json; import requests; import io; import glob
+import os; import re; import getopt; import random; import pyzstd; from xml.dom import minidom; from colorama import Fore, Style; import sys; import shutil; import zipfile; import uuid; from collections import Counter; import xml.etree.ElementTree as ET; from collections import defaultdict; import os as O, binascii as X; from pathlib import Path; from random import randint; import datetime; import time; import struct; import hashlib; import json; import requests; import io; import glob; from pystyle import *; import builtins
 
 URL = "https://raw.githubusercontent.com/DoanNguyenHaNam/SourceGame/main/Resources.zip"
 FOLDER_NAME = "Resources"
@@ -164,8 +164,10 @@ def enc(path1=None):
 fixlag = '1'#input("\n>>> ")
 def process_input_numbers(numbers):
     return numbers 
-CAMXA = input("\n\t\033[1;97m[\033[1;92m?\033[1;97m] MOD CAM XA Y/n: ")
-input_numbers = input('\n\t' + "ID: ")
+#CAMXA = input("\n\t\033[1;97m[\033[1;92m?\033[1;97m] MOD CAM XA Y/n: ")
+cyyy =  Colors.StaticMIX((Col.light_blue, Col.light_gray, Col.light_red))
+print('Game Update Vui Lòng Xoá Resources Cũ Và Chạy Lại Tool Để Tải Resources Mới...')
+input_numbers = input(Colorate.Diagonal(Colors.DynamicMIX((Col.red, cyyy)), ">> Enter Your IDSkin: "))
 numbers = [int(num) for num in input_numbers.split()]
 results = process_input_numbers(numbers)
 if results is None:
@@ -3615,6 +3617,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
         tinh=VTM.count(b'Element')
         VTM=VTCUOI
         KB=0
+        CODEFULL = b''
         CODEFULL=b''
         for i in range(tinh):
                 ELe=VTM.find(b'Element')-8
@@ -3789,15 +3792,13 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     RootD1=RootDsau[8:12]
     VTR=int.from_bytes(RootD1,byteorder='little')#ArtPrefabLOD
     m=RootDsau.find(b'ArtPrefabLOD')-8
-    FIXTRIEUVAN=b'\x61\x00\x00\x00\x19\x00\x00\x00\x75\x73\x65\x53\x74\x61\x74\x65\x44\x72\x69\x76\x65\x6E\x4D\x65\x63\x61\x6E\x69\x6D\x3C\x00\x00\x00\x03\x00\x00\x00\x0D\x00\x00\x00\x06\x00\x00\x00\x4A\x54\x50\x72\x69\x1A\x00\x00\x00\x08\x00\x00\x00\x54\x79\x70\x65\x53\x79\x73\x74\x65\x6D\x2E\x42\x6F\x6F\x6C\x65\x61\x6E\x0D\x00\x00\x00\x05\x00\x00\x00\x56\x54\x72\x75\x65\x04\x00\x00\x00'
-    #if IDCHECK == '12912':
-        #RootDsau=RootDsau[:VTR+8]+FIXTRIEUVAN+RootDsau[m:] 
     tinhRootDsau=len(RootDsau).to_bytes(4,byteorder='little')+RootDsau[4:]
     tinhRootDtrc=RootDtrc+tinhRootDsau
     CodeDayDu=len(tinhRootDtrc).to_bytes(4,byteorder='little')+tinhRootDtrc[4:]
-    CodeDayDu=CodeDayDu.replace(b"Light<",b"00000<")
-    CodeDayDu = CodeDayDu.replace(b"imeline<", b"1234567<")
-    CodeDayDu=CodeDayDu.replace(b'_LOD2',b'_LOD1').replace(b'_LOD3',b'_LOD1').replace(b'_Show2\x04',b'_Show1\x04').replace(b'_Show3\x04',b'_Show1\x04')
+    if IDCHECK != '13314':
+        CodeDayDu=CodeDayDu.replace(b"Light<",b"00000<")
+        CodeDayDu = CodeDayDu.replace(b"imeline<", b"1234567<")
+        CodeDayDu=CodeDayDu.replace(b'_LOD2',b'_LOD1').replace(b'_LOD3',b'_LOD1').replace(b'_Show2\x04',b'_Show1\x04').replace(b'_Show3\x04',b'_Show1\x04')
     tinhcam=CodeDayDu[:89]
     with open(op,'wb')as f: f.write(CodeDayDu)
     o=open(op,'rb')
@@ -3824,7 +3825,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
 #-----------------------------------------------
     SkinSpecial = IDMODSKIN
     IDM = IDMODSKIN
-    if SkinSpecial in ['19015', '11620', '13118', '54805','13213','11215','11120','17408','13314'] or IDM[:3] == '196':
+    if SkinSpecial in ['19015', '11620', '13118', '54805','13213','11215','11120','17408'] or IDM[:3] == '196':
 
         if IDM[:3] == '196':
             if b"Skin_Icon_Skill" in dieukienmod:
@@ -3936,7 +3937,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
         
                 LC = '2'
                 process_directory(Directory, LC)
-        if IDM in ['54805','13118','13213','11215','11120','13314']:
+        if IDM in ['54805','13118','13213','11215','11120']:
             shutil.rmtree(f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/')
             idg = IDINFO
             pf = idg[:3]
@@ -4077,8 +4078,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             d = d.replace('</ArtSkinLobbyShowLOD>', '</ArtLobbyShowLOD>', 1)
             d = d.replace('<Element var="Com" type="Assets.Scripts.GameLogic.SkinElement">', '', 1)
             d = re.sub(r'<ActorName var="String" type="System.String" value=".*?"/>','<ActorName var="String" type="System.String" value="Mod_By_Tran_Thi_Nhung"/>',d)
-            if idg != "13315":
-                d = d.replace('LOD3','LOD1').replace('LOD2','LOD1').replace('_Show3','_Show1').replace('_Show2','_Show1')
+            d = d.replace('LOD3','LOD1').replace('LOD2','LOD1').replace('_Show3','_Show1').replace('_Show2','_Show1')
                 
             d = re.sub(
                 r'[ \t]*<ArtSkinLobbyNode var="String" type="System.String" value="Prefab_Characters/Prefab_Hero/531_keera/5312_Keera_Show1_Node"/>\s*\n?',
