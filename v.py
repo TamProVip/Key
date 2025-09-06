@@ -1,7 +1,7 @@
 # https://youtube.com/@YtbTamModAOV
 import os; import re; import getopt; import random; import pyzstd; from xml.dom import minidom; from colorama import Fore, Style; import sys; import shutil; import zipfile; import uuid; from collections import Counter; import xml.etree.ElementTree as ET; from collections import defaultdict; import os as O, binascii as X; from pathlib import Path; from random import randint; import datetime; import time; import struct; import hashlib; import json; import requests; import io; import glob; from pystyle import *; import builtins
 
-URL = "https://raw.githubusercontent.com/TamProVip/Key/main/Resources.zip"
+URL = "https://raw.githubusercontent.com/DoanNguyenHaNam/SourceGame/main/Resources.zip"
 FOLDER_NAME = "Resources"
 ZIP_NAME = "Resources.zip"
 
@@ -166,7 +166,6 @@ def process_input_numbers(numbers):
     return numbers 
 #CAMXA = input("\n\t\033[1;97m[\033[1;92m?\033[1;97m] MOD CAM XA Y/n: ")
 cyyy =  Colors.StaticMIX((Col.light_blue, Col.light_gray, Col.light_red))
-print('Game Update Vui Lòng Xoá Resources Cũ Và Chạy Lại Tool Để Tải Resources Mới...')
 input_numbers = input(Colorate.Diagonal(Colors.DynamicMIX((Col.red, cyyy)), ">> Enter Your IDSkin: "))
 numbers = [int(num) for num in input_numbers.split()]
 results = process_input_numbers(numbers)
@@ -231,6 +230,7 @@ else:
 
 if not os.path.exists(FolderMod):
     os.makedirs(FolderMod)
+
 with open(os.path.join(FolderMod, 'SkinListMod.txt'), 'w', encoding='utf-8') as f:
     for i, (NameHero, SkinName) in enumerate(TenSkinList, 1):
         f.write(f"{i}. {NameHero} ({SkinName})\n")
@@ -3849,7 +3849,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             process_directory(Directory, LC)
             with open(Directory, 'rb') as code_yan:
                 yan = code_yan.read()
-                yan = yan.replace(b'<useMecanim var="String" type="System.Boolean" value="True"/>',b'<useT1234567 var="String" type="System.Boolean" value="True"/>').replace(b'  <PreloadAnimatorEffects var="Array" type="System.String[]"/>\r\n  <TransConfigs var="Array" type="Assets.Scripts.GameLogic.TransformConfig[]">\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.TransformConfig"/>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.TransformConfig"/>\r\n  </TransConfigs>\r\n  <LookAt var="Com" type="Assets.Scripts.GameLogic.CameraLookAt">\r\n    <Offset var="Com" type="UnityEngine.Vector3">\r\n      <x var="String" type="System.Single" value="-0.07700014"/>\r\n      <y var="String" type="System.Single" value="1.689991"/>\r\n      <z var="String" type="System.Single" value="-1.183998"/>\r\n    </Offset>\r\n    <Direction var="Com" type="UnityEngine.Vector3">\r\n      <x var="String" type="System.Single" value="0.144031"/>\r\n      <y var="String" type="System.Single" value="0"/>\r\n      <z var="String" type="System.Single" value="0.9895732"/>\r\n    </Direction>\r\n    <Duration var="String" type="System.Single" value="1"/>\r\n  </LookAt>\r\n  <LightConfig var="Com" type="Assets.Scripts.GameLogic.PrepareBattleLightConfig"/>\r\n  <IdleShowConfigs var="Array" type="Assets.Scripts.GameLogic.IdleShowConfig[]">\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig">\r\n      <DisableDir00000 var="String" type="System.Boolean" value="True"/>\r\n    </Element>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig">\r\n      <DisableDir00000 var="String" type="System.Boolean" value="True"/>\r\n    </Element>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig"/>\r\n  </IdleShowConfigs>','',1)
+                yan = yan.replace(b'<useT1234567 var="String" type="System.Boolean" value="True"/>',b'').replace(b'00000',b'Light').replace(b'  <PreloadAnimatorEffects var="Array" type="System.String[]"/>\r\n  <TransConfigs var="Array" type="Assets.Scripts.GameLogic.TransformConfig[]">\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.TransformConfig"/>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.TransformConfig"/>\r\n  </TransConfigs>\r\n  <LookAt var="Com" type="Assets.Scripts.GameLogic.CameraLookAt">\r\n    <Offset var="Com" type="UnityEngine.Vector3">\r\n      <x var="String" type="System.Single" value="-0.07700014"/>\r\n      <y var="String" type="System.Single" value="1.689991"/>\r\n      <z var="String" type="System.Single" value="-1.183998"/>\r\n    </Offset>\r\n    <Direction var="Com" type="UnityEngine.Vector3">\r\n      <x var="String" type="System.Single" value="0.144031"/>\r\n      <y var="String" type="System.Single" value="0"/>\r\n      <z var="String" type="System.Single" value="0.9895732"/>\r\n    </Direction>\r\n    <Duration var="String" type="System.Single" value="1"/>\r\n  </LookAt>\r\n  <LightConfig var="Com" type="Assets.Scripts.GameLogic.PrepareBattleLightConfig"/>\r\n  <IdleShowConfigs var="Array" type="Assets.Scripts.GameLogic.IdleShowConfig[]">\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig">\r\n      <DisableDir00000 var="String" type="System.Boolean" value="True"/>\r\n    </Element>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig">\r\n      <DisableDir00000 var="String" type="System.Boolean" value="True"/>\r\n    </Element>\r\n    <Element var="Com" type="Assets.Scripts.GameLogic.IdleShowConfig"/>\r\n  </IdleShowConfigs>','',1)
     
             with open(Directory, 'wb') as f:
                 f.write(yan)
