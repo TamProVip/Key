@@ -164,7 +164,7 @@ def enc(path1=None):
 fixlag = '1'#input("\n>>> ")
 def process_input_numbers(numbers):
     return numbers 
-#CAMXA = input("\n\t\033[1;97m[\033[1;92m?\033[1;97m] MOD CAM XA Y/n: ")
+CAMXA = '3'#input("\n\t\033[1;97m[\033[1;92m?\033[1;97m] MOD CAM XA Y/n: ")
 cyyy =  Colors.StaticMIX((Col.light_blue, Col.light_gray, Col.light_red))
 input_numbers = input(Colorate.Diagonal(Colors.DynamicMIX((Col.red, cyyy)), ">> Enter Your IDSkin: "))
 numbers = [int(num) for num in input_numbers.split()]
