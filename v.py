@@ -1997,9 +1997,10 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                     f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN in ['11120'] and 'U1.xml' in file_path:
-                with open(file_path, 'rb') as f: sec = f.read().replace(b'SkinAvatarFilterType="9">',b'SkinAvatarFilterType="11">')
+                with open(file_path, 'rb') as f: 
+                    sec = f.read().replace(b'SkinAvatarFilterType="9">',b'SkinAvatarFilterType="11">')
                 with open(file_path, 'wb') as f:
-                    f.write(rpl)
+                    f.write(sec)
             if IDMODSKIN in ['11120','11119'] and 'A1B1.xml' in file_path:
                 with open(file_path, 'rb') as f: sec = f.read().replace(b'</Action>', b'    <Track trackName="SpawnLiteObjDuration0" eventType="SpawnLiteObjDuration" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Event eventName="SpawnLiteObjDuration" time="0.000" length="5.000" isDuration="true" guid="6d868a6f-8ee5-477f-b215-8168ab03ce28">\n        <String name="OutputLiteBulletName" value="111a1b1" refParamName="" useRefParam="false"/>\n        <uint name="ConfigID" value="11100" refParamName="" useRefParam="false"/>\n        <TemplateObject name="ReferenceID" id="0" objectName="\xe6\x94\xbb\xe5\x87\xbb\xe8\x80\x85" isTemp="false" refParamName="" useRefParam="false"/>\n        <TemplateObject name="TargetID" id="1" objectName="target" isTemp="false" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n    <Track trackName="StopTrack1" eventType="StopTrack" guid="4ce273d3-51d6-4fe0-8fbe-1ff46fefa576" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Condition id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" status="true"/>\n      <Event eventName="StopTrack" time="0.000" isDuration="false" guid="c0253b7e-2e8c-461d-919a-e5617c64555b">\n        <TrackObject name="trackId" id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n  </Action>')
                 with open(file_path,'wb') as f: f.write(sec)
@@ -2263,7 +2264,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
 
 #---------------—------------———----------------
             if IDMODSKIN =='15012' and 'U1.xml' in file_path:
-                with open(file_path, 'rb') as f: rpl = f.read().replace(b'CheckSkinIdVirtualTick',b'CheckSkinIdTick')
+                with open(file_path, 'rb') as f: rpl = f.read().replace(b'<int name="skinId" value="15092" refParamName="" useRefParam="false" />',b'<int name="skinId" value="15092" refParamName="" useRefParam="false" />\n        <bool name="useNegateValue" value="true" refParamName="" useRefParam="false" />')
                 with open(file_path, 'wb') as f: f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN =='10620' and 'S2.xml' not in file_path:
