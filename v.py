@@ -69,7 +69,7 @@ def menu_key():
     center_line("╰" + "─" * (box_width + 2) + "╯")
 
 menu_key()
-
+print('11/9 Update Vui Lòng Xoá Resources Cũ Để Tool Tải Resources Mới')
 # Đọc version từ file
 try:
     folders = os.listdir("Resources")
