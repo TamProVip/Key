@@ -69,7 +69,7 @@ def menu_key():
     center_line("╰" + "─" * (box_width + 2) + "╯")
 
 menu_key()
-print('11/9 Update Vui Lòng Xoá Resources Cũ Để Tool Tải Resources Mới')
+
 # Đọc version từ file
 try:
     folders = os.listdir("Resources")
@@ -141,39 +141,43 @@ def _giaima_file(filepath):
     except Exception as e:
         pass
 
-def enc(path1=None):
-    if path1 is None: path1 = input("Nhập đường dẫn: ")
-    for path in path1.split():
-        files = []
-        if os.path.isdir(path):
-            for f1, _, f2 in os.walk(path):
-                if 'imprint' not in f1.lower():
-                    files += [os.path.join(f1, f) for f in f2 if f.endswith(('.xml','.bytes','.txt'))]
-        elif os.path.isfile(path): files = [path]
-        for file in files:
-            try:
-                with open(file, 'rb') as f: b = f.read()
-                c = pyzstd.compress(b, 1, pyzstd.ZstdDict(ZSTD_DICT))
-                if file.endswith('.xml'): c += b"ModByYtbTamPro"
-                c += c[len(c)//2:len(c)//2+randint(3,4)]
-                c = b'"J\x00\xef' + len(b).to_bytes(4,'little') + c
-                with open(file, 'wb') as f: f.write(c)
-            except Exception as e:
-                pass
+def enc(path1):
+    Path = []
+
+    if os.path.isdir(path1):
+        for fo, foc, files in os.walk(path1):
+            for file in files:
+                O = os.path.join(fo, file)
+                Path.append(O)
+    elif os.path.isfile(path1):
+        Path.append(path1)
+    
+    for file_path in Path:
+        try:
+            with open(file_path, 'rb') as File:
+                All_Code = File.read()
+
+            Code = bytearray(pyzstd.compress(All_Code, 17, pyzstd.ZstdDict(ZSTD_DICT)))
+            if file_path.endswith('.xml'):
+                Code += b"MODBYRONAOV"
+                Code += Code[int(len(Code)//2):int(len(Code)//2)+randint(3, 1000)]
+            else:
+                Code += Code[int(len(Code)/2):int(len(Code)/2)+randint(3, 4)]
+            Code[0:0] = len(All_Code).to_bytes(4, byteorder="little")
+            Code[0:0] = b"\"J\x00\xef"
+
+            with open(file_path, 'wb') as File:
+                File.write(Code)
+            #print(f"✅ Đã nén: {file_path}")
+        except Exception as e:
+            pass
+
 #print("\033[36m[III]. Chọn Chức Năng Fix Lag\n   [1].Fix Lag AssetRefs\n   [2].Fix Lag Born\n   [3].Không Fix Lag")
 fixlag = '1'#input("\n>>> ")
-from pystyle import Colors, Col
-
-my_color = Colors.StaticMIX((Col.light_blue, Col.light_gray, Col.light_red))
-
-_builtin_print = print  # lưu print gốc
-
-def print(*args, **kwargs):
-    text = " ".join(str(a) for a in args)
-    _builtin_print(my_color + text + Colors.reset, **kwargs)
 def process_input_numbers(numbers):
     return numbers 
 CAMXA = '3'#input("\n\t\033[1;97m[\033[1;92m?\033[1;97m] MOD CAM XA Y/n: ")
+Anti = '1'
 cyyy =  Colors.StaticMIX((Col.light_blue, Col.light_gray, Col.light_red))
 input_numbers = input(Colorate.Diagonal(Colors.DynamicMIX((Col.red, cyyy)), ">> Enter Your IDSkin: "))
 numbers = [int(num) for num in input_numbers.split()]
@@ -198,13 +202,8 @@ TenSkinList = []
 for IDCC in IDMODSKIN:
     IDD1 = struct.pack("<I", int(IDCC))
     VTCT = VTR.find(IDD1)
-    if VTCT == -1:
-        print(f"Không tìm thấy {IDCC}")
-        continue
-
     ST1 = VTR[VTCT+12:VTCT+60].split(b"\x00",1)[0].decode("utf8","ignore")
     ST2 = VTR[VTCT+40:VTCT+80].split(b"\x00",1)[0].decode("utf8","ignore")
-
     C1 = C2 = ""
     for file in glob.glob(f"Resources/{Ver}/Languages/VN_Garena_VN/*.txt"):
         with open(file,"r",encoding="utf8",errors="ignore") as f:
@@ -679,167 +678,240 @@ for IDMODSKIN in IDMODSKIN1:
             phukienb = 'tim'
         if phukien12 == "2":
             phukienb = 'do'
-    
-    try:
-        id_mod = dec_to_hex(int(skinid.decode()))
-        id_0 = dec_to_hex(int(skinid[:3].decode() + '00'))
-        hero_actor = dec_to_hex(int(skinid[:3].decode()))
-        
-        with open(file_actor_mod, 'rb') as f:
-            strin = f.read()
-        pos_mod = strin.find(id_mod + b'\x00\x00' + hero_actor)
-        pos_base = strin.find(id_0 + b'\x00\x00' + hero_actor)
-        
-        if pos_mod != -1 and pos_base != -1:
-            actor_mod = strin[pos_mod - 4:pos_mod + hex_to_dec(strin[pos_mod - 4:pos_mod - 2])]
-            actor_0 = strin[pos_base - 4:pos_base + hex_to_dec(strin[pos_base - 4:pos_base - 2])]
-    
-            if skinid == b'16707':
-                actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
-                actor_mod=actor_mod.replace(b'\x07\x00\x00\x00301677',b'\x07\x00\x00\x00301670',1)
-                actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_16707\x2ejpg',b'\x12\x00\x00\x00Share_16707_2\x2ejpg').replace(b'\x0a\x00\x00\x0016707\x2ejpg',b'\x0c\x00\x00\x0016707_2\x2ejpg').replace(b'\x0b\x00\x00\x00301677\x2ejpg',b'\x0d\x00\x00\x00301677_2\x2ejpg').replace(b'\x0f\x00\x00\x00301677head\x2ejpg',b'\x11\x00\x00\x00301677_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x2d\x00\x00\x00\x42\x47\x5f\x77\x75\x6b\x6f\x6e\x67\x6a\x75\x65\x78\x69\x6e\x67\x32\x2f\x42\x47\x5f\x77\x75\x6b\x6f\x6e\x67\x6a\x75\x65\x78\x69\x6e\x67\x32\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d')
-            elif skinid == b'10620':
-                actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
-                actor_mod = actor_mod.replace(b'\x08\x00\x00\x003010620', b'\x07\x00\x00\x00301060', 1)
-            elif skinid == b'13311':
-                actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
-                actor_mod=actor_mod.replace(b'\x08\x00\x00\x003013311',b'\x07\x00\x00\x00301330',1)
-                actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_13311\x2ejpg',b'\x12\x00\x00\x00Share_13311_2\x2ejpg').replace(b'\x0a\x00\x00\x0013311\x2ejpg',b'\x0c\x00\x00\x0013311_2\x2ejpg').replace(b'\x0c\x00\x00\x003013311\x2ejpg',b'\x0e\x00\x00\x003013311_2\x2ejpg').replace(b'\x10\x00\x00\x003013311head\x2ejpg',b'\x12\x00\x00\x003013311_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x33\x00\x00\x00\x42\x47\x5f\x44\x69\x52\x65\x6e\x4a\x69\x65\x5f\x31\x33\x33\x31\x32\x5f\x54\x33\x2f\x42\x47\x5f\x79\x69\x6e\x79\x69\x6e\x67\x7a\x68\x69\x73\x68\x6f\x75\x5f\x30\x31\x5f\x70\x6c\x61\x74\x66\x6f\x72\x6d')
-            elif skinid == b'11620':
-                actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
-                actor_mod=actor_mod.replace(b'\x08\x00\x00\x003011620',b'\x07\x00\x00\x00301160',1)
-                actor_mod=actor_mod.replace(
-                b'\x25\x00\x00\x00\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x2F\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x5F\x50\x6C\x61\x74\x66\x6F\x72\x6D\x00',
-                b'\x36\x00\x00\x00\x42\x47\x5F\x44\x61\x6F\x46\x65\x6E\x67\x4A\x69\x4E\x69\x61\x6E\x67\x5F\x31\x31\x36\x32\x31\x2F\x42\x47\x5F\x79\x69\x6E\x79\x69\x6E\x67\x7A\x68\x69\x73\x68\x6F\x75\x5F\x30\x31\x5F\x70\x6C\x61\x74\x66\x6F\x72\x6D\x00').replace(
-                b'\x10\x00\x00\x00Share_11620\x2ejpg',
-                b'\x12\x00\x00\x00Share_11620_2\x2ejpg').replace(
-b'\x0a\x00\x00\x0011620\x2ejpg',
-                b'\x0c\x00\x00\x0011620_2\x2ejpg').replace(
-                b'\x0c\x00\x00\x003011620\x2ejpg',
-                b'\x0e\x00\x00\x003011620_2\x2ejpg').replace(
-                b'\x10\x00\x00\x003011620head\x2ejpg',
-                b'\x12\x00\x00\x003011620_2head\x2ejpg')
-            elif skinid == b'15412':
-                actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
-                actor_mod = actor_mod.replace(
-                    b'\x08\x00\x00\x003015412', b'\x07\x00\x00\x00301540', 1
-                ).replace(
-                    b'\x12\x00\x00\x003015412_B43_1', b'\x0c\x00\x00\x003015412', 1
-                )
-            else:
-                nhanDangId_0 = actor_0[64:]
-                nhanDangId_0 = nhanDangId_0[:hex_to_dec(nhanDangId_0[:2]) + 4]
-    
-                actor_mod = (
-                    actor_mod[:64] + nhanDangId_0 +
-                    actor_mod[64 + hex_to_dec(actor_mod[64:66]) + 4:]
-                )
-                actor_mod = actor_mod.replace(id_mod + b'\x00\x00' + hero_actor, id_0 + b'\x00\x00' + hero_actor)
-                actor_mod = actor_mod[:36] + b'\x00' + actor_mod[37:]
-            actor_mod = dec_to_hex(len(actor_mod) - 4) + actor_mod[2:]
-            dieukienmod=actor_mod
-            #print(dieukienmod)
-            strin = strin.replace(actor_0, actor_mod, 1)
-        with open(file_actor_mod, 'wb') as f:
-            f.write(strin)
-    
-    except Exception as bug:
-        print(bug)
-        print('\n\t\033[0m          [   \033[1;31mKhông Mod Heroskin Mặc Định\033[0m    ]')
-#-----------------------------------------------
-    print('Mod Skin Phụ')
-    try:
-        for nnn in range(1,30):
-            #nnn=int(nnn.decode()[3:])-1
-            with open(file_actor_mod,'rb') as f:
+    if IDCHECK in ["16707", "11620", "13311"]:
+        try:
+            id_mod = dec_to_hex(int(skinid.decode()))
+            id_0 = dec_to_hex(int(skinid[:3].decode() + '00'))
+            hero_actor = dec_to_hex(int(skinid[:3].decode()))
+            
+            with open(file_actor_mod, 'rb') as f:
                 strin = f.read()
-                hero_actor=dec_to_hex(int(skinid[:3].decode()))
-                id_mod=dec_to_hex(int(skinid.decode()))
-                pos = strin.find(id_mod+b'\x00\x00'+hero_actor)
-                if pos!=-1:
-                    actor_mod = strin[pos-4:pos+hex_to_dec(strin[pos-4:pos-2])]
-                    if skinid==b'16707':
-                        actor_mod=actor_mod.replace(b'\x07\x00\x00\x00301677',b'\x09\x00\x00\x00301677_2',1)
-                        actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_16707\x2ejpg',b'\x12\x00\x00\x00Share_16707_2\x2ejpg').replace(b'\x0a\x00\x00\x0016707\x2ejpg',b'\x0c\x00\x00\x0016707_2\x2ejpg').replace(b'\x0b\x00\x00\x00301677\x2ejpg',b'\x0d\x00\x00\x00301677_2\x2ejpg').replace(b'\x0f\x00\x00\x00301677head\x2ejpg',b'\x11\x00\x00\x00301677_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x2d\x00\x00\x00\x42\x47\x5f\x77\x75\x6b\x6f\x6e\x67\x6a\x75\x65\x78\x69\x6e\x67\x32\x2f\x42\x47\x5f\x77\x75\x6b\x6f\x6e\x67\x6a\x75\x65\x78\x69\x6e\x67\x32\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d')
-                        actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
-                    if skinid==b'13311':
-                        actor_mod=actor_mod.replace(b'\x08\x00\x00\x003013311',b'\x0a\x00\x00\x003013311_2',1)
-                        actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_13311\x2ejpg',b'\x12\x00\x00\x00Share_13311_2\x2ejpg').replace(b'\x0a\x00\x00\x0013311\x2ejpg',b'\x0c\x00\x00\x0013311_2\x2ejpg').replace(b'\x0c\x00\x00\x003013311\x2ejpg',b'\x0e\x00\x00\x003013311_2\x2ejpg').replace(b'\x10\x00\x00\x003013311head\x2ejpg',b'\x12\x00\x00\x003013311_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x33\x00\x00\x00\x42\x47\x5f\x44\x69\x52\x65\x6e\x4a\x69\x65\x5f\x31\x33\x33\x31\x32\x5f\x54\x33\x2f\x42\x47\x5f\x79\x69\x6e\x79\x69\x6e\x67\x7a\x68\x69\x73\x68\x6f\x75\x5f\x30\x31\x5f\x70\x6c\x61\x74\x66\x6f\x72\x6d')
-                        actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
-                    if skinid==b'11620':
-                        actor_mod=actor_mod.replace(b'\x08\x00\x00\x003011620',b'\x0a\x00\x00\x003011620_1',1)
-                        actor_mod=actor_mod.replace(b'\x25\x00\x00\x00\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x2F\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x5F\x50\x6C\x61\x74\x66\x6F\x72\x6D\x00',b'\x36\x00\x00\x00\x42\x47\x5F\x44\x61\x6F\x46\x65\x6E\x67\x4A\x69\x4E\x69\x61\x6E\x67\x5F\x31\x31\x36\x32\x31\x2F\x42\x47\x5F\x79\x69\x6E\x79\x69\x6E\x67\x7A\x68\x69\x73\x68\x6F\x75\x5F\x30\x31\x5F\x70\x6C\x61\x74\x66\x6F\x72\x6D\x00').replace(b'\x10\x00\x00\x00Share_11620\x2ejpg',b'\x12\x00\x00\x00Share_11620_2\x2ejpg').replace(b'\x0a\x00\x00\x0011620\x2ejpg',b'\x0c\x00\x00\x0011620_2\x2ejpg').replace(b'\x0c\x00\x00\x003011620\x2ejpg',b'\x0e\x00\x00\x003011620_2\x2ejpg').replace(b'\x10\x00\x00\x003011620head\x2ejpg',b'\x12\x00\x00\x003011620_2head\x2ejpg')
-                        actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
-                    id_2=dec_to_hex(int(skinid[:3].decode())*100+nnn)
-                    pos = strin.find(id_2+b'\x00\x00'+hero_actor)
-                    if pos !=-1:
-                        actor_2 = strin[pos-4:pos+hex_to_dec(strin[pos-4:pos-2])]
-                        re_2 = actor_mod[:4]+id_2+actor_mod[6:][:30]+dec_to_hex(nnn)+actor_mod[37:]
-                        if re_2!=b'' and actor_2!=b'' and nnn!=int(skinid[3:].decode()):
-                            strin=strin.replace(actor_2,re_2)
-                            with open(file_actor_mod,'wb') as f1:
-                                f1.write(strin)
-    except Exception as bug:
-        print(bug)
-    try:
-        print('Mod HeroSkinShop')
-        id_0_list = []
-        base_id = int(skinid[:3].decode()) * 100
-        for i in range(31):  # từ 00 đến 30
-            id_0_list.append(dec_to_hex(base_id + i))
+            pos_mod = strin.find(id_mod + b'\x00\x00' + hero_actor)
+            pos_base = strin.find(id_0 + b'\x00\x00' + hero_actor)
+            
+            if pos_mod != -1 and pos_base != -1:
+                actor_mod = strin[pos_mod - 4:pos_mod + hex_to_dec(strin[pos_mod - 4:pos_mod - 2])]
+                actor_0 = strin[pos_base - 4:pos_base + hex_to_dec(strin[pos_base - 4:pos_base - 2])]
+        
+                if skinid == b'16707':
+                    actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
+                    actor_mod=actor_mod.replace(b'\x07\x00\x00\x00301677',b'\x07\x00\x00\x00301670',1)
+                    actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_16707\x2ejpg',b'\x12\x00\x00\x00Share_16707_2\x2ejpg').replace(b'\x0a\x00\x00\x0016707\x2ejpg',b'\x0c\x00\x00\x0016707_2\x2ejpg').replace(b'\x0b\x00\x00\x00301677\x2ejpg',b'\x0d\x00\x00\x00301677_2\x2ejpg').replace(b'\x0f\x00\x00\x00301677head\x2ejpg',b'\x11\x00\x00\x00301677_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x2d\x00\x00\x00\x42\x47\x5f\x77\x75\x6b\x6f\x6e\x67\x6a\x75\x65\x78\x69\x6e\x67\x32\x2f\x42\x47\x5f\x77\x75\x6b\x6f\x6e\x67\x6a\x75\x65\x78\x69\x6e\x67\x32\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d')
+                elif skinid == b'10620':
+                    actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
+                    actor_mod = actor_mod.replace(b'\x08\x00\x00\x003010620', b'\x07\x00\x00\x00301060', 1)
+                elif skinid == b'13311':
+                    actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
+                    actor_mod=actor_mod.replace(b'\x08\x00\x00\x003013311',b'\x07\x00\x00\x00301330',1)
+                    actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_13311\x2ejpg',b'\x12\x00\x00\x00Share_13311_2\x2ejpg').replace(b'\x0a\x00\x00\x0013311\x2ejpg',b'\x0c\x00\x00\x0013311_2\x2ejpg').replace(b'\x0c\x00\x00\x003013311\x2ejpg',b'\x0e\x00\x00\x003013311_2\x2ejpg').replace(b'\x10\x00\x00\x003013311head\x2ejpg',b'\x12\x00\x00\x003013311_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x33\x00\x00\x00\x42\x47\x5f\x44\x69\x52\x65\x6e\x4a\x69\x65\x5f\x31\x33\x33\x31\x32\x5f\x54\x33\x2f\x42\x47\x5f\x79\x69\x6e\x79\x69\x6e\x67\x7a\x68\x69\x73\x68\x6f\x75\x5f\x30\x31\x5f\x70\x6c\x61\x74\x66\x6f\x72\x6d')
+                elif skinid == b'11620':
+                    actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
+                    actor_mod=actor_mod.replace(b'\x08\x00\x00\x003011620',b'\x07\x00\x00\x00301160',1)
+                    actor_mod=actor_mod.replace(
+                    b'\x25\x00\x00\x00\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x2F\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x5F\x50\x6C\x61\x74\x66\x6F\x72\x6D\x00',
+                    b'\x36\x00\x00\x00\x42\x47\x5F\x44\x61\x6F\x46\x65\x6E\x67\x4A\x69\x4E\x69\x61\x6E\x67\x5F\x31\x31\x36\x32\x31\x2F\x42\x47\x5F\x79\x69\x6E\x79\x69\x6E\x67\x7A\x68\x69\x73\x68\x6F\x75\x5F\x30\x31\x5F\x70\x6C\x61\x74\x66\x6F\x72\x6D\x00').replace(
+                    b'\x10\x00\x00\x00Share_11620\x2ejpg',
+                    b'\x12\x00\x00\x00Share_11620_2\x2ejpg').replace(
+    b'\x0a\x00\x00\x0011620\x2ejpg',
+                    b'\x0c\x00\x00\x0011620_2\x2ejpg').replace(
+                    b'\x0c\x00\x00\x003011620\x2ejpg',
+                    b'\x0e\x00\x00\x003011620_2\x2ejpg').replace(
+                    b'\x10\x00\x00\x003011620head\x2ejpg',
+                    b'\x12\x00\x00\x003011620_2head\x2ejpg')
+                elif skinid == b'15412':
+                    actor_mod = actor_mod[:4] + actor_0[4:10] + actor_mod[10:36] + b'\x00' + actor_mod[37:]
+                    actor_mod = actor_mod.replace(
+                        b'\x08\x00\x00\x003015412', b'\x07\x00\x00\x00301540', 1
+                    ).replace(
+                        b'\x12\x00\x00\x003015412_B43_1', b'\x0c\x00\x00\x003015412', 1
+                    )
+                else:
+                    nhanDangId_0 = actor_0[64:]
+                    nhanDangId_0 = nhanDangId_0[:hex_to_dec(nhanDangId_0[:2]) + 4]
+        
+                    actor_mod = (
+                        actor_mod[:64] + nhanDangId_0 +
+                        actor_mod[64 + hex_to_dec(actor_mod[64:66]) + 4:]
+                    )
+                    actor_mod = actor_mod.replace(id_mod + b'\x00\x00' + hero_actor, id_0 + b'\x00\x00' + hero_actor)
+                    actor_mod = actor_mod[:36] + b'\x00' + actor_mod[37:]
+                actor_mod = dec_to_hex(len(actor_mod) - 4) + actor_mod[2:]
+                dieukienmod=actor_mod
+                #print(dieukienmod)
+                strin = strin.replace(actor_0, actor_mod, 1)
+            with open(file_actor_mod, 'wb') as f:
+                f.write(strin)
+        
+        except Exception as bug:
+            print(bug)
+            print('\n\t\033[0m          [   \033[1;31mKhông Mod Heroskin Mặc Định\033[0m    ]')
+    #-----------------------------------------------
+        print('Mod Skin Phụ')
+        try:
+            for nnn in range(1,30):
+                #nnn=int(nnn.decode()[3:])-1
+                with open(file_actor_mod,'rb') as f:
+                    strin = f.read()
+                    hero_actor=dec_to_hex(int(skinid[:3].decode()))
+                    id_mod=dec_to_hex(int(skinid.decode()))
+                    pos = strin.find(id_mod+b'\x00\x00'+hero_actor)
+                    if pos!=-1:
+                        actor_mod = strin[pos-4:pos+hex_to_dec(strin[pos-4:pos-2])]
+                        if skinid==b'16707':
+                            actor_mod=actor_mod.replace(b'\x07\x00\x00\x00301677',b'\x09\x00\x00\x00301677_2',1)
+                            actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_16707\x2ejpg',b'\x12\x00\x00\x00Share_16707_2\x2ejpg').replace(b'\x0a\x00\x00\x0016707\x2ejpg',b'\x0c\x00\x00\x0016707_2\x2ejpg').replace(b'\x0b\x00\x00\x00301677\x2ejpg',b'\x0d\x00\x00\x00301677_2\x2ejpg').replace(b'\x0f\x00\x00\x00301677head\x2ejpg',b'\x11\x00\x00\x00301677_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x2d\x00\x00\x00\x42\x47\x5f\x77\x75\x6b\x6f\x6e\x67\x6a\x75\x65\x78\x69\x6e\x67\x32\x2f\x42\x47\x5f\x77\x75\x6b\x6f\x6e\x67\x6a\x75\x65\x78\x69\x6e\x67\x32\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d')
+                            actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
+                        if skinid==b'13311':
+                            actor_mod=actor_mod.replace(b'\x08\x00\x00\x003013311',b'\x0a\x00\x00\x003013311_2',1)
+                            actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_13311\x2ejpg',b'\x12\x00\x00\x00Share_13311_2\x2ejpg').replace(b'\x0a\x00\x00\x0013311\x2ejpg',b'\x0c\x00\x00\x0013311_2\x2ejpg').replace(b'\x0c\x00\x00\x003013311\x2ejpg',b'\x0e\x00\x00\x003013311_2\x2ejpg').replace(b'\x10\x00\x00\x003013311head\x2ejpg',b'\x12\x00\x00\x003013311_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x33\x00\x00\x00\x42\x47\x5f\x44\x69\x52\x65\x6e\x4a\x69\x65\x5f\x31\x33\x33\x31\x32\x5f\x54\x33\x2f\x42\x47\x5f\x79\x69\x6e\x79\x69\x6e\x67\x7a\x68\x69\x73\x68\x6f\x75\x5f\x30\x31\x5f\x70\x6c\x61\x74\x66\x6f\x72\x6d')
+                            actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
+                        if skinid==b'11620':
+                            actor_mod=actor_mod.replace(b'\x08\x00\x00\x003011620',b'\x0a\x00\x00\x003011620_1',1)
+                            actor_mod=actor_mod.replace(b'\x25\x00\x00\x00\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x2F\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x5F\x50\x6C\x61\x74\x66\x6F\x72\x6D\x00',b'\x36\x00\x00\x00\x42\x47\x5F\x44\x61\x6F\x46\x65\x6E\x67\x4A\x69\x4E\x69\x61\x6E\x67\x5F\x31\x31\x36\x32\x31\x2F\x42\x47\x5F\x79\x69\x6E\x79\x69\x6E\x67\x7A\x68\x69\x73\x68\x6F\x75\x5F\x30\x31\x5F\x70\x6C\x61\x74\x66\x6F\x72\x6D\x00').replace(b'\x10\x00\x00\x00Share_11620\x2ejpg',b'\x12\x00\x00\x00Share_11620_2\x2ejpg').replace(b'\x0a\x00\x00\x0011620\x2ejpg',b'\x0c\x00\x00\x0011620_2\x2ejpg').replace(b'\x0c\x00\x00\x003011620\x2ejpg',b'\x0e\x00\x00\x003011620_2\x2ejpg').replace(b'\x10\x00\x00\x003011620head\x2ejpg',b'\x12\x00\x00\x003011620_2head\x2ejpg')
+                            actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
+                        id_2=dec_to_hex(int(skinid[:3].decode())*100+nnn)
+                        pos = strin.find(id_2+b'\x00\x00'+hero_actor)
+                        if pos !=-1:
+                            actor_2 = strin[pos-4:pos+hex_to_dec(strin[pos-4:pos-2])]
+                            re_2 = actor_mod[:4]+id_2+actor_mod[6:][:30]+dec_to_hex(nnn)+actor_mod[37:]
+                            if re_2!=b'' and actor_2!=b'' and nnn!=int(skinid[3:].decode()):
+                                strin=strin.replace(actor_2,re_2)
+                                with open(file_actor_mod,'wb') as f1:
+                                    f1.write(strin)
+        except Exception as bug:
+            print(bug)
+        try:
+            print('Mod HeroSkinShop')
+            id_0_list = []
+            base_id = int(skinid[:3].decode()) * 100
+            for i in range(31):  # từ 00 đến 30
+                id_0_list.append(dec_to_hex(base_id + i))
+        
+            id_mod = dec_to_hex(int(skinid.decode()))
+            with open(file_shop_mod, 'rb') as f:
+                strin = f.read()
+                hero_actor = hex(int(skinid[:3].decode()))[2:]
+                if len(hero_actor) % 2 == 1:
+                    hero_actor = '0' + hero_actor
+                hero_actor = bytes.fromhex(hero_actor)
+                hero_actor = hero_actor[1:] + hero_actor[:1]
+        
+                for id_0 in id_0_list:
+                    pos = strin.find(id_0 + b'\x00\x00' + hero_actor)
+                    if pos != -1:
+                        pos2 = strin[pos-4:pos-2]
+                        pos2 = pos2.hex()
+                        pos2 = pos2[2:] + pos2[:2]
+                        pos2 = int(pos2, 16)
+                        hs_0 = strin[pos-4:pos+pos2]
+        
+                        pos_mod = strin.find(id_mod + b'\x00\x00' + hero_actor)
+                        if pos_mod != -1:
+                            pos2 = hex_to_dec(strin[pos_mod-4:pos_mod-2])
+                            hs_mod = strin[pos_mod-4:pos_mod+pos2]
+                            if skinid in [b'13311', b'11620']:
+                                with open(f'./Resources/{Ver}/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
+                                    strin2 = decompress_(f.read(), ZSTD_DICT)
+                                posx = strin2.find(b'\x43\x41\x00\x00\xA7')
+                                hs_mod = strin2[posx-4:posx+hex_to_dec(strin2[posx-4:posx-2])]
+                                hs_mod = hs_mod.replace(b'\x43\x41\x00\x00\xA7', b'\xFF\x33\x00\x00\x85')
+                                hs_mod = hs_mod[:36] + b'\x0B' + hs_mod[37:]
+                                hs_mod = hs_mod.replace(b'Awake_Label_1', b'Awake_Label_5')
+        
+                            if skinid == b'16707':
+                                hs_mod = hs_mod.replace(b'Awake_Label_1', b'Awake_Label_5')
+                        else:
+                            hs_mod = b'\x2C\x01\x00\x00PMINMOD\x00\x00\x14\x00\x00\x00\x42\x46\x42\x37\x36\x35\x44\x41\x30\x33\x33\x42\x39\x41\x32\x32\x5F\x23\x23\x00\x0B\x00\x00\x00\x14\x00\x00\x00\x33\x39\x36\x37\x36\x31\x39\x30\x34\x42\x32\x36\x45\x44\x45\x30\x5F\x23\x23\x00\x14\x00\x00\x00\x34\x42\x42\x32\x36\x42\x33\x36\x45\x32\x39\x30\x39\x31\x30\x37\x5F\x23\x23\x00\x01\x01\x00\x00\x00\x00\x01\x00\x00\x00\x00\x16\x00\x00\x00\x4C\x61\x62\x65\x6C\x5F\x53\x53\x53\x5F\x4C\x69\x6D\x69\x74\x65\x64\x2E\x70\x6E\x67\x00\x03\x00\x14\x00\x00\x00\x42\x46\x42\x42\x35\x39\x41\x35\x44\x37\x45\x36\x32\x33\x43\x36\x5F\x23\x23\x00\x00\x48\x0B\x00\x00\x00\x00\x00\x00\x00\x00\x48\x0B\x00\x00\x00\x00\x1C\x00\x00\x00\x00\xD2\x0A\x3D\x00\x00\x3F\xFC\x01\x00\x40\xFC\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0F\x00\x00\x00\x32\x30\x32\x31\x30\x32\x30\x38\x30\x30\x30\x30\x30\x30\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xCF\x84\x01\x00\x01\x01\x00\x00\x06\x1C\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00'
+                            t = dec_to_hex(int(skinid.decode())) + b'\x00\x00' + dec_to_hex(int(skinid.decode()[:3]))
+                            if len(t) == 5:
+                                t += b'\x00'
+                            hs_mod = hs_mod.replace(b'PMINMOD', t)
+                        hs_mod = hs_mod[:4] + hs_0[4:][:2] + hs_mod[6:]
+                        hs_mod = hs_mod[:36] + hs_0[36:][:1] + hs_mod[37:]
+        
+                        strin = strin.replace(hs_0, hs_mod)
+                with open(file_shop_mod, 'wb') as f1:
+                    f1.write(strin)
+        
+        except Exception as e:
+            import traceback
+            print(Fore.RED+Style.BRIGHT+'Không Mod HeroSkinShop'+Style.RESET_ALL)
+            print("Chi tiết lỗi:", e)
+            traceback.print_exc()
     
-        id_mod = dec_to_hex(int(skinid.decode()))
-        with open(file_shop_mod, 'rb') as f:
-            strin = f.read()
-            hero_actor = hex(int(skinid[:3].decode()))[2:]
-            if len(hero_actor) % 2 == 1:
-                hero_actor = '0' + hero_actor
-            hero_actor = bytes.fromhex(hero_actor)
-            hero_actor = hero_actor[1:] + hero_actor[:1]
-    
-            for id_0 in id_0_list:
-                pos = strin.find(id_0 + b'\x00\x00' + hero_actor)
-                if pos != -1:
-                    pos2 = strin[pos-4:pos-2]
-                    pos2 = pos2.hex()
-                    pos2 = pos2[2:] + pos2[:2]
-                    pos2 = int(pos2, 16)
-                    hs_0 = strin[pos-4:pos+pos2]
-    
-                    pos_mod = strin.find(id_mod + b'\x00\x00' + hero_actor)
-                    if pos_mod != -1:
-                        pos2 = hex_to_dec(strin[pos_mod-4:pos_mod-2])
-                        hs_mod = strin[pos_mod-4:pos_mod+pos2]
-                        if skinid in [b'13311', b'11620']:
-                            with open(f'./Resources/{Ver}/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
-                                strin2 = decompress_(f.read(), ZSTD_DICT)
-                            posx = strin2.find(b'\x43\x41\x00\x00\xA7')
-                            hs_mod = strin2[posx-4:posx+hex_to_dec(strin2[posx-4:posx-2])]
-                            hs_mod = hs_mod.replace(b'\x43\x41\x00\x00\xA7', b'\xFF\x33\x00\x00\x85')
-                            hs_mod = hs_mod[:36] + b'\x0B' + hs_mod[37:]
-                            hs_mod = hs_mod.replace(b'Awake_Label_1', b'Awake_Label_5')
-    
-                        if skinid == b'16707':
-                            hs_mod = hs_mod.replace(b'Awake_Label_1', b'Awake_Label_5')
-                    else:
-                        hs_mod = b'\x2C\x01\x00\x00PMINMOD\x00\x00\x14\x00\x00\x00\x42\x46\x42\x37\x36\x35\x44\x41\x30\x33\x33\x42\x39\x41\x32\x32\x5F\x23\x23\x00\x0B\x00\x00\x00\x14\x00\x00\x00\x33\x39\x36\x37\x36\x31\x39\x30\x34\x42\x32\x36\x45\x44\x45\x30\x5F\x23\x23\x00\x14\x00\x00\x00\x34\x42\x42\x32\x36\x42\x33\x36\x45\x32\x39\x30\x39\x31\x30\x37\x5F\x23\x23\x00\x01\x01\x00\x00\x00\x00\x01\x00\x00\x00\x00\x16\x00\x00\x00\x4C\x61\x62\x65\x6C\x5F\x53\x53\x53\x5F\x4C\x69\x6D\x69\x74\x65\x64\x2E\x70\x6E\x67\x00\x03\x00\x14\x00\x00\x00\x42\x46\x42\x42\x35\x39\x41\x35\x44\x37\x45\x36\x32\x33\x43\x36\x5F\x23\x23\x00\x00\x48\x0B\x00\x00\x00\x00\x00\x00\x00\x00\x48\x0B\x00\x00\x00\x00\x1C\x00\x00\x00\x00\xD2\x0A\x3D\x00\x00\x3F\xFC\x01\x00\x40\xFC\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0F\x00\x00\x00\x32\x30\x32\x31\x30\x32\x30\x38\x30\x30\x30\x30\x30\x30\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xCF\x84\x01\x00\x01\x01\x00\x00\x06\x1C\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00'
-                        t = dec_to_hex(int(skinid.decode())) + b'\x00\x00' + dec_to_hex(int(skinid.decode()[:3]))
-                        if len(t) == 5:
-                            t += b'\x00'
-                        hs_mod = hs_mod.replace(b'PMINMOD', t)
-                    hs_mod = hs_mod[:4] + hs_0[4:][:2] + hs_mod[6:]
-                    hs_mod = hs_mod[:36] + hs_0[36:][:1] + hs_mod[37:]
-    
-                    strin = strin.replace(hs_0, hs_mod)
-            with open(file_shop_mod, 'wb') as f1:
-                f1.write(strin)
-    
-    except Exception as e:
-        import traceback
-        print(Fore.RED+Style.BRIGHT+'Không Mod HeroSkinShop'+Style.RESET_ALL)
-        print("Chi tiết lỗi:", e)
-        traceback.print_exc()
-
+    if IDCHECK not in ["16707", "11620", "13311"]:
+        ID = IDCHECK
+        Show = 'y'
+        IDB = int(ID).to_bytes(4, byteorder="little")
+        IDH = int(ID[0:3]).to_bytes(4, byteorder="little")
+        Files = [file_actor_mod, file_shop_mod]
+        for File in Files:
+            All = []
+            Skin = ""
+            file = open(File, "rb")
+            Code = file.read()
+            Find= -10
+            while True:
+                Find = Code.find(b"\x00\x00"+IDH, Find+10)
+                if Find == -1: break
+                elif str(int.from_bytes(Code[Find-2:Find], byteorder="little"))[0:3] == ID[0:3]:
+                    VT2 = int.from_bytes(Code[Find-6:Find-4], byteorder="little")
+                    Code2 = Code[Find-6:Find-6+VT2]
+                    All.append(Code2)
+                    if Code2.find(IDB) != -1: Skin=Code2
+            if Skin == "":
+                print("\n \033[1;31m The id couldn't be found in " + File + " file!")
+                IDNew = input("\n\033[1;36m  Enter an alternate skin ID: ")
+                IDK = int(IDNew).to_bytes(4, byteorder="little")
+                IDH2 = int(IDNew[0:3]).to_bytes(4, byteorder="little")
+                Find = Code.find(IDK+IDH2)
+                Sum = int.from_bytes(Code[Find-4:Find-2], byteorder="little")
+                Skin = Code[Find-4:Find-4+Sum]
+            for Id in All:
+                Cache = Skin.replace(Skin[4:6], Id[4:6], 1)
+                Cache = Cache.replace(Cache[35:44], Id[35:40]+Cache[40:44],1)
+                if Show == "y":
+                    if Id == Skin:
+                        Cache = Cache.replace(Skin[35:44], b"\x00" * 5 + b"\x14" + b"\x00" *3, 1)
+                    if Id == All[0]:
+                        Cache = Cache.replace(Id[35:44], Skin[35:44], 1)
+                Hero = hex(int(ID[0:3]))[2:]
+                if len(Hero) == 3: Hero = Hero[1:3] + "0" + Hero[0]
+                else: Hero+="00"
+                Hero += "0000"
+                Hero = bytes.fromhex(Hero)
+                Cache = Cache.replace(Cache[8:12],Hero,1)
+                if File == Files[0]:
+                    if Id == All[0]:
+                        ID30 = b"\x07\x00\x00\x0030" + bytes(ID[0:3] + "0", "utf8") + b"\x00"
+                        XYZ = Cache[64]
+                        ID0 = Cache[64: 68 + XYZ]
+                        Cache = Cache.replace(ID0, ID30, 1)
+                        VT = Id.find(b"Hero_")
+                        NumHero = Id[VT - 4]
+                        Hero = Id[VT - 4: VT + NumHero]
+                        Cache = Cache.replace(b"jpg\x00\x01\x00\x00\x00\x00", b"jpg\x00" + Hero)
+                        Full = Cache.count(Hero)
+                        if Full > 1:
+                            Cache = Cache.replace(b"jpg\x00" + Hero, b"jpg\x00\x01\x00\x00\x00\x00", Full - 1)
+                        EndTheCode = hex(len(Cache))
+                        if len(EndTheCode) == 5:
+                            EndTheCode = EndTheCode[3:5] + "0" + EndTheCode[2:3]
+                        else:
+                            EndTheCode = EndTheCode[4:6] + EndTheCode[2:4]
+                        EndTheCode = bytes.fromhex(EndTheCode)
+                        Cache = Cache.replace(Cache[0:2], EndTheCode, 1)
+                Code = Code.replace(Id, Cache, 1)
+                dieukienmod1=[]
+                dieukienmod1.append(Cache)
+                for dieukienmod2 in dieukienmod1:
+                    if b"Hero" in dieukienmod2:
+                         dieukienmod = dieukienmod2
+                #print(Cache)
+            file = open(File, "wb")
+            W = file.write(Code)
+            file.close()
+        print('  Icon - BG : Done')
 #----------------------------------------------
     if len(IDMODSKIN1) == 1:
         if b'Skin_Icon_HeadFrame' in dieukienmod:
@@ -1033,6 +1105,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                 with open(fileasset_mod, 'wb') as f:
                     f.write(strin)
                 process_directory(fileasset_mod, '2')
+                
     
     print('[✓] Âm Thanh Databin')
     if IDCHECK == "53002" or b"Skin_Icon_SoundEffect" in dieukienmod or b"Skin_Icon_Dialogue" in dieukienmod:
@@ -1102,6 +1175,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
 
             with open(os.path.join(sound_directory, sound_file_name), "wb") as sound_file:
                 sound_file.write(sound_data)
+            
             print(f"     Sound: {sound_file_name}  Done")
     print(f"{'+ Trạng Thái Mod':<25}")
 #----------------------------------------------
@@ -1151,10 +1225,10 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                         new_code = Code.replace(full_code, b'')
                         with open(file_mod_Character, 'wb') as f:
                             f.write(new_code)
+                        
                         print(f'    Fix Mất Ngoại Hình - {IDMODSKIN}')
 #----------------------------------------------
     if IDCHECK == "53002" or b"Skin_Icon_Skill" in dieukienmod or b"Skin_Icon_BackToTown" in dieukienmod:
-        
         def B2Js(blocks_data):
             offset = 140
             blocks = []
@@ -1526,6 +1600,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
 
             print('    [-] ' + os.path.basename(file_mod_skill2) + '    Done')
         process_file_skillmark(file_mod_skill2,2)
+        
 #-----------------------------------------------
     with open(f'{FolderMod}/Resources/1.59.1/Databin/Client/Motion/ResSkinMotionBaseCfg.bytes','rb') as f:
         strin=f.read()
@@ -1997,7 +2072,7 @@ b'\x0a\x00\x00\x0011620\x2ejpg',
                     f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN in ['11120'] and 'U1.xml' in file_path:
-                with open(file_path, 'rb') as f: 
+                with open(file_path, 'rb') as f:
                     sec = f.read().replace(b'SkinAvatarFilterType="9">',b'SkinAvatarFilterType="11">')
                 with open(file_path, 'wb') as f:
                     f.write(sec)
@@ -2325,7 +2400,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #-----------------------------------------------
-    IDNODMODCHECK = ['13210', '13011', '52414', '15015', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408','52113','13118']
+    IDNODMODCHECK = ['13210', '13011', '52414', '15015', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408','52113','13118','11119','56301','15903']
     
     if IDCHECK not in IDNODMODCHECK:
         directorypath = Files_Directory_Path + f'{NAME_HERO}' + '/skill/'
@@ -2545,14 +2620,44 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
         
             with open(File_Check_Code, "wb") as f:
                 f.write(All)
-        #if IDCHECK == '59901' and 'S1B1.xml' in file:
-            #with open(File_Check_Code, "rb") as f:
-                #All = f.read()
-            #All=All.replace(
-            #b'489244d8-5e63-43fc-a238-4941e1b4d289" enabled="true', 
-            #b'489244d8-5e63-43fc-a238-4941e1b4d289" enabled="false')
-            #with open(File_Check_Code, "wb") as f:
-                #f.write(All)
+        if IDMODSKIN == '56301':
+            with open(File_Check_Code, "rb") as f:
+                All = f.read()
+    
+            tracks = re.findall(rb'(<Track trackName=".*?</Track>)', All, flags=re.DOTALL)
+            for t in tracks:
+                t_low = t.lower()
+                if (b"stoptrack" in t_low or b"spawnobjectduration" in t_low or
+                    b"spawnbullettick" in t_low or b"setactorvisibilitytick" in t_low or
+                    b"simplespawnbufftick" in t_low or b'checkskillcombineconditiontick' in t_low):
+                    continue
+    
+                All = All.replace(
+                    t,
+                    t.replace(b'<SkinOrAvatarList id="56301" />', b'')
+                )
+    
+            with open(File_Check_Code, "wb") as f:
+                f.write(All)
+        if IDMODSKIN == '15903':
+            with open(File_Check_Code, "rb") as f:
+                All = f.read()
+    
+            tracks = re.findall(rb'(<Track trackName=".*?</Track>)', All, flags=re.DOTALL)
+            for t in tracks:
+                t_low = t.lower()
+                if (b"filtertargettype" in t_low or b"spawnobjectduration" in t_low or
+                    b"spawnbullettick" in t_low or b"setactorvisibilitytick" in t_low or
+                    b"simplespawnbufftick" in t_low or b'checkskillcombineconditiontick' in t_low or b'stoptrack' in t_low):
+                    continue
+    
+                All = All.replace(
+                    t,
+                    t.replace(b'<SkinOrAvatarList id="15903" />', b'')
+                )
+    
+            with open(File_Check_Code, "wb") as f:
+                f.write(All)
         if IDCHECK == '59901' and file not in ['S1B1.xml','Back.xml','P10E2.xml']:
           with open(File_Check_Code,"rb") as f:
             data=f.read()
@@ -2653,7 +2758,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 if (filename in ['S1.xml', 'S1B1.xml', 'S1B2.xml'] and IDCODE == "14111") or \
                        (filename in ['S2.xml', 'S21.xml', 'S22.xml'] and IDCODE == "13011") or \
                        (filename not in ['13210_Back.xml', 'S2B2.xml', 't2p1.xml', 't2p2.xml'] and IDCODE == "13210") or \
-                       (filename == 'P1E5.xml' and IDCODE[:3] == '131') or \
+                       (filename == 'P1E5.xml' and IDCODE == '13199') or \
                        (filename != 'S1B1.xml' and IDCODE == '13609') or \
                        (filename != 'U1E1.xml' and IDCODE == '10611') or \
                        (filename == 'U1.xml' and IDCODE == '10611') or \
@@ -2755,6 +2860,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     )
             with open(duongdan, 'wb') as f:
                 f.write(content)
+            enc(duongdan)
     if IDCHECK == '15013':
         Youtuber_Name = f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/PassiveResource/BlueBuff_CD.xml'
         giai(Youtuber_Name)
@@ -2766,6 +2872,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                                   b'prefab_skill_effects/hero_skill_effects/150_hanxin/15013/')
         with open(Youtuber_Name, 'wb') as f:
             f.write(noidung)
+        enc(Youtuber_Name)
     try:
         with open(f'Resources/{Ver}/assetbundle/resourceverificationinfosetall.assetbundle','rb') as f:
             strin=f.read()
@@ -2819,82 +2926,83 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
         Read = Read.replace("NUM", str(NUM))
 
         with open(PathBorn, "w", encoding='utf-8') as F: F.write(Read)
+        enc(PathBorn)
 #-----------------------------------------------
-    if IDCHECK in ("50108","14111","11107","15009","13015","13314"):
-        organSkin = f"Resources/{Ver}/Databin/Client/Actor/organSkin.bytes"
-        organSkin_mod = f"{FolderMod}/Resources/{Ver}/Databin/Client/Actor/organSkin.bytes"
-        shutil.copy(organSkin, organSkin_mod)
-        giai(organSkin_mod)
-        ID = IDCHECK
-        file = open(organSkin_mod, "rb")
-        IDN = str(hex(int(ID)))
-        IDN = IDN[4:6] + IDN[2:4]
-        IDN = bytes.fromhex(IDN)
-        ALL_ID = []
-        MD = int(ID[0:3] + "00")
-        for IDNew in range(21):
-            ALL_ID.append(str(MD))
-            MD += 1
-        ALL_ID.remove(ID)
-        for x in range(20):
-            IDK = str(hex(int(ALL_ID[x])))
-            IDK = IDK[4:6] + IDK[2:4]
-            IDK = bytes.fromhex(IDK)
-            ALL_ID[x] = IDK
-        Begin = file.read(140)
-        Read = b"\x00"
-        All = []
-        while Read != b"":
-            Read = file.read(36)
-            if Read.find(IDN) != -1:
-                All.append(Read)
-            try:
-                Max = Read[4] + (Read[5]*256)
-                Max0 = str(hex(Max))
-                if len(Max0) == 4:
-                    Max0 = Max0[2:4] + "00"
-                if len(Max0) == 5:
-                    Max0 = Max0[3:5] + "0" + Max0[2]
-                if len(Max0) == 6:
-                    Max0 = Max0[4:6] + Max0[2:4]
-                Max0 = bytes.fromhex(Max0)
-            except:
-                None
-        file.close()
-        file = open(organSkin_mod, "ab+")
-        Read0 = file.read()
-        for i in range(len(ALL_ID)):
-            for j in range(len(All)):
-                CT = All[j]
-                if CT.find(IDN) != -1:
-                    CT = CT.replace(IDN,ALL_ID[i])
-                else:
-                    CT = CT.replace(ALL_ID[i-1],ALL_ID[i])
-                CTN = str(hex(Max0[0]+(Max0[1]*256)+1))
-                if len(CTN) == 4:
-                    CTN = CTN[2:4]
-                if len(CTN) == 5:
-                    CTN = CTN[3:5] + "0" + CTN[2]
-                if len(CTN) == 6:
-                    CTN = CTN[4:6] + CTN[2:4]
-                CTN = bytes.fromhex(CTN)
-                OZ = b" \x00\x00\x00"
-                if len(CTN) == 1:
-                    CT = CT.replace(OZ+CT[4:6],OZ+CTN+b"\x00",1)
-                if len(CTN) == 2:
-                    CT = CT.replace(OZ+CT[4:6],OZ+CTN,1)
-                All[j] = CT
-                XXX = file.write(CT)
-                Max0 = CT[4:6]
-        file.close()
-        file = open(organSkin_mod, "rb")
-        Read = file.read()
-        Read = Read.replace(Begin[12:14],Max0,1)
-        file.close()
-        file = open(organSkin_mod, "wb")
-        Z = file.write(Read)
-        file.close()
-
+        if IDCHECK in ("50108","14111","11107","15009","13015","13314"):
+            organSkin = f"Resources/{Ver}/Databin/Client/Actor/organSkin.bytes"
+            organSkin_mod = f"{FolderMod}/Resources/{Ver}/Databin/Client/Actor/organSkin.bytes"
+            shutil.copy(organSkin, organSkin_mod)
+            giai(organSkin_mod)
+        if IDCHECK in ("50108","14111","11107","15009","13015","13314"):
+            ID = IDCHECK
+            file = open(organSkin_mod, "rb")
+            IDN = str(hex(int(ID)))
+            IDN = IDN[4:6] + IDN[2:4]
+            IDN = bytes.fromhex(IDN)
+            ALL_ID = []
+            MD = int(ID[0:3] + "00")
+            for IDNew in range(21):
+                ALL_ID.append(str(MD))
+                MD += 1
+            ALL_ID.remove(ID)
+            for x in range(20):
+                IDK = str(hex(int(ALL_ID[x])))
+                IDK = IDK[4:6] + IDK[2:4]
+                IDK = bytes.fromhex(IDK)
+                ALL_ID[x] = IDK
+            Begin = file.read(140)
+            Read = b"\x00"
+            All = []
+            while Read != b"":
+                Read = file.read(36)
+                if Read.find(IDN) != -1:
+                    All.append(Read)
+                try:
+                    Max = Read[4] + (Read[5]*256)
+                    Max0 = str(hex(Max))
+                    if len(Max0) == 4:
+                        Max0 = Max0[2:4] + "00"
+                    if len(Max0) == 5:
+                        Max0 = Max0[3:5] + "0" + Max0[2]
+                    if len(Max0) == 6:
+                        Max0 = Max0[4:6] + Max0[2:4]
+                    Max0 = bytes.fromhex(Max0)
+                except:
+                    None
+            file.close()
+            file = open(organSkin_mod, "ab+")
+            Read0 = file.read()
+            for i in range(len(ALL_ID)):
+                for j in range(len(All)):
+                    CT = All[j]
+                    if CT.find(IDN) != -1:
+                        CT = CT.replace(IDN,ALL_ID[i])
+                    else:
+                        CT = CT.replace(ALL_ID[i-1],ALL_ID[i])
+                    CTN = str(hex(Max0[0]+(Max0[1]*256)+1))
+                    if len(CTN) == 4:
+                        CTN = CTN[2:4]
+                    if len(CTN) == 5:
+                        CTN = CTN[3:5] + "0" + CTN[2]
+                    if len(CTN) == 6:
+                        CTN = CTN[4:6] + CTN[2:4]
+                    CTN = bytes.fromhex(CTN)
+                    OZ = b" \x00\x00\x00"
+                    if len(CTN) == 1:
+                        CT = CT.replace(OZ+CT[4:6],OZ+CTN+b"\x00",1)
+                    if len(CTN) == 2:
+                        CT = CT.replace(OZ+CT[4:6],OZ+CTN,1)
+                    All[j] = CT
+                    XXX = file.write(CT)
+                    Max0 = CT[4:6]
+            file.close()
+            file = open(organSkin_mod, "rb")
+            Read = file.read()
+            Read = Read.replace(Begin[12:14],Max0,1)
+            file.close()
+            file = open(organSkin_mod, "wb")
+            Z = file.write(Read)
+            file.close()
 #-----------------------------------------------
     if IDCHECK == '13706' or b"Skin_Icon_BackToTown" in dieukienmod or b"Skin_Icon_Animation" in dieukienmod:
         import uuid, os, re
@@ -3027,25 +3135,12 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             CODE_BV_HERO.append(ryoma)
         injected = b'\n' + b'\n'.join(CODE_BV_HERO) + b'\n'
         if b'</Action>' in data:
-            result = data.replace(b'</Action>', injected + b'  </Action>')
+            result = data.replace(b'</Action>', injected + b'  </Action>').replace(b'<SkinOrAvatarList id="' + IDMODSKIN.encode() + b'" />',b'<SkinOrAvatarList id="' + IDMODSKIN[:3].encode() + b'00" />')
         else:
             pass
         with open(back_path, 'wb') as f:
             f.write(result)
-
-            # --------SkinOrAvatarList-------
-            with open(back_path, 'rb') as f:
-                SkinOrAvatarList = f.read()
-            
-            SkinOrAvatarList = SkinOrAvatarList.replace(
-                b'<SkinOrAvatarList id="' + IDMODSKIN.encode() + b'" />',
-                b'<SkinOrAvatarList id="' + IDMODSKIN[:3].encode() + b'00" />'
-            )
-            
-            with open(back_path, 'wb') as f:
-                f.write(SkinOrAvatarList)
-
-            print("    Back.xml hoàn tất")
+        print("    Back.xml hoàn tất")
 #-----------------------------------------------
     GiaTocEdit = 2
     for haste_file in ['HasteE1.xml', 'HasteE1_leave.xml']:
@@ -3120,6 +3215,8 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     block_effect = block_effect.replace('jiasu_tongyong_01', 'T2_Spint').replace('<Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600" refParamName="" useRefParam="false" />', '<Vector3 name="bindPosOffset" x="0.000" y="0.000" z="0.000" refParamName="" useRefParam="false" />')
                 elif IDMODSKIN == '15015':
                     block_effect = block_effect.replace('jiasu_tongyong_01', '15015_HanXin_sprint_01')
+                elif IDCHECK == "52011":
+                    block_effect = block_effect.replace(b"jiasu_tongyong_01", b"52011/520_Veres_long_sprint_loop")
                 elif IDMODSKIN == '52414':
                     block_effect = block_effect.replace('jiasu_tongyong_01', '52414_Capheny_sprint_loop')
                 elif IDMODSKIN == '54307':
@@ -3269,7 +3366,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     arcname = os.path.relpath(file_path, start=folder_path)
                     zipf.write(file_path, arcname)
     if IDCHECK == "54402":
-        giapcuongnoyan = input("\033[1;97m[\033[1;92m?\033[1;97m] SPECIAL: 54402 - MOD EFX GIÁP CUỒNG NỘ YAN Y/n \n[\033[1;92m•\033[1;97m] INPUT: ")
+        giapcuongnoyan = '3'#input("\033[1;97m[\033[1;92m?\033[1;97m] SPECIAL: 54402 - MOD EFX GIÁP CUỒNG NỘ YAN Y/n \n[\033[1;92m•\033[1;97m] INPUT: ")
         if giapcuongnoyan.lower() == 'y':	
             with zipfile.ZipFile(f'Resources/{Ver}/Ages/Prefab_Gear.pkg.bytes') as f:
                 f.extractall(f'{FolderMod}/Resources/{Ver}/Ages/mod2/')
@@ -3393,12 +3490,13 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             giai(duongdancamxa)
             with open (duongdancamxa, 'rb') as f:
                 noidungsexx = f.read()            
-                noidungsexx = noidungsexx.replace(b'</Action>', b"""  <Track trackName="SetCameraHeightDuration0" eventType="SetCameraHeightDuration" guid="9489c796-894b-4c2e-9a95-acf27873964a" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n    <Event eventName="SetCameraHeightDuration" time="0.000" length="1.000" isDuration="true" guid="422a1ed9-a12c-44b3-a9c5-3fe899d689dd">\n      <int name="slerpTick" value="0" refParamName="" useRefParam="false"/>\n        <float name="heightRate" value="1.25" refParamName="" useRefParam="false"/>\n        <bool name="bOverride" value="true" refParamName="" useRefParam="false"/>\n        <bool name="leftTimeSlerpBack" value="true" refParamName="" useRefParam="false"/>\n        <String name="refParamName" value="" refParamName="" useRefParam="false"/>\n      </Event>\n	</Track>\n <Track trackName="InBattleMsgSendTick0" eventType="InBattleMsgSendTick" guid="5169fb6a-26eb-4bf0-ae25-0da74fe7d84a" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n	<Event eventName="InBattleMsgSendTick" time="0.000" isDuration="false" guid="9473c11a-e73b-4a84-b950-3b39d37dee13">\n	  <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\n  	<String name="msgKey" value="Create:MMN AOV" refParamName="" useRefParam="false" />\n	</Event>\n  </Track>\n    </Action>""")    
+                noidungsexx = noidungsexx.replace(b'</Action>', b"""  <Track trackName="SetCameraHeightDuration0" eventType="SetCameraHeightDuration" guid="9489c796-894b-4c2e-9a95-acf27873964a" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n    <Event eventName="SetCameraHeightDuration" time="0.000" length="1.000" isDuration="true" guid="422a1ed9-a12c-44b3-a9c5-3fe899d689dd">\n      <int name="slerpTick" value="0" refParamName="" useRefParam="false"/>\n        <float name="heightRate" value="1.25" refParamName="" useRefParam="false"/>\n        <bool name="bOverride" value="true" refParamName="" useRefParam="false"/>\n        <bool name="leftTimeSlerpBack" value="true" refParamName="" useRefParam="false"/>\n        <String name="refParamName" value="" refParamName="" useRefParam="false"/>\n      </Event>\n	</Track>\n <Track trackName="InBattleMsgSendTick0" eventType="InBattleMsgSendTick" guid="5169fb6a-26eb-4bf0-ae25-0da74fe7d84a" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n	<Event eventName="InBattleMsgSendTick" time="0.000" isDuration="false" guid="9473c11a-e73b-4a84-b950-3b39d37dee13">\n	  <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\n  	<String name="msgKey" value="Create:YtbTamModAOV" refParamName="" useRefParam="false" />\n	</Event>\n  </Track>\n    </Action>""")    
             with open (duongdancamxa,'wb') as f : f.write(noidungsexx)
             giai(duongdancamxa)
-    antidec = 'n'#input("ANTI_DECOMP__?: ").strip().lower()
-    if antidec == 'y':
+    if Anti == '1':
+        print(directory_path)
         enc(directory_path)
+
 #-----------------------------------------------
     INFO_MOD = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/'
     with zipfile.ZipFile(f'Resources/{Ver}/Prefab_Characters/Actor_{IDINFO[:3]}_Infos.pkg.bytes') as f:
@@ -3729,7 +3827,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     tinhRootDsau=len(RootDsau).to_bytes(4,byteorder='little')+RootDsau[4:]
     tinhRootDtrc=RootDtrc+tinhRootDsau
     CodeDayDu=len(tinhRootDtrc).to_bytes(4,byteorder='little')+tinhRootDtrc[4:]
-    if IDCHECK != '13314':
+    if IDCHECK not in ['13314', '11607']:
         CodeDayDu=CodeDayDu.replace(b"Light<",b"00000<")
         CodeDayDu = CodeDayDu.replace(b"imeline<", b"1234567<")
         CodeDayDu=CodeDayDu.replace(b'_LOD2',b'_LOD1').replace(b'_LOD3',b'_LOD1').replace(b'_Show2\x04',b'_Show1\x04').replace(b'_Show3\x04',b'_Show1\x04')
@@ -3752,6 +3850,18 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     tinhcam1=CodeDayDu[:88]+k
     CodeDayDu=CodeDayDu.replace(tinhcam,tinhcam1)
     with open(op,'wb')as f: f.write(CodeDayDu)
+    enc(newpath)
+    enc(file_actor_mod)
+    enc(file_shop_mod)
+    enc(fileasset_mod)
+    enc(Sound_Files)
+    enc(file_mod_Character)
+    enc(file_mod_Modtion)
+    enc(file_mod_skill2)
+    enc(file_mod_skill1)
+    enc(f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/commonresource/Back.xml')
+    enc(f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/commonresource/HasteE1.xml')
+    enc(f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/commonresource/HasteE1_leave.xml')
     print(f'    {os.path.basename(actorinfo_file)}')
     print('   Actor_'+IDINFO[:3]+'_Infos.pkg.bytes'+' Done')
     
