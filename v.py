@@ -141,7 +141,7 @@ def _giaima_file(filepath):
     except Exception as e:
         pass
 
-"""def enc(path1):
+def enc(path1):
     Path = []
 
     if os.path.isdir(path1):
@@ -159,7 +159,7 @@ def _giaima_file(filepath):
 
             Code = bytearray(pyzstd.compress(All_Code, 17, pyzstd.ZstdDict(ZSTD_DICT)))
             if file_path.endswith('.xml'):
-                Code += b"MODBYRONAOV"
+                Code += b"ModByTamModAov"
                 Code += Code[int(len(Code)//2):int(len(Code)//2)+randint(3, 1000)]
             else:
                 Code += Code[int(len(Code)/2):int(len(Code)/2)+randint(3, 4)]
@@ -169,14 +169,15 @@ def _giaima_file(filepath):
             with open(file_path, 'wb') as File:
                 File.write(Code)
         except Exception as e:
-            pass"""
+            pass
 
 #print("\033[36m[III]. Chọn Chức Năng Fix Lag\n   [1].Fix Lag AssetRefs\n   [2].Fix Lag Born\n   [3].Không Fix Lag")
-fixlag = '3'#input("\n>>> ")
+fixlag = '1'#input("\n>>> ")
 def process_input_numbers(numbers):
     return numbers 
 CAMXA = '3'#input("\n\t\033[1;97m[\033[1;92m?\033[1;97m] MOD CAM XA Y/n: ")
 cyyy =  Colors.StaticMIX((Col.light_blue, Col.light_gray, Col.light_red))
+Anti = input(Colorate.Diagonal(Colors.DynamicMIX((Col.red, cyyy)), ">> Antidec Để Giảm Lag (Y/N): "))
 input_numbers = input(Colorate.Diagonal(Colors.DynamicMIX((Col.red, cyyy)), ">> Enter Your IDSkin: "))
 numbers = [int(num) for num in input_numbers.split()]
 results = process_input_numbers(numbers)
@@ -314,7 +315,6 @@ giai(file_mod_vien)
 
 with zipfile.ZipFile(f'Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes') as zipf:
     zipf.extractall(f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/')
-    giai(f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/commonresource/Back.xml')
 #-----------------------------------------------
 ngoaihinhkhieov=b'B\x10\x00\x00\x0b\x00\x00\x00ElementE\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTCom0\x00\x00\x00\x08\x00\x00\x00TypeAssets.Scripts.GameLogic.SkinElement\x04\x00\x00\x00\xea\x0f\x00\x00\x0e\x00\x00\x00\x10\x02\x00\x00\x14\x00\x00\x00ArtSkinPrefabLOD0\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTArr\x1b\x00\x00\x00\x08\x00\x00\x00TypeSystem.String[]\x04\x00\x00\x00\xc4\x01\x00\x00\x03\x00\x00\x00\x94\x00\x00\x00\x0b\x00\x00\x00Element}\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringO\x00\x00\x00\x05\x00\x00\x00VPrefab_Characters/Prefab_Hero/167_WuKong/Awaken/1678_sunwukong_03_LOD1\x04\x00\x00\x00\x04\x00\x00\x00\x94\x00\x00\x00\x0b\x00\x00\x00Element}\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringO\x00\x00\x00\x05\x00\x00\x00VPrefab_Characters/Prefab_Hero/167_WuKong/Awaken/1678_sunwukong_03_LOD2\x04\x00\x00\x00\x04\x00\x00\x00\x94\x00\x00\x00\x0b\x00\x00\x00Element}\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringO\x00\x00\x00\x05\x00\x00\x00VPrefab_Characters/Prefab_Hero/167_WuKong/Awaken/1678_sunwukong_03_LOD3\x04\x00\x00\x00\x04\x00\x00\x00\xa4\x00\x00\x00\x16\x00\x00\x00ArtSkinPrefabLODEx0\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTArr\x1b\x00\x00\x00\x08\x00\x00\x00TypeSystem.String[]\x04\x00\x00\x00V\x00\x00\x00\x01\x00\x00\x00N\x00\x00\x00\x0b\x00\x00\x00Element7\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.String\t\x00\x00\x00\x05\x00\x00\x00V\x04\x00\x00\x00\x04\x00\x00\x00\x16\x02\x00\x00\x17\x00\x00\x00ArtSkinLobbyShowLOD0\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTArr\x1b\x00\x00\x00\x08\x00\x00\x00TypeSystem.String[]\x04\x00\x00\x00\xc7\x01\x00\x00\x03\x00\x00\x00\x95\x00\x00\x00\x0b\x00\x00\x00Element~\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringP\x00\x00\x00\x05\x00\x00\x00VPrefab_Characters/Prefab_Hero/167_WuKong/Awaken/1678_sunwukong_03_Show1\x04\x00\x00\x00\x04\x00\x00\x00\x95\x00\x00\x00\x0b\x00\x00\x00Element~\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringP\x00\x00\x00\x05\x00\x00\x00VPrefab_Characters/Prefab_Hero/167_WuKong/Awaken/1678_sunwukong_03_Show2\x04\x00\x00\x00\x04\x00\x00\x00\x95\x00\x00\x00\x0b\x00\x00\x00Element~\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringP\x00\x00\x00\x05\x00\x00\x00VPrefab_Characters/Prefab_Hero/167_WuKong/Awaken/1678_sunwukong_03_Show3\x04\x00\x00\x00\x04\x00\x00\x00E\x01\x00\x00\x1b\x00\x00\x00ArtSkinLobbyIdleShowLOD0\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTArr\x1b\x00\x00\x00\x08\x00\x00\x00TypeSystem.String[]\x04\x00\x00\x00\xf2\x00\x00\x00\x03\x00\x00\x00N\x00\x00\x00\x0b\x00\x00\x00Element7\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.String\t\x00\x00\x00\x05\x00\x00\x00V\x04\x00\x00\x00\x04\x00\x00\x00N\x00\x00\x00\x0b\x00\x00\x00Element7\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.String\t\x00\x00\x00\x05\x00\x00\x00V\x04\x00\x00\x00\x04\x00\x00\x00N\x00\x00\x00\x0b\x00\x00\x00Element7\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.String\t\x00\x00\x00\x05\x00\x00\x00V\x04\x00\x00\x00\x04\x00\x00\x00\xa2\x00\x00\x00\x1a\x00\x00\x00ArtSkinLobbyShowCamera|\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringN\x00\x00\x00\x05\x00\x00\x00VPrefab_Characters/Prefab_Hero/167_wukong/Awaken/1678_sunwukong_03_Cam\x04\x00\x00\x00\x04\x00\x00\x00\xa3\x00\x00\x00\x19\x00\x00\x00ArtSkinLobbyShowMovie~\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringP\x00\x00\x00\x05\x00\x00\x00VPrefab_Characters/Prefab_Hero/167_wukong/Awaken/1678_sunwukong_03_Movie\x04\x00\x00\x00\x04\x00\x00\x00Y\x00\x00\x00\x11\x00\x00\x00useNewMecanim<\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x1a\x00\x00\x00\x08\x00\x00\x00TypeSystem.Boolean\r\x00\x00\x00\x05\x00\x00\x00VTrue\x04\x00\x00\x00\x04\x00\x00\x00W\x00\x00\x00\x0f\x00\x00\x00bUnityLight<\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x1a\x00\x00\x00\x08\x00\x00\x00TypeSystem.Boolean\r\x00\x00\x00\x05\x00\x00\x00VTrue\x04\x00\x00\x00\x04\x00\x00\x00a\x00\x00\x00\x19\x00\x00\x00bUseCodeAnimComponent<\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x1a\x00\x00\x00\x08\x00\x00\x00TypeSystem.Boolean\r\x00\x00\x00\x05\x00\x00\x00VTrue\x04\x00\x00\x00\x04\x00\x00\x00f\x00\x00\x00\x08\x00\x00\x00MSAAR\x00\x00\x00\x03\x00\x00\x00\x0e\x00\x00\x00\x06\x00\x00\x00JTEnum2\x00\x00\x00\x08\x00\x00\x00TypeAssets.Scripts.GameLogic.EAntiAliasing\n\x00\x00\x00\x05\x00\x00\x00V2\x04\x00\x00\x00\x04\x00\x00\x00$\x03\x00\x00\x1a\x00\x00\x00PreloadAnimatorEffects0\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTArr\x1b\x00\x00\x00\x08\x00\x00\x00TypeSystem.String[]\x04\x00\x00\x00\xd2\x02\x00\x00\x05\x00\x00\x00\x8e\x00\x00\x00\x0b\x00\x00\x00Elementw\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringI\x00\x00\x00\x05\x00\x00\x00Vprefab_skill_effects/hero_skill_effects/167_WuKong/wukong_Sprint\x04\x00\x00\x00\x04\x00\x00\x00\x93\x00\x00\x00\x0b\x00\x00\x00Element|\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringN\x00\x00\x00\x05\x00\x00\x00Vprefab_skill_effects/hero_skill_effects/167_WuKong/wukong_Sprint_Idle\x04\x00\x00\x00\x04\x00\x00\x00\x93\x00\x00\x00\x0b\x00\x00\x00Element|\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringN\x00\x00\x00\x05\x00\x00\x00Vprefab_skill_effects/hero_skill_effects/167_WuKong/wukong_Sprint_Loop\x04\x00\x00\x00\x04\x00\x00\x00\x92\x00\x00\x00\x0b\x00\x00\x00Element{\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.StringM\x00\x00\x00\x05\x00\x00\x00Vprefab_skill_effects/hero_skill_effects/167_WuKong/wukong_Sprint_Run\x04\x00\x00\x00\x04\x00\x00\x00\x84\x00\x00\x00\x0b\x00\x00\x00Elementm\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.String?\x00\x00\x00\x05\x00\x00\x00Vprefab_skill_effects/Dance_Effects/167/dance_03_texiao\x04\x00\x00\x00\x04\x00\x00\x00\x86\x03\x00\x00\n\x00\x00\x00LookAtF\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTCom1\x00\x00\x00\x08\x00\x00\x00TypeAssets.Scripts.GameLogic.CameraLookAt\x04\x00\x00\x00.\x03\x00\x00\x04\x00\x00\x00B\x01\x00\x00\n\x00\x00\x00Offset4\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTCom\x1f\x00\x00\x00\x08\x00\x00\x00TypeUnityEngine.Vector3\x04\x00\x00\x00\xfc\x00\x00\x00\x03\x00\x00\x00S\x00\x00\x00\x05\x00\x00\x00xB\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.Single\x14\x00\x00\x00\x05\x00\x00\x00V-0.05998039\x04\x00\x00\x00\x04\x00\x00\x00P\x00\x00\x00\x05\x00\x00\x00y?\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.Single\x11\x00\x00\x00\x05\x00\x00\x00V1.389713\x04\x00\x00\x00\x04\x00\x00\x00Q\x00\x00\x00\x05\x00\x00\x00z@\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.Single\x12\x00\x00\x00\x05\x00\x00\x00V-2.490662\x04\x00\x00\x00\x04\x00\x00\x00B\x01\x00\x00\r\x00\x00\x00Direction4\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTCom\x1f\x00\x00\x00\x08\x00\x00\x00TypeUnityEngine.Vector3\x04\x00\x00\x00\xf9\x00\x00\x00\x03\x00\x00\x00T\x00\x00\x00\x05\x00\x00\x00xC\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.Single\x15\x00\x00\x00\x05\x00\x00\x00V1.831149E-07\x04\x00\x00\x00\x04\x00\x00\x00T\x00\x00\x00\x05\x00\x00\x00yC\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.Single\x15\x00\x00\x00\x05\x00\x00\x00V-8.35189E-09\x04\x00\x00\x00\x04\x00\x00\x00I\x00\x00\x00\x05\x00\x00\x00z8\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.Single\n\x00\x00\x00\x05\x00\x00\x00V1\x04\x00\x00\x00\x04\x00\x00\x00P\x00\x00\x00\x0c\x00\x00\x00Duration8\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.Single\n\x00\x00\x00\x05\x00\x00\x00V1\x04\x00\x00\x00\x04\x00\x00\x00R\x00\x00\x00\r\x00\x00\x00CameraFOV9\x00\x00\x00\x03\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTPri\x19\x00\x00\x00\x08\x00\x00\x00TypeSystem.Single\x0b\x00\x00\x00\x05\x00\x00\x00V17\x04\x00\x00\x00\x04\x00\x00\x00m\x00\x00\x00\x0f\x00\x00\x00LightConfigR\x00\x00\x00\x02\x00\x00\x00\r\x00\x00\x00\x06\x00\x00\x00JTCom=\x00\x00\x00\x08\x00\x00\x00TypeAssets.Scripts.GameLogic.PrepareBattleLightConfig\x04\x00\x00\x00\x04\x00\x00\x00'
 #-----------------------------------------------
@@ -343,7 +343,7 @@ def Track_Guid_Skill(directory_path):
         with open(file_path, "wb") as w0:
             w0.write(context)
 #-----------------------------------------------
-def Function_Track_Guid(path):
+def Function_Track_Guid_AddGetHoliday(path):
     for file in os.listdir(path):
         file_path = os.path.join(path, file)
         with open(file_path, "rb") as r0:
@@ -359,7 +359,6 @@ def Function_Track_Guid(path):
                         for j in range(len(IdGuidFalse)):
                             j = IdGuidFalse[j].decode()
                             guid_false = str.encode(f'id="{j}" guid="{guid_track}"')
-                            print(guid_false)
                             context = context.replace(guid_false, guid_true)
         with open(file_path, "wb") as w0:
             w0.write(context)
@@ -651,7 +650,6 @@ for IDMODSKIN in IDMODSKIN1:
     IDSOUND1=IDSOUND_S[3:]
     IDSOUND12=IDSOUND1.encode()
     IDSOUND = b"_Skin" + IDSOUND12
-
     if IDCHECK == '52007':
         phukien1 = input(
             '\033[1;97m[\033[1;91m?\033[1;97m] Mod Component:\n'
@@ -1232,7 +1230,7 @@ for IDMODSKIN in IDMODSKIN1:
                         
                         print(f'    Fix Mất Ngoại Hình - {IDMODSKIN}')
 #----------------------------------------------
-    if IDCHECK == 'PHIM SEX KHONG CHE VI EM CUTE':
+    if IDCHECK == "53002" or b"Skin_Icon_Skill" in dieukienmod or b"Skin_Icon_BackToTown" in dieukienmod:
         def B2Js(blocks_data):
             offset = 140
             blocks = []
@@ -1604,66 +1602,7 @@ for IDMODSKIN in IDMODSKIN1:
 
             print('    [-] ' + os.path.basename(file_mod_skill2) + '    Done')
         process_file_skillmark(file_mod_skill2,2)
-    if IDCHECK == "53002" or b"Skin_Icon_Skill" in dieukienmod or b"Skin_Icon_BackToTown" in dieukienmod:
-        file_paths = [file_mod_skill1, file_mod_skill2]
-        matching_files = []
-        user_id = IDMODSKIN
-        user_id_bytes = bytes(f"fects/{user_id[0:3]}_", "utf8")
-        for file in file_paths:
-            if user_id_bytes in open(file, "rb").read():
-                matching_files.append(file)
-        for file in matching_files:
-            if user_id == '13311':
-                with open(file, "rb") as f:
-                    code_content = f.read()
-                    code_content = code_content.replace(b"prefab_skill_effects/hero_skill_effects/133_direnjie/",
-                                                          b"prefab_skill_effects/component_effects/13311/13311_5/")
-                with open(file, "wb") as f:
-                    f.write(code_content)
-                break
-            modified_codes = []
-            buffer_codes = []
-            with open(file, "rb") as f:
-                begin_content = f.read(140)
-                while True:
-                    data_length = f.read(2)
-                    if data_length == b"":
-                         break
-                    section_length = data_length[0] + data_length[1] * 256 + 2
-                    code_section = data_length + f.read(section_length)
-                    if user_id_bytes in code_section:
-                         modified_codes.append(code_section)
-            for code_section in modified_codes:
-                start_index = code_section.find(user_id_bytes) + 6
-                end_index = code_section.find(b"/", start_index) + 1
-                hero_name = code_section[start_index:end_index]
-                code_section = code_section.replace(b"Prefab_Skill_Effects/Hero_Skill_Effects",
-                                                      b"prefab_skill_effects/hero_skill_effects")
-                code_section = code_section.replace(b"hero_skill_effects/" + hero_name,
-                                                      b"hero_skill_effects/" + hero_name + bytes(user_id + "/", "utf"))
-                offset = code_section.find(b"prefab_skill_effects") - 4
-                length_change = bytes.fromhex(hex(code_section[offset] + len(user_id) + 1)[2:]) + b"\x00" * 3
-                code_section = code_section.replace(code_section[offset:offset + 4], length_change)
-                target_length = hex(len(code_section) - 4)[2:]
-                if len(target_length) == 3:
-                    target_length = target_length[1:3] + "0" + target_length[0]
-                elif len(target_length) == 2:
-                    target_length += "00"
-                target_length = bytes.fromhex(target_length)
-                code_section = code_section.replace(code_section[0:2], target_length, 1)
-                buffer_codes.append(code_section)
-            modified_content = open(file, "rb").read()
-            for index in range(len(modified_codes)):
-                modified_content = modified_content.replace(modified_codes[index], buffer_codes[index], 1)
-            with open(file, "wb") as f:
-                f.write(modified_content)
-    #print('-'*53)
-    print(f"    Mod Skill Effect ID: {user_id}")
-    if matching_files:
-        for file in matching_files:
-            print(f"    [-] {os.path.basename(file):<25} Done!")
-    else:
-        print("    [x] SkillMark Not Found")
+        
 #-----------------------------------------------
     with open(f'{FolderMod}/Resources/1.59.1/Databin/Client/Motion/ResSkinMotionBaseCfg.bytes','rb') as f:
         strin=f.read()
@@ -1990,6 +1929,12 @@ for IDMODSKIN in IDMODSKIN1:
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
+            if IDMODSKIN == '13118' and 'S2.xml' in file_path:
+                with open(file_path, 'rb') as f:
+                    rpl = f.read().replace(b'<String name="resourceName" value="prefab_skill_effects/hero_skill_effects/Libai_attack_spell02.prefab" refParamName="" useRefParam="false" />',b'<String name="resourceName" value="prefab_skill_effects/hero_skill_effects/131_LiBai/13118/Libai_attack_spell02.prefab" refParamName="" useRefParam="false" />')
+                with open(file_path, 'wb') as f:
+                    f.write(rpl)
+#---------------—------------———----------------
             if IDMODSKIN == '54402' and 'U1B1.xml' in file_path:
                 with open(file_path, 'rb') as f:
                     rpl = f.read().replace(b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/544_Painter/Painter_spell03_cutin" refParamName="" useRefParam="false" />',b'<String name="prefab" value="prefab_skill_effects/hero_skill_effects/544_Painter/54402/Painter_spell03_cutin" refParamName="" useRefParam="false" />')
@@ -2050,6 +1995,12 @@ for IDMODSKIN in IDMODSKIN1:
                     )
             
                 with open(file_path,'wb') as f: f.write(rpl)
+            if IDMODSKIN == '13210' and 'S1B1.xml' in file_path:
+                with open(file_path, 'rb') as f:
+                    content = f.read()
+                    new_content = content.replace(b'<bool name="useNegateValue" value="true" refParamName="" useRefParam="false" />',b'')
+                with open(file_path, 'wb') as f:
+                    f.write(new_content)
 #---------------—------------———----------------
             if IDMODSKIN[:3] =='510' and 'U11.xml' in file_path:
                 with open(file_path, 'rb') as f: rpl = f.read().replace(b'<Track trackName="ChangeActorMeshTick0" eventType="ChangeActorMeshTick" guid="3b065f40-1044-4f90-a2d5-1be4f1a968ee" enabled="false" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">', b'<Track trackName="ChangeActorMeshTick0" eventType="ChangeActorMeshTick" guid="3b065f40-1044-4f90-a2d5-1be4f1a968ee" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">')
@@ -2508,40 +2459,47 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             with open(filecheck, 'wb') as f:
                 f.write(All)
 #-----------------------------------------------
-        if IDCHECK == '53002' or b"Skin_Icon_SoundEffect" in dieukienmod or b"Skin_Icon_Dialogue" in dieukienmod:
-            
-            if IDCHECK not in ["13311", "16707"]:
-                directory_path = Files_Directory_Path + f'{NAME_HERO}' + '/skill/'
-        
-                o = directory_path
-                ID = (IDSOUND)
-                File = os.listdir(o)
-                for file in File:
-                    giai(o + file)
-                    with open(o + file, 'rb') as f:
-                        rpl = f.readlines()
-                    with open(o + file, 'rb') as f:
-                        Rpl = f.read()
-                    
-                    Code = []
-                    for i in rpl:
-                        if i.find(b'<String name="eventName" value="') != -1:
-                            Code.append(i[40:i.find(b'" refParamName="" useRefParam="false" />')])
-                    
-                    for i in Code:
-                        a = b'<String name="eventName" value="' + i + b'" refParamName="" useRefParam="false" />'
-                        if Code == []:
-                            pass
+    if IDCHECK == '53002' or b"Skin_Icon_SoundEffect" in dieukienmod or b"Skin_Icon_Dialogue" in dieukienmod:
+    
+        if IDCHECK not in ["13311", "16707"]:
+            directory_path = Files_Directory_Path + f'{NAME_HERO}' + '/skill/'
+    
+            o = directory_path
+            IDL = (IDSOUND)
+            File = os.listdir(o)
+            for file in File:
+                giai(o + file)
+                with open(o + file, 'rb') as f:
+                    rpl = f.readlines()
+                with open(o + file, 'rb') as f:
+                    Rpl = f.read()
+    
+                Code = []
+                for i in rpl:
+                    if i.find(b'<String name="eventName" value="') != -1:
+                        Code.append(i[40:i.find(b'" refParamName="" useRefParam="false" />')])
+    
+                for i in Code:
+                    a = b'<String name="eventName" value="' + i + b'" refParamName="" useRefParam="false" />'
+                    if Code == []:
+                        pass
+                    else:
+                        if IDCHECK == "11620":
+                            Rpl = Rpl.replace(
+                                a,
+                                b'<String name="eventName" value="' + i + IDSOUND + b'_AW5" refParamName="" useRefParam="false" />'
+                            )
                         else:
-                            if IDCHECK == "11620":
-                                Rpl = Rpl.replace(a, b'<String name="eventName" value="' + i + IDSOUND + b'_AW5" refParamName="" useRefParam="false" />')
-                            else:
-                                Rpl = Rpl.replace(a, b'<String name="eventName" value="' + i + IDSOUND + b'" refParamName="" useRefParam="false" />')
-                    
-                    with open(o + file, 'wb') as f:
-                        f.write(Rpl)
+                            Rpl = Rpl.replace(
+                                a,
+                                b'<String name="eventName" value="' + i + IDSOUND + b'" refParamName="" useRefParam="false" />'
+                            )
+    
+                with open(o + file, 'wb') as f:
+                    f.write(Rpl)
+    
             print('    Mod Sound : Done')
-                
+    
             def remove_extra_skin_array(file_path):
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
@@ -2585,6 +2543,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     
             if os.path.isdir(directory_path):
                 remove_extra_skin_array_in_folder(directory_path)
+
     Kiem_Tra_Code = os.path.join(Files_Directory_Path, f'{NAME_HERO}', 'skill')
     for file in os.listdir(Kiem_Tra_Code):
         File_Check_Code = os.path.join(Kiem_Tra_Code, file)
@@ -2838,7 +2797,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     
                 List_DOANAll = All.split(b'    <Track trackName="')
     
-                SKM = b'<int name="skinId" value="99999" refParamName="" useRefParam="false" />'
+                SKM = b'<int name="skinId" value="'+b'235'+IDMODSKIN[-2:].encode()+b'" refParamName="" useRefParam="false" />'
                 IDS = b'<int name="skinId" value="' + IDCODE.encode() + b'" refParamName="" useRefParam="false" />'
                 EQF = b'<bool name="bEqual" value="false" refParamName="" useRefParam="false" />'
                 EQT = b'<bool name="bEqual" value="true" refParamName="" useRefParam="false" />'
@@ -2905,7 +2864,6 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     
                     indent(root)
                     tree.write(file_path, encoding="utf-8", xml_declaration=True)
-                    #print(f"✔ Xử lý + làm đẹp: {file_path}")
                 except Exception as e:
                     pass
 
@@ -2922,6 +2880,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     )
             with open(duongdan, 'wb') as f:
                 f.write(content)
+            enc(duongdan)
     if IDCHECK == '15013':
         Youtuber_Name = f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/PassiveResource/BlueBuff_CD.xml'
         giai(Youtuber_Name)
@@ -2933,6 +2892,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                                   b'prefab_skill_effects/hero_skill_effects/150_hanxin/15013/')
         with open(Youtuber_Name, 'wb') as f:
             f.write(noidung)
+        enc(Youtuber_Name)
     try:
         with open(f'Resources/{Ver}/assetbundle/resourceverificationinfosetall.assetbundle','rb') as f:
             strin=f.read()
@@ -2946,7 +2906,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     fixlag1 = '1'
     if fixlag1 == '1':
         path = Files_Directory_Path + f'{NAME_HERO}' + '/skill/'
-        Function_Track_Guid(path)
+        Function_Track_Guid_AddGetHoliday(path)
         #AddGetHolidayResourcePath(path)
         PathBorn = os.path.join(f"{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/commonresource/", "Born.xml")
         giai(PathBorn)
@@ -2978,7 +2938,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
         	Read = Read.replace(kh, CheckHero + kh, 1)
         	Read = Read.replace(kh, '  ' + kh, 1)
         	NUM = Read.count('<Track trackName=')-1
-        	Read = Read.replace("IDSKIN", IDCHECK[:3])
+        	Read = Read.replace("IDSKIN", ID[:3])
         for code in Code:
             New = TG.replace("\n\n", "\n" + code + "\n")
             print(repr(New.encode()))
@@ -3066,6 +3026,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     if IDCHECK == '13706' or b"Skin_Icon_BackToTown" in dieukienmod or b"Skin_Icon_Animation" in dieukienmod:
         import uuid, os, re
         back_path = f'{FolderMod}/Resources/{Ver}/Ages/Prefab_Characters/Prefab_Hero/mod1/commonresource/Back.xml'
+        giai(back_path)
         with open(back_path, 'rb') as f:
             data = f.read()
         
@@ -3216,7 +3177,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
             vtr = int.from_bytes(vt_bytes, byteorder='little')
             vt1 = ab[pos - 2 : pos - 2 + vtr]
             DKMODGT = vt1.lower()
-            if b'sprint' in DKMODGT or b'jiasu' in DKMODGT:
+            if b'sprint' in DKMODGT or b'jiasu' in DKMODGT or IDMODSKIN == '15015':
                 try:
                     with open(duonggia, 'r', encoding='utf-8') as f:
                         text = f.read()
@@ -3552,6 +3513,9 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 noidungsexx = noidungsexx.replace(b'</Action>', b"""  <Track trackName="SetCameraHeightDuration0" eventType="SetCameraHeightDuration" guid="9489c796-894b-4c2e-9a95-acf27873964a" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n    <Event eventName="SetCameraHeightDuration" time="0.000" length="1.000" isDuration="true" guid="422a1ed9-a12c-44b3-a9c5-3fe899d689dd">\n      <int name="slerpTick" value="0" refParamName="" useRefParam="false"/>\n        <float name="heightRate" value="1.25" refParamName="" useRefParam="false"/>\n        <bool name="bOverride" value="true" refParamName="" useRefParam="false"/>\n        <bool name="leftTimeSlerpBack" value="true" refParamName="" useRefParam="false"/>\n        <String name="refParamName" value="" refParamName="" useRefParam="false"/>\n      </Event>\n	</Track>\n <Track trackName="InBattleMsgSendTick0" eventType="InBattleMsgSendTick" guid="5169fb6a-26eb-4bf0-ae25-0da74fe7d84a" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\n	<Event eventName="InBattleMsgSendTick" time="0.000" isDuration="false" guid="9473c11a-e73b-4a84-b950-3b39d37dee13">\n	  <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\n  	<String name="msgKey" value="Create:YtbTamModAOV" refParamName="" useRefParam="false" />\n	</Event>\n  </Track>\n    </Action>""")    
             with open (duongdancamxa,'wb') as f : f.write(noidungsexx)
             giai(duongdancamxa)
+    if Anti == 'Y':
+        enc(directory_path)
+
 #-----------------------------------------------
     INFO_MOD = f'{FolderMod}/Resources/{Ver}/Prefab_Characters/mod/'
     with zipfile.ZipFile(f'Resources/{Ver}/Prefab_Characters/Actor_{IDINFO[:3]}_Infos.pkg.bytes') as f:
