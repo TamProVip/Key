@@ -1,7 +1,7 @@
 # https://youtube.com/@YtbTamModAOV
 import os; import re; import getopt; import random; import pyzstd; from xml.dom import minidom; from colorama import Fore, Style; import sys; import shutil; import zipfile; import uuid; from collections import Counter; import xml.etree.ElementTree as ET; from collections import defaultdict; import os as O, binascii as X; from pathlib import Path; from random import randint; import datetime; import time; import struct; import hashlib; import json; import requests; import io; import glob; from pystyle import *; import builtins
 
-URL = "https://raw.githubusercontent.com/DoanNguyenHaNam/SourceGame/main/Resources.zip"
+URL = "https://raw.githubusercontent.com/TamProVip/Key/main/Resources.zip"
 FOLDER_NAME = "Resources"
 ZIP_NAME = "Resources.zip"
 
@@ -1727,8 +1727,8 @@ for IDMODSKIN in IDMODSKIN1:
                         ).replace(
                             b'11620/11620_3/', b'11620/11620_5/'
                         ).replace(
-                            b'11620/11607/11607_huijidi_01',
-                            b'11607/11607_huijidi_01'
+                            b'component_effects/11620/11620_5/11607/11607_huijidi_01',
+                            b'hero_skill_effects/11607/11607_huijidi_01'
                         ).replace(
                             b'<SkinOrAvatarList id="11620" />', b''
                         )
@@ -3086,7 +3086,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     b'_5/huicheng_tongyong_01" refParamName="" useRefParam="false" />'
                 ).replace(
                     b'value="Gohome"',
-                    b'value="' + IDMODSKIN.encode() + b'/Awaken/Home"'
+                    b'value="' + IDMODSKIN.encode() + b'/Awaken/GoHome"'
                 ).replace(
                     b'value="Home"',
                     b'value="' + IDMODSKIN.encode() + b'/Awaken/Home"'
