@@ -344,7 +344,10 @@ def Track_Guid_Skill(directory_path):
             w0.write(context)
 #-----------------------------------------------
 def Function_Track_Guid_AddGetHoliday(path):
-    for file in os.listdir(path):
+    files = os.listdir(path)
+    total = len(files)
+
+    for dem, file in enumerate(files, 1):
         file_path = os.path.join(path, file)
         with open(file_path, "rb") as r0:
             context = r0.read()
@@ -362,6 +365,15 @@ def Function_Track_Guid_AddGetHoliday(path):
                             context = context.replace(guid_false, guid_true)
         with open(file_path, "wb") as w0:
             w0.write(context)
+
+        bar_length = 30
+        filled = int(bar_length * dem / total)
+        bar = "#" * filled + "-" * (bar_length - filled)
+        sys.stdout.write(f"\r    [{bar}] {dem}/{total}")
+        sys.stdout.flush()
+    time.sleep(0.5)
+    sys.stdout.write("\r" + " " * (bar_length + 20) + "\r")
+    sys.stdout.flush()
 #-----------------------------------------------
 class StringBytes:
     def __init__(self,String):
@@ -1931,7 +1943,7 @@ for IDMODSKIN in IDMODSKIN1:
 #---------------—------------———----------------
             if IDMODSKIN == '13118' and 'S2.xml' in file_path:
                 with open(file_path, 'rb') as f:
-                    rpl = f.read().replace(b'<String name="resourceName" value="prefab_skill_effects/hero_skill_effects/Libai_attack_spell02.prefab" refParamName="" useRefParam="false" />',b'<String name="resourceName" value="prefab_skill_effects/hero_skill_effects/131_LiBai/13118/Libai_attack_spell02.prefab" refParamName="" useRefParam="false" />')
+                    rpl = f.read().replace(b'<String name="resourceName" value="prefab_skill_effects/hero_skill_effects/Libai_attack_spell02',b'<String name="resourceName" value="prefab_skill_effects/hero_skill_effects/131_LiBai/13118/Libai_attack_spell02.prefab')
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
@@ -1953,7 +1965,10 @@ for IDMODSKIN in IDMODSKIN1:
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
-            
+            if IDMODSKIN == '13011' and 'S2B1.xml' in file_path:
+                with open(file_path, 'rb') as f: rpl = f.read().replace(b'<TemplateObject name="targetId" id="2" objectName="bullet" isTemp="true" refParamName="" useRefParam="false" />',b'<TemplateObject name="targetId" id="0" objectName="self" isTemp="true" refParamName="" useRefParam="false" />')
+                with open(file_path, 'wb') as f:
+                    f.write(rpl)
 #---------------—------------———----------------
             if IDMODSKIN =='13613' and 'S1E1.xml' in file_path:
                 with open(file_path, 'rb') as f: rpl = f.read().replace(b'</Event>\r\n    </Track>\r\n  </Action>\r\n</Project>',b'</Event>\r\n    </Track>\r\n    <Track trackName="Youtuber_You_Mod_Skin" eventType="TriggerParticleTick" guid="daa65ca6-798c-4280-84b3-171fc3a73a82" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="TriggerParticleTick" time="0.000" isDuration="false" guid="5f30bc82-d28a-4b25-b3a6-92fc32eac064">\r\n        <TemplateObject name="targetId" objectName="None" id="-1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/136_wuzetian/13613/WuZeTian_hurt02" refParamName="" useRefParam="false" />\r\n        <float name="lifeTime" value="0.600" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="1.000" z="0.000" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>\r\n</Project>')
@@ -2399,7 +2414,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #-----------------------------------------------
-    IDNODMODCHECK = ['13210', '13011', '52414', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408','52113','13118','11119','56301','15903','15015']
+    IDNODMODCHECK = ['13210', '13011', '52414', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408','52113','13118','11119','56301','15903','15015','54402']
     
     if IDCHECK not in IDNODMODCHECK:
         directorypath = Files_Directory_Path + f'{NAME_HERO}' + '/skill/'
@@ -2540,10 +2555,6 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                     b'SkinAvatarFilterType="11">')
             with open(File_Check_Code, 'wb') as f:
                 f.write(rpl)
-        if IDMODSKIN =='54402' and 'U1B1.xml' in file:
-            with open(File_Check_Code, "rb") as f:
-                rpl = f.read().replace(b'<bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />',b'<bool name="bEqual" value="false" refParamName="" useRefParam="false" />\n        <bool name="bSkipLogicCheck" value="true" refParamName="" useRefParam="false" />')
-            with open(File_Check_Code, "wb") as f:f.write(rpl)
         if IDMODSKIN[:3] == '537' and 'Change.xml' in file or IDMODSKIN[:3] == '537' and 'ChangeB.xml' in file:
             with open(File_Check_Code, "rb") as f:
                 rpl = f.read().replace(b'537_Trip/', b'537_Trip/' + IDMODSKIN.encode() + b'/')
