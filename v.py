@@ -1579,8 +1579,6 @@ for IDMODSKIN in IDMODSKIN1:
                 b"hero_skill_effects/" + hero_name + b"/" + ID_SKIN + b"/"
             )
         
-            #if ID_SKIN == b'11215':
-                #strin = strin.replace(b'<Track ConfigID="11200"',b'<Track ConfigID="11200" BulletName="112s1b1" resource="prefab_skill_effects/hero_skill_effects/112_gongshuban/11215/gongshuban_attack01_spell01" none="983a0000000000000100003200000001000100010000000000000000000000000000007e04e803e803" />\n<Track ConfigID="11200"')
             if ID_SKIN == b'11119':
                 strin = strin.replace(b'<Track ConfigID="500001" BulletName="500001texiao" resource="Prefab_Skill_Effects/New_Common_Effects/EF_BlueTower_GoldenCoin" none="581b000000000000010000a00f18fc0100010001000000000000000000000000000000e803e803e803" />',b'<Track ConfigID="500001" BulletName="500001texiao" resource="Prefab_Skill_Effects/New_Common_Effects/EF_BlueTower_GoldenCoin" none="581b000000000000010000a00f18fc0100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111126" BulletName="111a1b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" none="b888000000000000010000ee0200000100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111237" BulletName="111a2b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_fly_01b" none="b888000000000000012c01bc02bc020100010001000000000000000000000000000000e803e803e803" />\n<Track ConfigID="111004" BulletName="111a4b1" resource="prefab_skill_effects/hero_skill_effects/111_sunshangxiang/11119/sunshangxiang_attack01_C" none="b888000000000000010000ee0200000100010001000000000000000000000000000000e803e803e803" />')
             if ID_SKIN == b'13311':
@@ -2093,11 +2091,6 @@ for IDMODSKIN in IDMODSKIN1:
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #---------------—------------———----------------
-            if IDMODSKIN in ['11120'] and 'U1.xml' in file_path:
-                with open(file_path, 'rb') as f:
-                    sec = f.read().replace(b'SkinAvatarFilterType="9">',b'SkinAvatarFilterType="11">')
-                with open(file_path, 'wb') as f:
-                    f.write(sec)
             if IDMODSKIN in ['11120','11119'] and 'A1B1.xml' in file_path:
                 with open(file_path, 'rb') as f: sec = f.read().replace(b'</Action>', b'    <Track trackName="SpawnLiteObjDuration0" eventType="SpawnLiteObjDuration" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Event eventName="SpawnLiteObjDuration" time="0.000" length="5.000" isDuration="true" guid="6d868a6f-8ee5-477f-b215-8168ab03ce28">\n        <String name="OutputLiteBulletName" value="111a1b1" refParamName="" useRefParam="false"/>\n        <uint name="ConfigID" value="11100" refParamName="" useRefParam="false"/>\n        <TemplateObject name="ReferenceID" id="0" objectName="\xe6\x94\xbb\xe5\x87\xbb\xe8\x80\x85" isTemp="false" refParamName="" useRefParam="false"/>\n        <TemplateObject name="TargetID" id="1" objectName="target" isTemp="false" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n    <Track trackName="StopTrack1" eventType="StopTrack" guid="4ce273d3-51d6-4fe0-8fbe-1ff46fefa576" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" SkinAvatarFilterType="11">\n      <Condition id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" status="true"/>\n      <Event eventName="StopTrack" time="0.000" isDuration="false" guid="c0253b7e-2e8c-461d-919a-e5617c64555b">\n        <TrackObject name="trackId" id="10" guid="\xe9\x83\x91\xe5\x87\xaf\xe6\x98\x8e" refParamName="" useRefParam="false"/>\n      </Event>\n      <SkinOrAvatarList id="11119"/>\n      <SkinOrAvatarList id="11120"/>\n    </Track>\n  </Action>')
                 with open(file_path,'wb') as f: f.write(sec)
@@ -2414,7 +2407,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 with open(file_path, 'wb') as f:
                     f.write(rpl)
 #-----------------------------------------------
-    IDNODMODCHECK = ['13210', '13011', '52414', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408','52113','13118','11119','56301','15903','15015','54402']
+    IDNODMODCHECK = ['13210', '13011', '52414', '15013', '13314', '13706','59901','13213','11215','59802','10915','15412','10611','10620','11120', '15710','54804','17408','52113','13118','11119','56301','15903','15015','54402','16707']
     
     if IDCHECK not in IDNODMODCHECK:
         directorypath = Files_Directory_Path + f'{NAME_HERO}' + '/skill/'
@@ -2566,10 +2559,11 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
                 All = All.replace(b'<SkinOrAvatarList id="' + IDMODSKIN.encode() + b'" />', b'')
             with open(File_Check_Code, "wb") as f:
                 f.write(All)
-        if IDCHECK == '11120' and file not in ["A1B1.xml", "A1b2.xml", "A2B1.xml", "A2b2.xml", "A4B1.xml", "A4b2.xml", "S2.xml"]:
+        if IDCHECK == '11120' and file not in ["A1B1.xml", "A1b2.xml", "A2B1.xml", "A2b2.xml", "A4B1.xml", "A4b2.xml"]:
             with open(File_Check_Code, "rb") as f:
                 All = f.read()
-                All = All.replace(b'<SkinOrAvatarList id="11120" />',b'<SkinOrAvatarList id="23720" />')
+                All = All.replace(b'<SkinOrAvatarList id="11120" />',b'<SkinOrAvatarList id="23720" />').replace(b'SkinAvatarFilterType="9">',
+b'SkinAvatarFilterType="X">').replace(b'SkinAvatarFilterType="11">',b'SkinAvatarFilterType="9">').replace(b'SkinAvatarFilterType="X">',b'SkinAvatarFilterType="11">')
             with open(File_Check_Code, "wb") as f:
                 f.write(All)
         if IDCHECK == '10915' and 'U1E1.xml' not in file:
@@ -2819,8 +2813,7 @@ b'        <int name="changeSkillID" value="13700" refParamName="" useRefParam="f
     
                 with open(file_path, 'wb') as f:
                     f.write(All)
-
-
+                
                 try:
                     tree = ET.parse(file_path)
                     root = tree.getroot()
