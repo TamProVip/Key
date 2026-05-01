@@ -66,7 +66,19 @@ FILE_AUTHORIZED   = os.path.join(JSON_DIR, "authorized_users.json")   # danh sá
 
 # File danh sách tướng/skin
 FILE_LIST = "list.txt"
+from flask import Flask
+import threading
+import os
 
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running"
+
+def run_web():
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
 # Cấu hình khác
 ITEMS_PER_PAGE = 18  # 4 cột × 4 hàng = 18 item mỗi trang
 HSD = datetime(2029, 8, 19)  # hạn dùng tool free-key (nếu muốn tắt sau ngày này)
@@ -903,4 +915,5 @@ def main():
     updater.idle()
 
 if __name__ == "__main__":
+    threading.Thread(target=run_web).start()
     main()
