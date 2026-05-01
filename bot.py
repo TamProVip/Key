@@ -49,7 +49,10 @@ from telegram.ext import (
 )
 
 # ========================= Cấu hình =========================
-TOKEN = "8651170747:AAHILKh9w7p_gMoqEwhjuq7xDt5AwDKL1Y4"  # <--- ĐỔI TOKEN BOT Ở ĐÂY
+
+
+TOKEN = "8089667166:AAEwvBDYbSUXwtQTZ9pq1fnJFpxY5KT6yR8"
+#TOKEN = "8651170747:AAHILKh9w7p_gMoqEwhjuq7xDt5AwDKL1Y4"  # <--- ĐỔI TOKEN BOT Ở ĐÂY
 ADMIN_ID = 6455013172           # <--- ĐỔI THÀNH user_id Telegram của bạn (số dương), không phải ID kênh/nhóm
 
 # Thư mục/Files
